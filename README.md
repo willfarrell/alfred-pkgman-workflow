@@ -1,7 +1,7 @@
-alfred-pkgman-workflow (1.-)
-============================
+Package Managers.alfredworkflow ([Download v1.15](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
+======================================
 
-Package Repo Search [Download](https://raw.github.com/willfarrell/alfred-workflows/master/Package%20Managers.alfredworkflow)
+Package Repo Search 
 
 Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports `Alcatraz`, `bower`, `CocoaDocs/CocoaPods`, `Composer`, `docker`, `Grunt`, `Homebrew`, `Maven`, `npm`, `pear`, `pypi`, `gems`, and `rpm`. All workflows require constant internet connection.
 

@@ -6,7 +6,7 @@ class cache {
 		"alcatraz" => "https://raw.github.com/mneorr/alcatraz-packages/master/packages.json",
 		"apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
 		"cocoa" => "http://cocoadocs.org/documents.jsonp",
-		"grunt" => "http://gruntjs.com/plugin-list",
+		"grunt" => "http://gruntjs.com/plugin-list.json",
 	);
 	var $query_file = "queries";
 	

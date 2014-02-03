@@ -19,6 +19,10 @@ All repos have caching enabled to speed up common queries. These caches are refr
 
 ![alt text][grunt]
 
+**node.js task runner:** `gulp {query}`
+
+![alt text][gulp]
+
 **XCode:** `alcatraz {query}`, `cocoa {query}`
 
 CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
@@ -66,6 +70,7 @@ The Python Package Index is very slow due to a lack on API and pagaination. A mi
 [docker]: ./screenshots/docker.png "Sample docker result"
 [gems]: ./screenshots/gems.png "Sample gems result"
 [grunt]: ./screenshots/grunt.png "Sample grunt result"
+[gulp]: ./screenshots/gulp.png "Sample gulp result"
 [maven]: ./screenshots/maven.png "Sample maven result"
 [npm]: ./screenshots/npm.png "Sample npm result"
 [pear]: ./screenshots/pear.png "Sample pear result"

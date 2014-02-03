@@ -7,6 +7,7 @@ class cache {
 		"apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
 		"cocoa" => "http://cocoadocs.org/documents.jsonp",
 		"grunt" => "http://gruntjs.com/plugin-list.json",
+		"gulp" => "http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version,license&q=keywords:gulpplugin,gulpfriendly&size=999&sort=rating:desc&start=0"
 	);
 	var $query_file = "queries";
 	

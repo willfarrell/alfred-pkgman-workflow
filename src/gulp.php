@@ -1,8 +1,9 @@
 <?php
 
 //header ("Content-Type:text/xml");
+//syslog(LOG_ERR, "message to send to log");
 
-$query = "contrib";
+//$query = "angular";
 // ****************
 //error_reporting(0);
 require_once('cache.php');
@@ -10,14 +11,14 @@ require_once('workflows.php');
 
 $cache = new Cache();
 $w = new Workflows();
-//$query = urlencode( "{query}" );
+$query = urlencode( "{query}" );
 
-$pkgs = (array) $cache->get_db('grunt')->aaData;
+$pkgs = (array) $cache->get_db('gulp')->results;
 
 function search($plugin, $query) {
 	if (strpos($plugin->name, $query) !== false) {
 		return true;
-	} else if (strpos($plugin->ds, $query) !== false) {
+	} else if (strpos($plugin->description, $query) !== false) {
 		return true;
 	} 
 
@@ -26,24 +27,24 @@ function search($plugin, $query) {
 
 foreach($pkgs as $plugin) {
 	if (search($plugin, $query)) {
-		$title = str_replace('grunt-', '', $plugin->name); // remove grunt- from title
+		$title = str_replace('gulp-', '', $plugin->name); // remove pulp- from title
 	
 		// add author to title
 		if (isset($plugin->author)) {
 			$title .= " by " . $plugin->author;
 		}
-		$url = 'https://npmjs.org/package/' . $plugin->name;
 		
 		//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
-		$w->result( $plugin->name, $url, $title, $plugin->ds, 'icon-cache/grunt.png' );
+		$w->result( $plugin->name, $plugin->homepage, $title, $plugin->description, 'icon-cache/gulp.png' );
 	}
 }
 
+
 if ( count( $w->results() ) == 0) {
 	if($query) {
-		$w->result( 'grunt', 'http://gruntjs.com/plugins/'.$query, 'No plugins were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/grunt.png' );
+		$w->result( 'gulp', 'http://gulpjs.com/plugins/#?q='.$query, 'No plugins were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/gulp.png' );
 	}
-	$w->result( 'grunt-www', 'http://gruntjs.com/', 'Go to the website', 'http://gruntjs.com', 'icon-cache/grunt.png' );
+	$w->result( 'gulp-www', 'http://gulpjs.com/', 'Go to the website', 'http://gulpjs.com', 'icon-cache/gulp.png' );
 }
 
 echo $w->toxml();

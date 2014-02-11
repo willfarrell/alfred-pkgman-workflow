@@ -24,14 +24,14 @@ foreach($pkgs as $item) {
 	$author = preg_replace("/[\s]+/", " ", $author);
 	$details = trim(strip_tags($matches[1][1]));
 	
-	$w->result( $title, 'https://npmjs.org/package/'.$title, $title.' ~ '.$author, $details, 'icon-cache/npm.png' );
+	$w->result( $title, 'https://www.npmjs.org/package/'.$title, $title.' ~ '.$author, $details, 'icon-cache/npm.png' );
 }
 
 if ( count( $w->results() ) == 0) {
 	if($query) {
-		$w->result( 'npm', 'https://npmjs.org/search?q='.$query, 'No packages were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/npm.png' );
+		$w->result( 'npm', 'https://www.npmjs.org/search?q='.$query, 'No packages were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/npm.png' );
 	}
-	$w->result( 'npm-www', 'https://npmjs.org/', 'Go to the website', 'https://npmjs.org', 'icon-cache/npm.png' );
+	$w->result( 'npm-www', 'https://www.npmjs.org/', 'Go to the website', 'https://www.npmjs.org', 'icon-cache/npm.png' );
 }
 
 echo $w->toxml();

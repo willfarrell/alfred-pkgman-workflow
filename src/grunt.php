@@ -32,7 +32,7 @@ foreach($pkgs as $plugin) {
 		if (isset($plugin->author)) {
 			$title .= " by " . $plugin->author;
 		}
-		$url = 'https://npmjs.org/package/' . $plugin->name;
+		$url = 'https://www.npmjs.org/package/' . $plugin->name;
 		
 		//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
 		$w->result( $plugin->name, $url, $title, $plugin->ds, 'icon-cache/grunt.png' );

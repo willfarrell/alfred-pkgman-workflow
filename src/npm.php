@@ -13,7 +13,7 @@ $cache = new Cache();
 $w = new Workflows();
 //$query = urlencode( "{query}" );
 
-$pkgs = $cache->get_query_regex('npm', $query, 'https://npmjs.org/search?q='.$query, '/<li class="search-result package">([\s\S]*?)<\/ul>/i');
+$pkgs = $cache->get_query_regex('npm', $query, 'https://www.npmjs.org/search?q='.$query, '/<li class="search-result package">([\s\S]*?)<\/ul>/i');
 
 foreach($pkgs as $item) {
 	preg_match('/<h2>(.*?)<\/h2>/i', $item, $matches);

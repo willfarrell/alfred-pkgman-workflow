@@ -3,7 +3,7 @@ Package Managers ([Download v1.20](https://raw.github.com/willfarrell/alfred-pkg
 
 Package Repo Search 
 
-Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports `Alcatraz`, `bower`, `CocoaDocs/CocoaPods`, `Composer`, `docker`, `yoeman`, `grunt`, 'gulp', `Homebrew`, `Maven`, `npm`, `pear`, `pypi`, `gems`, and `rpm`. All workflows require constant internet connection.
+Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports `Alcatraz`, `bower`, `CocoaDocs/CocoaPods`, `Composer`, `docker`, `yoeman`, `grunt`, `gulp`, `Homebrew`, `Maven`, `npm`, `pear`, `pypi`, `gems`, and `rpm`. All workflows require constant internet connection.
 
 All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer then expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended.
 
@@ -23,7 +23,11 @@ All repos have caching enabled to speed up common queries. These caches are refr
 
 ![alt text][grunt]
 
-**node.js task runner:** `gulp {query}`
+**node.js task runner Grunt:** `gulp {query}`
+
+![alt text][gulp]
+
+**node.js task runner Gulp:** `gulp {query}`
 
 ![alt text][gulp]
 
@@ -74,6 +78,7 @@ The Python Package Index is very slow due to a lack on API and pagaination. A mi
 [docker]: ./screenshots/docker.png "Sample docker result"
 [gems]: ./screenshots/gems.png "Sample gems result"
 [grunt]: ./screenshots/grunt.png "Sample grunt result"
+[gulp]: ./screenshots/gulp.png "Sample gulp result"
 [gulp]: ./screenshots/gulp.png "Sample gulp result"
 [maven]: ./screenshots/maven.png "Sample maven result"
 [npm]: ./screenshots/npm.png "Sample npm result"

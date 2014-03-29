@@ -3,7 +3,7 @@
 //header ("Content-Type:text/xml");
 //syslog(LOG_ERR, "message to send to log");
 
-$query = "angular";
+//$query = "angular";
 // ****************
 //error_reporting(0);
 require_once('cache.php');
@@ -11,7 +11,7 @@ require_once('workflows.php');
 
 $cache = new Cache();
 $w = new Workflows();
-//$query = urlencode( "{query}" );
+$query = urlencode( "{query}" );
 
 $pkgs = $cache->get_query_json('bower', $query, 'https://bower.herokuapp.com/packages/search/'.$query);
 

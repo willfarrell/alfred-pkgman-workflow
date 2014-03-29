@@ -7,7 +7,8 @@ class cache {
 		"apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
 		"cocoa" => "http://cocoadocs.org/documents.jsonp",
 		"grunt" => "http://gruntjs.com/plugin-list.json",
-		"gulp" => "http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version,license&q=keywords:gulpplugin,gulpfriendly&size=999&sort=rating:desc&start=0"
+		"gulp" => "http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version,license&q=keywords:gulpplugin,gulpfriendly&size=999&sort=rating:desc&start=0",
+		"yo" => "http://yeoman-generator-list.herokuapp.com/"
 	);
 	var $query_file = "queries";
 	
@@ -31,6 +32,7 @@ class cache {
 		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400) ) {
 			$data = $this->w->request( $this->dbs[$id] );
 			if (substr($this->dbs[$id], -5) == 'jsonp') { $data = preg_replace('/.+?([\[{].+[\]}]).+/','$1',$data); } // clean jsonp wrapper
+			
 			$this->w->write($data, $name.'.json');
 			$pkgs = json_decode( $data );
 		} else if (!$pkgs) {

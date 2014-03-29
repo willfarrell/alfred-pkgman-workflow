@@ -25,7 +25,7 @@ function search($plugin, $query) {
 }
 
 foreach($pkgs as $plugin) {
-	if (search($plugin, $query)) {
+	if ($query && search($plugin, $query)) {
 		$title = str_replace('grunt-', '', $plugin->name); // remove grunt- from title
 	
 		// add author to title

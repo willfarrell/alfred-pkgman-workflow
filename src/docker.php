@@ -3,7 +3,7 @@
 //header ("Content-Type:text/xml");
 //syslog(LOG_ERR, );
 
-$query = "h";
+//$query = "h";
 // ****************
 error_reporting(0);
 require_once('cache.php');
@@ -11,13 +11,14 @@ require_once('workflows.php');
 
 $cache = new Cache();
 $w = new Workflows();
-//$query = urlencode( "{query}" );
+$query = urlencode( "{query}" );
 
-$pkgs = $cache->get_query_regex('docker', $query, 'https://index.docker.io/search?q='.$query, '/<li>[\s]*<h3>([\s\S]*?)<\/li>/i', 1); // requires parsing
+$pkgs = $cache->get_query_regex('docker', $query, 'https://index.docker.io/search?q='.$query, '/<div class="repo-list-item">([\s\S]*?)<hr class="repo-list-separator">/i', 1); // requires parsing
 
 //$count = 25;
 foreach($pkgs as $pkg) {
-	preg_match('/<a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
+	preg_match('/<div class="repo-list-item-description"><a href=\'(.*?)\'><h2>(.*?)<\/h2><\/a>/i', $pkg, $matches);
+	var_dump($pkg);var_dump($matches);
 	$title = $matches[2];
 	$url = 'https://index.docker.io'.$matches[1];
 	
@@ -27,14 +28,16 @@ foreach($pkgs as $pkg) {
 		$description = $url;
 	}
 	
-	preg_match('/<p class="date">Last updated: (.*?)[\s]*downloaded: (.*?) times<\/p>/i', $pkg, $matches);
-	$updated = $matches[1];
-	if ($updated == "Not Available") {
-		$updated = "";
+	if (stripos($pkg, 'Registered (and last updated)') !== false) {
+		$official = '[Official]';
+	} else {
+		$official = '';
 	}
-	$downloads = $matches[2];
 	
-	$w->result( $title, $url, $title."    ".$updated."    ".$downloads, $description, 'icon-cache/docker.png' );
+	preg_match('/<span class="fixtime" utc-date="[\w-:+]*">[\s]*([\s\S]*?)[\s]*<\/span>/i', $pkg, $matches);
+	$updated = $matches[1];
+	
+	$w->result( $title, $url, $title."\t".$official."\t".$updated, $description, 'icon-cache/docker.png' );
 	
 	//if (!--$count) { break; }
 }

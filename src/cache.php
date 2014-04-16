@@ -65,7 +65,7 @@ class cache {
 		
 		$pkgs = $this->w->read($name.'.json');
 		$timestamp = $this->w->filetime($name.'.json');
-		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
+		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) { // update - Add || 1 for debuggin
 			$data = $this->w->request($url);
 			preg_match_all($regex, $data, $matches);
 			$data = $matches[$regex_pos];

@@ -23,7 +23,7 @@ foreach($pkgs as $item) {
 
 	$author = trim(strip_tags($matches[3][0]));
 	$version = trim(strip_tags($matches[2][0]));
-	$description = trim(strip_tags($matches[1][0]));
+	$description = html_entity_decode(trim(strip_tags($matches[1][0])));
 
 	$w->result( $title, 'https://www.npmjs.org/package/'.$title, $title.' ~ v'.$version.' by '.$author, $description, 'icon-cache/npm.png' );
 }

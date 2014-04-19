@@ -1,4 +1,4 @@
-Package Managers ([Download v1.23](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
+Package Managers ([Download v1.24](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
 ======================================
 
 Package Repo Search 

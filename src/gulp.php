@@ -1,9 +1,5 @@
 <?php
 
-//header ("Content-Type:text/xml");
-//syslog(LOG_ERR, "message to send to log");
-
-//$query = "angular";
 // ****************
 //error_reporting(0);
 require_once('cache.php');
@@ -29,6 +25,10 @@ foreach($pkgs as $plugin) {
 	if (search($plugin, $query)) {
 		$title = str_replace('gulp-', '', $plugin->name); // remove pulp- from title
 	
+		// add version to title
+		if (isset($plugin->version)) {
+			$title .= ' v'.$plugin->version;
+		}
 		// add author to title
 		if (isset($plugin->author)) {
 			$title .= " by " . $plugin->author;

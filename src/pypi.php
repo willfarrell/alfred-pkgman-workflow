@@ -29,7 +29,7 @@ if (strlen($query) >= $min_query_length) {
 		$downloads = strip_tags($matches[1][1]);
 		$details = strip_tags($matches[1][2]);
 		
-		$w->result( $title, 'https://crate.io'.$url, $title."    ".$downloads, $details, 'icon-cache/pypi.png' );
+		$w->result( $title, 'https://pypi.python.org'.$url, $title."    ".$downloads, $details, 'icon-cache/pypi.png' );
 		if (!--$count) { break; }
 	}
 	

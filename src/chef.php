@@ -50,7 +50,7 @@ foreach ($cookbooks->items as $cookbook) {
 
 		$w->result(
 			$cookbook->cookbook_name,
-			$cookbook->cookbook,
+			"https://supermarket.getchef.com/cookbooks/{$cookbook->cookbook_name}",
 			$title,
 			$cookbook->cookbook_description,
 			$chef_icon

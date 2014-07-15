@@ -1,7 +1,7 @@
 Package Managers ([Download v1.24](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
 ======================================
 
-Package Repo Search 
+Package Repo Search
 
 Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports `Alcatraz`, `bower`, `CocoaDocs/CocoaPods`, `Composer`, `docker`, `yoeman`, `grunt`, `gulp`, `Homebrew`, `Maven`, `apt-get`, `puppet`, `npm`, `pear`, `pypi`, `gems`, and `rpm`. All workflows require constant internet connection.
 
@@ -69,10 +69,14 @@ The Python Package Index is very slow due to a lack on API and pagaination. A mi
 
 ![alt text][docker]
 
+**Chef Cookbooks:** `chef {query`
+
+![Screenshot of a search of Chef Supermarket][chef]
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
+[chef]: ./screenshots/chef.png "Sample chef result"
 [cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
 [composer]: ./screenshots/composer.png "Sample composer result"
 [docker]: ./screenshots/docker.png "Sample docker result"

@@ -1,5 +1,7 @@
 <?php
 
+require_once('workflows.php');
+
 class cache {
 	var $cache_age = 14;
 	var $dbs = array(
@@ -8,6 +10,7 @@ class cache {
 		"cocoa" => "http://cocoadocs.org/documents.jsonp",
 		"grunt" => "http://gruntjs.com/plugin-list.json",
 		"gulp" => "http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version,license&q=keywords:gulpplugin,gulpfriendly&size=9999&sort=rating:desc&start=0",
+		"raspbian" => "http://archive.raspbian.org/raspbian/dists/wheezy/main/binary-armhf/Packages",
 		"yo" => "http://yeoman-generator-list.herokuapp.com/"
 	);
 	var $query_file = "queries";

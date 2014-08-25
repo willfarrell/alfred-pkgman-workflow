@@ -18,16 +18,18 @@ $pkgs = $cache->get_query_regex('brew', $query, 'http://braumeister.org/search/'
 
 foreach($pkgs as $pkg) {
 	// name
-	preg_match('/<a href="(.*?)" class="formula">(.*?)<\/a>/i', $pkg, $matches);
+	preg_match('/<a class="formula" href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
 	$title = strip_tags($matches[0]);
 	
 	// version
-	preg_match('/<strong class="version">(.*?)<\/strong>/i', $pkg, $matches);
-	$version = strip_tags($matches[0]);
+	preg_match('/<strong class="version spec-stable">([\s\S]*?)<\/strong>/i', $pkg, $matches);
+	$version = trim(strip_tags($matches[0]));
 	
 	// url
 	preg_match('/Homepage: <a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
 	$details = strip_tags($matches[1]);
+	
+	//echo $title.' ~ '.$version.' // '.$details;
 	
 	$w->result( $title, 'http://braumeister.org/formula/'.$title, $title.' ~ '.$version, $details, 'icon-cache/brew.png' );
 }

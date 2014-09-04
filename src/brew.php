@@ -1,46 +1,122 @@
 <?php
 
-//header ("Content-Type:text/xml");
-//syslog(LOG_ERR, "message to send to log");
+/*
+Brew
 
-$query = "p";
+*/
+
 // ****************
-//error_reporting(0);
+
 require_once('cache.php');
 require_once('workflows.php');
 
-$cache = new Cache();
-$w = new Workflows();
-//$query = urlencode( "{query}" );
-
-
-$pkgs = $cache->get_query_regex('brew', $query, 'http://braumeister.org/search/'.$query, '/<div class="formula (odd|even)">([\s\S]*?)<\/div>/i', 2);
-
-foreach($pkgs as $pkg) {
-	// name
-	preg_match('/<a class="formula" href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
-	$title = strip_tags($matches[0]);
+class Repo {
 	
-	// version
-	preg_match('/<strong class="version spec-stable">([\s\S]*?)<\/strong>/i', $pkg, $matches);
-	$version = trim(strip_tags($matches[0]));
+	private $id = 'brew';
+	private $min_query_length = 1; // increase for slow DBs
+	private $max_return = 25;
 	
-	// url
-	preg_match('/Homepage: <a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
-	$details = strip_tags($matches[1]);
+	private $cache;
+	private $w;
+	private $pkgs;
 	
-	//echo $title.' ~ '.$version.' // '.$details;
-	
-	$w->result( $title, 'http://braumeister.org/formula/'.$title, $title.' ~ '.$version, $details, 'icon-cache/brew.png' );
-}
-
-if ( count( $w->results() ) == 0) {
-	if($query) {
-		$w->result( 'brew', 'http://braumeister.org/search/'.$query, 'No plugins were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/brew.png' );
+	function __construct() {
+		
+		$this->cache = new Cache();
+		$this->w = new Workflows();
+		
+		// get DB here if not dynamic search
+		//$data = (array) $this->cache->get_db($this->id);
 	}
-	$w->result( 'brew-www', 'http://braumeister.org/', 'Go to the website', 'http://braumeister.org', 'icon-cache/brew.png' );
+	
+	// return id | url | pkgstr
+	function makeArg($id, $url, $version) {
+		return $id . "|" . $url . "|" . "\"$id\":\"$version\",";
+	}
+	
+	/*function check($pkg, $query) {
+		if (!$query) { return true; }
+		if (strpos($pkg["name"], $query) !== false) {
+			return true;
+		} else if (strpos($pkg["description"], $query) !== false) {
+			return true;
+		} 
+	
+		return false;
+	}*/
+	
+	function search($query) {
+		if ( count($query) < $this->min_query_length) {
+			$this->w->result(
+				"{$this->id}-min",
+				$query,
+				"Minimum query length of {$this->min_query_length} not met.",
+				"",
+				"icon-cache/{$this->id}.png"
+			);
+			return;
+		}
+		
+		$this->pkgs = $cache->get_query_regex($this->id, $query, 'http://braumeister.org/search/'.$query, '/<div class="formula (odd|even)">([\s\S]*?)<\/div>/i', 2);
+		
+		foreach($this->pkgs as $pkg) {
+			// name
+			preg_match('/<a class="formula" href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
+			$title = strip_tags($matches[0]);
+			
+			// version
+			preg_match('/<strong class="version spec-stable">([\s\S]*?)<\/strong>/i', $pkg, $matches);
+			$version = trim(strip_tags($matches[0]));
+			
+			// url
+			preg_match('/Homepage: <a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
+			$details = strip_tags($matches[1]);
+			
+			$this->w->result(
+				$title,
+				"http://braumeister.org/formula/{$title}",
+				"{$title} ~ {$version}",
+				$details,
+				"icon-cache/{$this->id}.png"
+			);
+			
+			// only search till max return reached
+			if ( count ( $this->w->results() ) == $this->max_return ) {
+				break;
+			}
+		}
+		
+		if ( count( $this->w->results() ) == 0) {
+			$this->w->result(
+				$this->id,
+				"http://braumeister.org/search/{$query}",
+				"No components were found that matched \"{$query}\"",
+				"Click to see the results for yourself",
+				"icon-cache/{$this->id}.png"
+			);
+		}
+	}
+	
+	function xml() {
+		
+		$this->w->result(
+			"{$this->id}-www",
+			'http://braumeister.org/',
+			'Go to the website',
+			'http://braumeister.org',
+			"icon-cache/{$this->id}.png"
+		);
+		
+		return $this->w->toxml();
+	}
+
 }
 
-echo $w->toxml();
 // ****************
+
+/*$query = "p";
+$repo = new Repo();
+$repo->search($query);
+echo $repo->xml();*/
+
 ?>

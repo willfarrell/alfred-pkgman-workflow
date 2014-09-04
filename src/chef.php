@@ -1,82 +1,101 @@
 <?php
-// ****************
-error_reporting(0);
 
-$min_query_length = 3; // use when loading in large DBs
+/*
+Bower
+
+*/
+
+// ****************
 
 require_once('cache.php');
 require_once('workflows.php');
 
-$cache     = new Cache();
-$w         = new Workflows();
-$query     = urlencode('{query}');
-$chef_icon = 'icon-cache/chef.png';
-
-$cookbooks = $cache->get_query_json(
-	'chef',
-	$query,
-	"https://supermarket.getchef.com/api/v1/search?q={$query}"
-);
-
-/**
- * Checks a cookbook item from a Supermarket search to see if it matches the
- * given query
- *
- * @param  array  $cookbook The cookbook item being checked
- * @param  string $query    The string being searched for
- * @return boolean          True if it matches; false otherwise
- */
-function search($cookbook, $query)
-{
-	$found = false;
-
-	if (   strpos($cookbook->cookbook_name, $query) !== false
-		|| strpos($cookbook->cookbook_description, $query) !== false
-	) {
-		$found = true;
+class Repo {
+	
+	private $id = 'chef';
+	private $min_query_length = 1; // increase for slow DBs
+	private $max_return = 25;
+	
+	private $cache;
+	private $w;
+	private $pkgs;
+	
+	function __construct() {
+		
+		$this->cache = new Cache();
+		$this->w = new Workflows();
+		
+		// get DB here if not dynamic search
+		//$data = (array) $this->cache->get_db($this->id);
+		//$this->$pkgs = $data;
 	}
+	
+	// return id | url | pkgstr
+	function makeArg($id, $url, $version) {
+		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
+	}
+	
+	function check($pkg, $query) {
+		if (!$query) { return true; }
 
-	return $found;
-}
-
-foreach ($cookbooks->items as $cookbook) {
-	if (search($cookbook, $query)) {
-		$title = $cookbook->cookbook_name;
-
-		// add author to title
-		if (isset($cookbook->cookbook_maintainer)) {
-			$title .= " by {$cookbook->cookbook_maintainer}";
+		if (   strpos($pkg->cookbook_name, $query) !== false
+			|| strpos($pkg->cookbook_description, $query) !== false
+		) {
+			return true;
 		}
-
-		$w->result(
-			$cookbook->cookbook_name,
-			"https://supermarket.getchef.com/cookbooks/{$cookbook->cookbook_name}",
-			$title,
-			$cookbook->cookbook_description,
-			$chef_icon
-		);
+		return false;
 	}
+	
+	function search($query) {
+		if ( count($query) < $this->min_query_length) {
+			$this->w->result( "{$this->id}-min", $query, "Minimum query length of {$this->min_query_length} not met.", "", "icon-cache/{$this->id}.png" );
+			return;
+		}
+		
+		$this->pkgs = $this->cache->get_query_json($this->id, $query, "https://supermarket.getchef.com/api/v1/search?q={$query}");
+		
+		foreach ($this->pkgs->items as $pkg) {
+			if ($this->check($pkg, $query)) {
+				$title = $pkg->cookbook_name;
+		
+				// add author to title
+				if (isset($pkg->cookbook_maintainer)) {
+					$title .= " by {$pkg->cookbook_maintainer}";
+				}
+		
+				$this->w->result(
+					$pkg->cookbook_name,
+					$this->makeArg($pkg->cookbook_name, "https://supermarket.getchef.com/cookbooks/{$pkg->cookbook_name}", "*"),
+					$title,
+					$pkg->cookbook_description,
+					"icon-cache/{$this->id}.png"
+				);
+			}
+			// only search till max return reached
+			if ( count ( $this->w->results() ) == $this->max_return ) {
+				break;
+			}
+		}
+		
+		if ( count( $this->w->results() ) == 0) {
+			$w->result( $this->id.'-search', 'http://supermarket.getchef.com/cookbooks/'.$query, 'No components were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/'.$this->id.'.png' );
+		}
+	}
+	
+	function xml() {
+		
+		$this->w->result( $this->id.'-www', 'http://supermarket.getchef.com/', 'Go to the website', 'http://supermarket.getchef.com', "icon-cache/".$this->id.".png" );
+		
+		return $this->w->toxml();
+	}
+
 }
 
-if (count($w->results()) == 0) {
-	if ($query) {
-		$w->result(
-			'chef',
-			"http://supermarket.getchef.com/cookbooks/{$query}",
-			"No plugins were found that matched {$query}",
-			'Click to see the results for yourself',
-			$chef_icon
-		);
-	}
-
-	$w->result(
-		'chef-www',
-		'http://supermarket.getchef.com/',
-		'Go to the website',
-		'http://supermarket.getchef.com',
-		$chef_icon
-	);
-}
-
-echo $w->toxml();
 // ****************
+/*
+$query = "o";
+$repo = new Repo();
+$repo->search($query);
+echo $repo->xml();
+*/
+?>

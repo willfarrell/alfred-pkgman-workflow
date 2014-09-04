@@ -1,5 +1,7 @@
 <?php
 
+ini_set('memory_limit', '-1'); // required for raspbian - remove later
+
 require_once('workflows.php');
 
 class cache {

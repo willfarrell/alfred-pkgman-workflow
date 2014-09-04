@@ -1,64 +1,116 @@
 <?php
 
-//header ("Content-Type:text/xml");
-//syslog(LOG_ERR, );
+/*
+Bower
 
-$query = "contrib";
+*/
+
 // ****************
-//$min_query_length = 3; // use when loading in large DBs
-error_reporting(0);
+
 require_once('cache.php');
 require_once('workflows.php');
 
-$cache = new Cache();
-$w = new Workflows();
-$query = urlencode( "{query}" );
-
-// use one of
-$pkgs = $cache->get_db('__pkgman_id__'); // entire db is provided in json, add to cache.php $dbs array
-$pkgs = $cache->get_query_json('__pkgman_id__', $query, 'https://bower.herokuapp.com/packages/search/'.$query); // has json API
-$pkgs = $cache->get_query_regex('__pkgman_id__', $query, 'http://braumeister.org/search/'.$query, '/<div class="formula (odd|even)">([\s\S]*?)<\/div>/i', 2); // requires parsing
-
-//array_shift($pkgs); // remove first item
-
-// sample search of object - use when provied with entire db
-function search($plugin, $query) {
-	if (strpos($plugin->name, $query) !== false) {
-		return true;
-	} else if (strpos($plugin->description, $query) !== false) {
-		return true;
-	} else {
-		foreach($plugin->keywords as $keyword) {
-			if (strpos($keyword, $query) !== false) {
-				return true;
+class Repo {
+	
+	private $id = '_TEMPLATE_';
+	private $min_query_length = 1; // increase for slow DBs
+	private $max_return = 25;
+	
+	private $cache;
+	private $w;
+	private $pkgs;
+	
+	function __construct() {
+		
+		$this->cache = new Cache();
+		$this->w = new Workflows();
+		
+		// get DB here if not dynamic search
+		$data = (array) $this->cache->get_db($this->id);
+		$this->$pkgs = $data;
+	}
+	
+	// return id | url | pkgstr
+	function makeArg($id, $url, $version) {
+		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
+	}
+	
+	function check($pkg, $query) {
+		if (!$query) { return true; }
+		if (strpos($pkg["name"], $query) !== false) {
+			return true;
+		} else if (strpos($pkg["description"], $query) !== false) {
+			return true;
+		} 
+	
+		return false;
+	}
+	
+	function search($query) {
+		if ( count($query) < $this->min_query_length) {
+			$this->w->result(
+				"{$this->id}-min",
+				$query,
+				"Minimum query length of {$this->min_query_length} not met.",
+				"",
+				"icon-cache/{$this->id}.png"
+			);
+			return;
+		}
+		
+		$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
+		
+		foreach($this->pkgs as $pkg) {
+			
+			// make params
+			
+			$this->w->result(
+				_UNIQUE_ID,
+				$this->makeArg(_PKG_NAME_, _PKG_URL_, "*"),
+				_PKG_NAME_,
+				_PKG_URL_,
+				"icon-cache/{$this->id}.png"
+			);
+			
+			// only search till max return reached
+			if ( count ( $this->w->results() ) == $this->max_return ) {
+				break;
 			}
 		}
-	}
-	return false;
-}
-
-//$count = 25;
-foreach($pkgs as $pkg ) {
-	if (search($pkg,  $query)) {
-		$title = str_replace('grunt-', '', $pkg->name); // remove grunt- from title
-	
-		// add author to title
-		if (isset($pkg->author) && isset($pkg->author->name)) {
-			$title .= " by " . $pkg->author->name;
+		
+		if ( count( $this->w->results() ) == 0) {
+			$this->w->result(
+				"{$this->id}-search",
+				"_TEMPLATE_SEARCH_URL_{$query}",
+				"No components were found that matched \"{$query}\"",
+				"Click to see the results for yourself",
+				"icon-cache/{$this->id}.png"
+			);
 		}
-		$url = str_replace("git://", "https://", $pkg->github);
-		$w->result( $pkg->name, $url, $title, $pkg->description, 'icon-cache/__pkgman_id__.png' );
 	}
-	//if (!--$count) { break; }
+	
+	function xml() {
+		
+		
+		
+		$this->w->result(
+			"{$this->id}-www",
+			'_TEMPLATE_URL_/',
+			'Go to the website',
+			'_TEMPLATE_URL_',
+			"icon-cache/{$this->id}.png"
+		);
+		
+		return $this->w->toxml();
+	}
+
 }
 
-if ( count( $w->results() ) == 0) {
-	if($query) {
-		$w->result( '__pkgman_id__', 'http://gruntjs.com/plugins/'.$query, 'No plugins were found that matched '.$query, 'Click to see the results for yourself', 'icon-cache/__pkgman_id__.png', 'yes' );
-	}
-	$w->result( '__pkgman_id__-www', 'http://gruntjs.com/', 'Go to the website', 'http://gruntjs.com', 'icon-cache/__pkgman_id__.png' );
-}
-
-echo $w->toxml();
 // ****************
+
+/*$query = "leaflet";
+$repo = new Repo();
+$repo->search($query);
+echo $repo->xml();*/
+
 ?>

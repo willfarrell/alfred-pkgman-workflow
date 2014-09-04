@@ -13,28 +13,26 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'raspbian';
-	//private $min_query_length = 3; // use when loading in large DBs
+	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
+	
 	private $cache;
 	private $w;
 	private $pkgs;
 	
 	function __construct() {
-		ini_set('memory_limit', '-1');
 		
 		$this->cache = new Cache();
 		$this->w = new Workflows();
 		
 		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db('raspbian');
-		//print_r($data[0]);
+		$data = (array) $this->cache->get_db($this->id);
 		$pkgs = explode("\n\n", $data[0]);
 		array_pop($pkgs); // remove file end
 		
 		$this->pkgs = [];
 		for ($i = 0, $l = count($pkgs); $i < $l; $i++) {
 			$pkg = $pkgs[$i];
-			//preg_match("/Package: ([^\n]+)\n[\s\S]*?Version: ([^\n]+)\n[\s\S]*?Installed-Size: ([^\n]+)\n[\s\S]*?Maintainer: ([^\n]+?) <([^\n]+?)>\n[\s\S]*Size: ([^\n]+)\n[\s\S]*?Description: (.*?)\n[\s\S]*?Homepage: ([^\n]+)\n[\s\S]*?Filename: ([^\n]+)/i", $pkgs[$i], $matches);
 			
 			preg_match("/Package: ([^\n]+)/i", $pkg, $name);
 			preg_match("/Version: ([^\n]+)/i", $pkg, $version);
@@ -63,10 +61,12 @@ class Repo {
 				//"homepage" => $homepage[1],
 				"filename" => $filename[1]
 			];
-			
-			//break;
 		}
-		//print_r($this->pkgs);
+	}
+	
+	// return id | url | pkgstr
+	function makeArg($id, $url, $version) {
+		return $id . "|" . $url . "|" . "$id";
 	}
 	
 	function check($pkg, $query) {
@@ -81,6 +81,10 @@ class Repo {
 	}
 	
 	function search($query) {
+		if ( count($query) < $this->min_query_length) {
+			$this->w->result( $this->id."-min", $query, 'Minimum query length of '.$this->min_query_length.' not met.', 'http://www.raspbian.org', "icon-cache/".$this->id.".png" );
+			return;
+		}
 		
 		foreach($this->pkgs as $pkg) {
 			if ($this->check($pkg, $query)) {
@@ -94,9 +98,9 @@ class Repo {
 				if (isset($pkg->author)) {
 					$title .= " by " . $pkg["author"];
 				}
-				
+				$url = "https://packages.debian.org/wheezy/".$pkg["name"];
 				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
-				$this->w->result( $pkg["name"], "https://packages.debian.org/wheezy/".$pkg["name"], $title, $pkg["description"], "icon-cache/".$this->id.".png" );
+				$this->w->result( $pkg["name"],  $this->makeArg($pkg["name"], $url, $pkg["version"]), $title, $pkg["description"], "icon-cache/".$this->id.".png" );
 			}
 			
 			// only search till max return reached
@@ -105,15 +109,17 @@ class Repo {
 			}
 		}
 		
+		if ( count( $this->w->results() ) == 0) {
+			/*
+			$this->w->result( $this->id, 'http://sindresorhus.com/bower-components/#!/search/'.$query, 'No components were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/bower.png' );
+			*/
+		}
 	}
 	
 	function xml() {
-		if ( count( $this->w->results() ) == 0) {
-			/*if($query) {
-				$this->w->result( $this->id, 'http://sindresorhus.com/bower-components/#!/search/'.$query, 'No components were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/bower.png' );
-			}*/
-			$this->w->result( $this->id."-www", 'http://www.raspbian.org/', 'Go to the website', 'http://www.raspbian.org', "icon-cache/".$this->id.".png" );
-		}
+		
+		
+		$this->w->result( $this->id."-www", 'http://www.raspbian.org/', 'Go to the website', 'http://www.raspbian.org', "icon-cache/".$this->id.".png" );
 		
 		return $this->w->toxml();
 	}

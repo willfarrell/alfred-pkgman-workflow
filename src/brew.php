@@ -13,6 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'brew';
+	private $kind = 'plugins'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -46,7 +47,7 @@ class Repo {
 	}*/
 	
 	function search($query) {
-		if ( count($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -57,7 +58,7 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $cache->get_query_regex($this->id, $query, 'http://braumeister.org/search/'.$query, '/<div class="formula (odd|even)">([\s\S]*?)<\/div>/i', 2);
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'http://braumeister.org/search/'.$query, '/<div class="formula (odd|even)">([\s\S]*?)<\/div>/i', 2);
 		
 		foreach($this->pkgs as $pkg) {
 			// name
@@ -90,7 +91,7 @@ class Repo {
 			$this->w->result(
 				$this->id,
 				"http://braumeister.org/search/{$query}",
-				"No components were found that matched \"{$query}\"",
+				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
 			);

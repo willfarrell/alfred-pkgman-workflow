@@ -13,6 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'bower';
+	private $kind = 'components'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -46,7 +47,7 @@ class Repo {
 	}*/
 	
 	function search($query) {
-		if ( count($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -78,7 +79,7 @@ class Repo {
 			$this->w->result(
 				"{$this->id}-search",
 				"http://sindresorhus.com/bower-components/#!/search/{$query}",
-				"No components were found that matched \"{$query}\"",
+				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
 			);

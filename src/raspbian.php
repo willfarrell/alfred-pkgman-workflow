@@ -81,7 +81,7 @@ class Repo {
 	}
 	
 	function search($query) {
-		if ( count($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result( $this->id."-min", $query, 'Minimum query length of '.$this->min_query_length.' not met.', 'http://www.raspbian.org', "icon-cache/".$this->id.".png" );
 			return;
 		}

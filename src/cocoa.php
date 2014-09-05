@@ -13,6 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'cocoa';
+	private $kind = 'libraries'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -27,7 +28,7 @@ class Repo {
 		
 		// get DB here if not dynamic search
 		$data = (array) $this->cache->get_db($this->id);
-		$this->$pkgs = $data;
+		$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
@@ -37,9 +38,9 @@ class Repo {
 	
 	function check($pkg, $query) {
 		if (!$query) { return true; }
-		if (strpos($plugin->name, $query) !== false) {
+		if (strpos($pkg->name, $query) !== false) {
 			return true;
-		} else if (isset($plugin->summary) && strpos($plugin->summary, $query) !== false) {
+		} else if (isset($pkg->summary) && strpos($pkg->summary, $query) !== false) {
 			return true;
 		} 
 	
@@ -47,7 +48,7 @@ class Repo {
 	}
 	
 	function search($query) {
-		if ( count($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -94,7 +95,7 @@ class Repo {
 			$this->w->result(
 				"{$this->id}-search",
 				"http://cocoadocs.org/?q={$query}",
-				"No components were found that matched \"{$query}\"",
+				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
 			);

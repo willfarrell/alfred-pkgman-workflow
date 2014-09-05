@@ -1,7 +1,7 @@
 <?php
 
 /*
-_TEMPLATE_
+docker
 
 */
 
@@ -12,8 +12,8 @@ require_once('workflows.php');
 
 class Repo {
 	
-	private $id = '_TEMPLATE_';
-	private $kind = 'packages'; // for none found msg
+	private $id = 'docker';
+	private $kind = 'images';
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -27,8 +27,8 @@ class Repo {
 		$this->w = new Workflows();
 		
 		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id);
-		$this->pkgs = $data;
+		//$data = (array) $this->cache->get_db($this->id);
+		//$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
@@ -36,7 +36,7 @@ class Repo {
 		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
 	}
 	
-	function check($pkg, $query) {
+	/*function check($pkg, $query) {
 		if (!$query) { return true; }
 		if (strpos($pkg["name"], $query) !== false) {
 			return true;
@@ -45,10 +45,10 @@ class Repo {
 		} 
 	
 		return false;
-	}
+	}*/
 	
 	function search($query) {
-		if ( strlen($query) < $this->min_query_length ) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -59,17 +59,27 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://registry.hub.docker.com/search?q='.$query, '/(<a href="\/u\/.*"><div class="repo-list-item box">[\s\S]*?<\/a>)/i', 1);
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			
+			preg_match('/<a href="(.*?)">[\s\S]*?<h2>([\s\S]*?)<[\s\S]*<\/h2>([\s\S]*?)<\/div>/i', $pkg, $matches);
+			$title = trim(preg_replace('/\s+/', '', $matches[2]));
+			$url = 'https://registry.hub.docker.com'. trim(preg_replace('/\s+/', '', $matches[1]));
+			$description = trim(preg_replace('/\s+/', ' ', $matches[3]));
+			if (!$description || trim(preg_replace('/\s+/', '', $matches[3])) == '') {
+				$description = $url;
+			}
+		
+			preg_match('/<span class="timesince" data-time=".*">\s?([\s\S]*?)\s?<\/span>/i', $pkg, $matches);
+			$updated = trim(preg_replace('/\s+/', ' ', $matches[1]));
+	
 			$this->w->result(
-				_UNIQUE_ID,
-				$this->makeArg(_PKG_NAME_, _PKG_URL_, "*"),
-				_PKG_NAME_,
-				_PKG_DETAILS_OR_URL_,
+				$title,
+				$this->makeArg($title, $url, "*"),
+				$title.' ~ '.$updated,
+				$description,
 				"icon-cache/{$this->id}.png"
 			);
 			
@@ -82,7 +92,7 @@ class Repo {
 		if ( count( $this->w->results() ) == 0) {
 			$this->w->result(
 				"{$this->id}-search",
-				"_TEMPLATE_SEARCH_URL_{$query}",
+				"https://registry.hub.docker.com/search?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -93,9 +103,9 @@ class Repo {
 	function xml() {
 		$this->w->result(
 			"{$this->id}-www",
-			'_TEMPLATE_URL_/',
+			'http://www.docker.io/',
 			'Go to the website',
-			'_TEMPLATE_URL_',
+			'http://www.docker.io',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -107,7 +117,7 @@ class Repo {
 // ****************
 
 /*
-$query = "leaflet";
+$query = "ng";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

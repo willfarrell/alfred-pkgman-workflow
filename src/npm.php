@@ -1,7 +1,7 @@
 <?php
 
 /*
-_TEMPLATE_
+npm
 
 */
 
@@ -12,7 +12,7 @@ require_once('workflows.php');
 
 class Repo {
 	
-	private $id = '_TEMPLATE_';
+	private $id = 'npm';
 	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
@@ -27,8 +27,8 @@ class Repo {
 		$this->w = new Workflows();
 		
 		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id);
-		$this->pkgs = $data;
+		//$data = (array) $this->cache->get_db($this->id);
+		//$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
@@ -36,7 +36,7 @@ class Repo {
 		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
 	}
 	
-	function check($pkg, $query) {
+	/*function check($pkg, $query) {
 		if (!$query) { return true; }
 		if (strpos($pkg["name"], $query) !== false) {
 			return true;
@@ -45,10 +45,10 @@ class Repo {
 		} 
 	
 		return false;
-	}
+	}*/
 	
 	function search($query) {
-		if ( strlen($query) < $this->min_query_length ) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -59,17 +59,25 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://www.npmjs.org/search?q='.$query, '/<li class="search-result package">([\s\S]*?)<\/div>/i');
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			
+			preg_match('/<h2>(.*?)<\/h2>/i', $pkg, $matches);
+			$title = strip_tags($matches[1]);
+		
+			preg_match_all('/<p class="description">([\s\S]*?)<\/p>([\s\S]*?)by([\s\S]*?)<\/span>/i', $pkg, $matches);
+		
+			$author = trim(strip_tags($matches[3][0]));
+			$version = trim(strip_tags($matches[2][0]));
+			$description = html_entity_decode(trim(strip_tags($matches[1][0])));
+	
 			$this->w->result(
-				_UNIQUE_ID,
-				$this->makeArg(_PKG_NAME_, _PKG_URL_, "*"),
-				_PKG_NAME_,
-				_PKG_DETAILS_OR_URL_,
+				$title,
+				$this->makeArg($title, 'https://www.npmjs.org/package/'.$title, "*"),
+				$title.' ~ v'.$version.' by '.$author,
+				$description,
 				"icon-cache/{$this->id}.png"
 			);
 			
@@ -82,7 +90,7 @@ class Repo {
 		if ( count( $this->w->results() ) == 0) {
 			$this->w->result(
 				"{$this->id}-search",
-				"_TEMPLATE_SEARCH_URL_{$query}",
+				"https://www.npmjs.org/search?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -93,9 +101,9 @@ class Repo {
 	function xml() {
 		$this->w->result(
 			"{$this->id}-www",
-			'_TEMPLATE_URL_/',
+			'https://www.npmjs.org/',
 			'Go to the website',
-			'_TEMPLATE_URL_',
+			'https://www.npmjs.org',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -107,7 +115,7 @@ class Repo {
 // ****************
 
 /*
-$query = "leaflet";
+$query = "gr";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

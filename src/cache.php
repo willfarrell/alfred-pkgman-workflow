@@ -7,7 +7,7 @@ require_once('workflows.php');
 class cache {
 	var $cache_age = 14;
 	var $dbs = array(
-		"alcatraz" => "https://raw.github.com/mneorr/alcatraz-packages/master/packages.json",
+		"alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",
 		"apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
 		"cocoa" => "http://cocoadocs.org/documents.jsonp",
 		"grunt" => "http://gruntjs.com/plugin-list.json",

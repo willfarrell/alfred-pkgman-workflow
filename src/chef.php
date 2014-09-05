@@ -13,6 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'chef';
+	private $kind = 'plugins'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -27,7 +28,7 @@ class Repo {
 		
 		// get DB here if not dynamic search
 		//$data = (array) $this->cache->get_db($this->id);
-		//$this->$pkgs = $data;
+		//$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
@@ -47,7 +48,7 @@ class Repo {
 	}
 	
 	function search($query) {
-		if ( count($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -87,7 +88,7 @@ class Repo {
 			$this->w->result(
 				"{$this->id}-search",
 				"http://supermarket.getchef.com/cookbooks/{$query}",
-				"No components were found that matched \"{$query}\"",
+				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
 			);
@@ -111,9 +112,11 @@ class Repo {
 
 // ****************
 
+/*
 $query = "or";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();
+*/
 
 ?>

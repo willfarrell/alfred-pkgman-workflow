@@ -13,6 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'alcatraz';
+	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -26,8 +27,8 @@ class Repo {
 		$this->w = new Workflows();
 		
 		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id);
-		$this->$pkgs = $data;
+		$data = (array) $this->cache->get_db($this->id)->packages;
+		$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
@@ -37,16 +38,16 @@ class Repo {
 	
 	function check($pkg, $query) {
 		if (!$query) { return true; }
-		if (strpos($item->name, $query) !== false) {
+		if (strpos($pkg->name, $query) !== false) {
 			return true;
-		} else if (strpos($item->description, $query) !== false) {
+		} else if (strpos($pkg->description, $query) !== false) {
 			return true;
 		}
 		return false;
 	}
 	
 	function search($query) {
-		if ( count($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length ) {
 			$this->w->result(
 				"{$this->id}-min",
 				$query,
@@ -57,15 +58,16 @@ class Repo {
 			return;
 		}
 		
-		foreach($this->pkgs->packages as $package ) {
+		foreach($this->pkgs as $pkg ) {
 			// plugins, color_scheme, project_templates, file_templates
-			for( $i = 0; $i < count($package); $i++ ) {
+			for( $i = 0; $i < count($pkg); $i++ ) {
 				
-				if (check($package[$i], $query)) {
+				if ($this->check($pkg[$i], $query)) {
 					$this->w->result(
-						$package[$i]->url,
-						$this->makeArg($package[$i]->name, $package[$i]->url, "*"),
-						$package[$i]->name, $package[$i]->description,
+						$pkg[$i]->url,
+						$this->makeArg($pkg[$i]->name, $pkg[$i]->url, "*"),
+						$pkg[$i]->name,
+						$pkg[$i]->description,
 						"icon-cache/{$this->id}.png"
 					);
 				}
@@ -81,7 +83,7 @@ class Repo {
 			$this->w->result(
 				"{$this->id}-search",
 				"http://mneorr.github.io/Alcatraz/{$query}",
-				"No components were found that matched \"{$query}\"",
+				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
 			);
@@ -107,9 +109,11 @@ class Repo {
 
 // ****************
 
-/*$query = "leaflet";
+/*
+$query = "a";
 $repo = new Repo();
 $repo->search($query);
-echo $repo->xml();*/
+echo $repo->xml();
+*/
 
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 /*
-Bower
+Chef
 
 */
 
@@ -48,7 +48,13 @@ class Repo {
 	
 	function search($query) {
 		if ( count($query) < $this->min_query_length) {
-			$this->w->result( "{$this->id}-min", $query, "Minimum query length of {$this->min_query_length} not met.", "", "icon-cache/{$this->id}.png" );
+			$this->w->result(
+				"{$this->id}-min",
+				$query,
+				"Minimum query length of {$this->min_query_length} not met.",
+				"",
+				"icon-cache/{$this->id}.png"
+			);
 			return;
 		}
 		
@@ -78,13 +84,25 @@ class Repo {
 		}
 		
 		if ( count( $this->w->results() ) == 0) {
-			$w->result( $this->id.'-search', 'http://supermarket.getchef.com/cookbooks/'.$query, 'No components were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/'.$this->id.'.png' );
+			$this->w->result(
+				"{$this->id}-search",
+				"http://supermarket.getchef.com/cookbooks/{$query}",
+				"No components were found that matched \"{$query}\"",
+				"Click to see the results for yourself",
+				"icon-cache/{$this->id}.png"
+			);
 		}
 	}
 	
 	function xml() {
 		
-		$this->w->result( $this->id.'-www', 'http://supermarket.getchef.com/', 'Go to the website', 'http://supermarket.getchef.com', "icon-cache/".$this->id.".png" );
+		$this->w->result(
+			"{$this->id}-www",
+			"http://supermarket.getchef.com/",
+			"Go to the website",
+			"http://supermarket.getchef.com",
+			"icon-cache/{$this->id}.png"
+		);
 		
 		return $this->w->toxml();
 	}
@@ -92,10 +110,10 @@ class Repo {
 }
 
 // ****************
-/*
-$query = "o";
+
+$query = "or";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();
-*/
+
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 /*
-Bower
+Cocoa
 
 */
 
@@ -71,15 +71,14 @@ class Repo {
 				$url = (isset($pkg->url)) ? $$pkg->url : $pkg->doc_url;
 				$details = (isset($pkg->summary)) ? $pkg->summary : $pkg->framework;
 				
-				$icon = (isset($pkg->url)) ? 'xcode.png' : "{$this->id}.png";
-				$w->result( $pkg->name, $url, $title, $details, 'icon-cache/'.$icon );
+				$icon = (isset($pkg->url)) ? "xcode" : "{$this->id}";
 				
 				$this->w->result(
 					$pkg->name,
-					$this->makeArg($library->name, $url, "*"),
-					$pkg->name,
-					$url,
-					"icon-cache/{$this->id}.png"
+					$this->makeArg($pkg->name, $url, "*"),
+					$title,
+					$details,
+					"icon-cache/{$icon}.png"
 				);
 			}
 			

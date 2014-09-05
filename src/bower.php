@@ -47,7 +47,13 @@ class Repo {
 	
 	function search($query) {
 		if ( count($query) < $this->min_query_length) {
-			$this->w->result( $this->id."-min", $query, 'Minimum query length of '.$this->min_query_length.' not met.', '', "icon-cache/".$this->id.".png" );
+			$this->w->result(
+				"{$this->id}-min",
+				$query,
+				"Minimum query length of {$this->min_query_length} not met.",
+				"",
+				"icon-cache/{$this->id}.png"
+			);
 			return;
 		}
 		
@@ -55,7 +61,12 @@ class Repo {
 		
 		foreach($this->pkgs as $pkg) {
 			$url = str_replace("git://", "https://", $pkg->url);
-			$this->w->result( $pkg->url, $this->makeArg($pkg->name, $url, "*"), $pkg->name, $url, "icon-cache/".$this->id.".png" );
+			$this->w->result(
+				$pkg->url,
+				$this->makeArg($pkg->name, $url, "*"),
+				$pkg->name, $url,
+				"icon-cache/{$this->id}.png"
+			);
 			
 			// only search till max return reached
 			if ( count ( $this->w->results() ) == $this->max_return ) {
@@ -64,15 +75,24 @@ class Repo {
 		}
 		
 		if ( count( $this->w->results() ) == 0) {
-			$this->w->result( $this->id.'-search', 'http://sindresorhus.com/bower-components/#!/search/'.$query, 'No components were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/'.$this->id.'.png' );
+			$this->w->result(
+				"{$this->id}-search",
+				"http://sindresorhus.com/bower-components/#!/search/{$query}",
+				"No components were found that matched \"{$query}\"",
+				"Click to see the results for yourself",
+				"icon-cache/{$this->id}.png"
+			);
 		}
 	}
 	
 	function xml() {
-		
-		
-		
-		$this->w->result( $this->id.'-www', 'http://bower.io/', 'Go to the website', 'http://bower.io', "icon-cache/".$this->id.".png" );
+		$this->w->result(
+			"{$this->id}-www",
+			"http://bower.io/",
+			"Go to the website",
+			"http://bower.io",
+			"icon-cache/{$this->id}.png"
+		);
 		
 		return $this->w->toxml();
 	}

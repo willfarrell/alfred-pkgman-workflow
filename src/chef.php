@@ -13,7 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'chef';
-	private $kind = 'plugins'; // for none found msg
+	private $kind = 'cookbooks'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	

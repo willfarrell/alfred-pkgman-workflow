@@ -13,6 +13,7 @@ require_once('workflows.php');
 class Repo {
 	
 	private $id = 'raspbian';
+	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -82,7 +83,13 @@ class Repo {
 	
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
-			$this->w->result( $this->id."-min", $query, 'Minimum query length of '.$this->min_query_length.' not met.', 'http://www.raspbian.org', "icon-cache/".$this->id.".png" );
+			$this->w->result(
+				"{$this->id}-min",
+				$query,
+				"Minimum query length of {$this->min_query_length} not met.",
+				"",
+				"icon-cache/{$this->id}.png"
+			);
 			return;
 		}
 		
@@ -100,7 +107,13 @@ class Repo {
 				}
 				$url = "https://packages.debian.org/wheezy/".$pkg["name"];
 				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
-				$this->w->result( $pkg["name"],  $this->makeArg($pkg["name"], $url, $pkg["version"]), $title, $pkg["description"], "icon-cache/".$this->id.".png" );
+				$this->w->result(
+					$pkg["name"],
+					$this->makeArg($pkg["name"], $url, $pkg["version"]),
+					$title,
+					$pkg["description"],
+					"icon-cache/".$this->id.".png"
+				);
 			}
 			
 			// only search till max return reached
@@ -110,16 +123,28 @@ class Repo {
 		}
 		
 		if ( count( $this->w->results() ) == 0) {
-			/*
-			$this->w->result( $this->id, 'http://sindresorhus.com/bower-components/#!/search/'.$query, 'No components were found that matched "'.$query.'"', 'Click to see the results for yourself', 'icon-cache/bower.png' );
-			*/
+			
+			$this->w->result(
+				"{$this->id}-search",
+				"https://packages.debian.org/wheezy/{$query}",
+				"No {$this->kind} were found that matched \"{$query}\"",
+				"Click to see the results for yourself",
+				"icon-cache/{$this->id}.png"
+			);
+			
 		}
 	}
 	
 	function xml() {
 		
 		
-		$this->w->result( $this->id."-www", 'http://www.raspbian.org/', 'Go to the website', 'http://www.raspbian.org', "icon-cache/".$this->id.".png" );
+		$this->w->result(
+			"{$this->id}-www",
+			'http://www.raspbian.org/',
+			'Go to the website',
+			'http://www.raspbian.org',
+			"icon-cache/".$this->id.".png"
+		);
 		
 		return $this->w->toxml();
 	}

@@ -102,9 +102,9 @@ class Repo {
 	function xml() {
 		$this->w->result(
 			"{$this->id}-www",
-			'http://yoeman.io/',
+			'http://yeoman.io/',
 			'Go to the website',
-			'http://yoeman.io',
+			'http://yeoman.io',
 			"icon-cache/{$this->id}.png"
 		);
 		

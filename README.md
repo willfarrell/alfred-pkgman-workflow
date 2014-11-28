@@ -1,41 +1,43 @@
-Package Managers ([Download v2.0](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
-======================================
+# Package Managers ([Download v2.0](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
 
-Package Repo Search 
+Package Repo Search
 
 Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
 
 ## Commands
-`pkgman cleardb`: Clear local database cache files
-`pkgman cachedb`: Update local database cache files
 
-`alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
-`apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
-`bower {query}`: [Bower Components](http://bower.io) for JavaScript
-`brew {query}`: [Homebrew Plugins](http://braumeister.org)
-`chef {query}`: [Chef Cookbooks](http://supermarket.getchef.com)
-`cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
-`composer {query}`: PHP [Composer Packages](http://getcomposer.org)
-`docker {query}`: [Docker Images](http://www.docker.io)
-`gems {query}`: [Ruby Gems](http://rubygems.org)
-`gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
-`grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
-`gulp {query}`: nodeJS task-runner [Gulp plugins](http://gulpjs.com)
-`maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
-`npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
-`pear {query}`: PHP [Pear Packages](http://pear.php.net)
-`puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
-`pypi {query}`: [Python Packages](https://pypi.python.org)
-`raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
-`rpm {query}`: [Linux Packages](http://rpmfind.net)
-`yo {query}`: [Yeoman Generators](http://yoeman.io)
+* `pkgman cleardb`: Clear local database cache files
+* `pkgman cachedb`: Update local database cache files
+
+* `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
+* `apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
+* `bower {query}`: [Bower Components](http://bower.io) for JavaScript
+* `brew {query}`: [Homebrew Plugins](http://braumeister.org)
+* `chef {query}`: [Chef Cookbooks](http://supermarket.getchef.com)
+* `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
+* `composer {query}`: PHP [Composer Packages](http://getcomposer.org)
+* `docker {query}`: [Docker Images](http://www.docker.io)
+* `gems {query}`: [Ruby Gems](http://rubygems.org)
+* `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
+* `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
+* `gulp {query}`: nodeJS task-runner [Gulp plugins](http://gulpjs.com)
+* `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
+* `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
+* `pear {query}`: PHP [Pear Packages](http://pear.php.net)
+* `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
+* `pypi {query}`: [Python Packages](https://pypi.python.org)
+* `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
+* `rpm {query}`: [Linux Packages](http://rpmfind.net)
+* `yo {query}`: [Yeoman Generators](http://yoeman.io)
 
 ## Action Modifiers
-`default`: open README page url 
-`cmd`: copy name/id to frontmost app
-`shift`: cope config file name/id and version to frontmost app
+
+* `default`: open README page url
+* `cmd`: copy name/id to frontmost app
+* `shift`: cope config file name/id and version to frontmost app
 
 ## Additional Notes
+
 All workflows require constant internet connection.
 
 Workflows can break from time to time due to changes by the provider of the repo. If you notice a workflow stops working, post it at https://github.com/willfarrell/alfred-pkgman-workflow/issues.

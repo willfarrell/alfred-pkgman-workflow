@@ -46,21 +46,21 @@ All repos have caching enabled to speed up common queries. These caches are refr
 
 The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
 
-![alt text][bower]
-![alt text][npm]
-![alt text][yo]
-![alt text][grunt]
-![alt text][gulp]
-![alt text][alcatraz]
-![alt text][cocoa]
-![alt text][composer]
-![alt text][pear]
-![alt text][pypi]
-![alt text][gems]
-![alt text][maven]
-![alt text][brew]
-![alt text][rpm]
-![alt text][docker]
+![][bower]
+![][npm]
+![][yo]
+![][grunt]
+![][gulp]
+![][alcatraz]
+![][cocoa]
+![][composer]
+![][pear]
+![][pypi]
+![][gems]
+![][maven]
+![][brew]
+![][rpm]
+![][docker]
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
 [bower]: ./screenshots/bower.png "Sample bower result"

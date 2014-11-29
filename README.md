@@ -61,10 +61,12 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][brew]
 ![][rpm]
 ![][docker]
+![][chef]
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
+[chef]: ./screenshots/chef.png "Sample chef result"
 [cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
 [composer]: ./screenshots/composer.png "Sample composer result"
 [docker]: ./screenshots/docker.png "Sample docker result"

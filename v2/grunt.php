@@ -35,10 +35,10 @@ class Repo {
 	}
 	
 	function check($pkg, $query) {
-		if (!$query) { return true; }
-		if (strpos($plugin->name, $query) !== false) {
-			return true;
-		} else if (strpos($plugin->ds, $query) !== false) {
+		if (   !$query
+			|| strpos($pkg->name, $query) !== false
+			|| strpos($pkg->ds, $query) !== false
+		) {
 			return true;
 		} 
 	

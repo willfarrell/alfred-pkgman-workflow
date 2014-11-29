@@ -4,7 +4,7 @@ ini_set('memory_limit', '-1'); // required for raspbian - remove later
 
 require_once('workflows.php');
 
-class cache {
+class Cache {
 	var $cache_age = 14;
 	var $dbs = array(
 		"alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",

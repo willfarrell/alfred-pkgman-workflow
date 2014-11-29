@@ -78,5 +78,4 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 [pear]: ./screenshots/pear.png "Sample pear result"
 [pypi]: ./screenshots/pypi.png "Sample pypi result"
 [rpm]: ./screenshots/rpm.png "Sample rpm result"
-[ruby]: ./screenshots/ruby.png "Sample ruby result"
 [yo]: ./screenshots/yo.png "Sample yo result"

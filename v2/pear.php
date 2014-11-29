@@ -8,7 +8,6 @@ pear
 // ****************
 
 require_once('cache.php');
-require_once('workflows.php');
 
 class Repo {
 	
@@ -24,7 +23,6 @@ class Repo {
 	function __construct() {
 		
 		$this->cache = new Cache();
-		$this->w = new Workflows();
 		
 		// get DB here if not dynamic search
 		//$data = (array) $this->cache->get_db($this->id);
@@ -49,7 +47,7 @@ class Repo {
 	
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
-			$this->w->result(
+			$this->cache->w->result(
 				"{$this->id}-min",
 				$query,
 				"Minimum query length of {$this->min_query_length} not met.",
@@ -71,7 +69,7 @@ class Repo {
 			// url
 			$details = strip_tags(substr($pkg, strpos($pkg, ":")+2));
 	
-			$this->w->result(
+			$this->cache->w->result(
 				$title,
 				$this->makeArg($title, 'http://pear.php.net/package/'.$title, "*"),
 				$title,
@@ -80,13 +78,13 @@ class Repo {
 			);
 			
 			// only search till max return reached
-			if ( count ( $this->w->results() ) == $this->max_return ) {
+			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;
 			}
 		}
 		
-		if ( count( $this->w->results() ) == 0) {
-			$this->w->result(
+		if ( count( $this->cache->w->results() ) == 0) {
+			$this->cache->w->result(
 				"{$this->id}-search",
 				"http://pear.php.net/search.php?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
@@ -97,7 +95,7 @@ class Repo {
 	}
 	
 	function xml() {
-		$this->w->result(
+		$this->cache->w->result(
 			"{$this->id}-www",
 			'http://pear.php.net/',
 			'Go to the website',
@@ -105,7 +103,7 @@ class Repo {
 			"icon-cache/{$this->id}.png"
 		);
 		
-		return $this->w->toxml();
+		return $this->cache->w->toxml();
 	}
 
 }

@@ -8,7 +8,6 @@ Raspbian
 // ****************
 
 require_once('cache.php');
-require_once('workflows.php');
 
 class Repo {
 	
@@ -24,7 +23,6 @@ class Repo {
 	function __construct() {
 		
 		$this->cache = new Cache();
-		$this->w = new Workflows();
 		
 		// get DB here if not dynamic search
 		$data = (array) $this->cache->get_db($this->id);
@@ -83,7 +81,7 @@ class Repo {
 	
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
-			$this->w->result(
+			$this->cache->w->result(
 				"{$this->id}-min",
 				$query,
 				"Minimum query length of {$this->min_query_length} not met.",
@@ -107,7 +105,7 @@ class Repo {
 				}
 				$url = "https://packages.debian.org/wheezy/".$pkg["name"];
 				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
-				$this->w->result(
+				$this->cache->w->result(
 					$pkg["name"],
 					$this->makeArg($pkg["name"], $url, $pkg["version"]),
 					$title,
@@ -117,14 +115,14 @@ class Repo {
 			}
 			
 			// only search till max return reached
-			if ( count ( $this->w->results() ) == $this->max_return ) {
+			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;
 			}
 		}
 		
-		if ( count( $this->w->results() ) == 0) {
+		if ( count( $this->cache->w->results() ) == 0) {
 			
-			$this->w->result(
+			$this->cache->w->result(
 				"{$this->id}-search",
 				"https://packages.debian.org/wheezy/{$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
@@ -138,7 +136,7 @@ class Repo {
 	function xml() {
 		
 		
-		$this->w->result(
+		$this->cache->w->result(
 			"{$this->id}-www",
 			'http://www.raspbian.org/',
 			'Go to the website',
@@ -146,7 +144,7 @@ class Repo {
 			"icon-cache/".$this->id.".png"
 		);
 		
-		return $this->w->toxml();
+		return $this->cache->w->toxml();
 	}
 
 }

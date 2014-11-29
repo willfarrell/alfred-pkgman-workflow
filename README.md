@@ -51,7 +51,6 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![alt text][yo]
 ![alt text][grunt]
 ![alt text][gulp]
-![alt text][gulp]
 ![alt text][alcatraz]
 ![alt text][cocoa]
 ![alt text][composer]
@@ -71,7 +70,6 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 [docker]: ./screenshots/docker.png "Sample docker result"
 [gems]: ./screenshots/gems.png "Sample gems result"
 [grunt]: ./screenshots/grunt.png "Sample grunt result"
-[gulp]: ./screenshots/gulp.png "Sample gulp result"
 [gulp]: ./screenshots/gulp.png "Sample gulp result"
 [maven]: ./screenshots/maven.png "Sample maven result"
 [npm]: ./screenshots/npm.png "Sample npm result"

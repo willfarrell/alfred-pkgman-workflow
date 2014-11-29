@@ -46,37 +46,36 @@ All repos have caching enabled to speed up common queries. These caches are refr
 
 The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
 
-![alt text][bower]
-![alt text][npm]
-![alt text][yo]
-![alt text][grunt]
-![alt text][gulp]
-![alt text][gulp]
-![alt text][alcatraz]
-![alt text][cocoa]
-![alt text][composer]
-![alt text][pear]
-![alt text][pypi]
-![alt text][gems]
-![alt text][maven]
-![alt text][brew]
-![alt text][rpm]
-![alt text][docker]
+![][bower]
+![][npm]
+![][yo]
+![][grunt]
+![][gulp]
+![][alcatraz]
+![][cocoa]
+![][composer]
+![][pear]
+![][pypi]
+![][gems]
+![][maven]
+![][brew]
+![][rpm]
+![][docker]
+![][chef]
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
+[chef]: ./screenshots/chef.png "Sample chef result"
 [cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
 [composer]: ./screenshots/composer.png "Sample composer result"
 [docker]: ./screenshots/docker.png "Sample docker result"
 [gems]: ./screenshots/gems.png "Sample gems result"
 [grunt]: ./screenshots/grunt.png "Sample grunt result"
 [gulp]: ./screenshots/gulp.png "Sample gulp result"
-[gulp]: ./screenshots/gulp.png "Sample gulp result"
 [maven]: ./screenshots/maven.png "Sample maven result"
 [npm]: ./screenshots/npm.png "Sample npm result"
 [pear]: ./screenshots/pear.png "Sample pear result"
 [pypi]: ./screenshots/pypi.png "Sample pypi result"
 [rpm]: ./screenshots/rpm.png "Sample rpm result"
-[ruby]: ./screenshots/ruby.png "Sample ruby result"
 [yo]: ./screenshots/yo.png "Sample yo result"

@@ -116,7 +116,7 @@ class Repo {
 // ****************
 
 /*
-$query = "leaflet";
+$query = 'contrib';
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

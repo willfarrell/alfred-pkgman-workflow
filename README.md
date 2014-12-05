@@ -2,7 +2,7 @@
 
 Package Repo Search
 
-Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
+Quick package/plugin/component (repo) lookup for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
 
 ## Commands
 
@@ -34,7 +34,7 @@ Quick package/plugin/component (repo) lookup of for your favourite package manag
 
 * `default`: open README page url
 * `cmd`: copy name/id to frontmost app
-* `shift`: cope config file name/id and version to frontmost app
+* `shift`: copy config file name/id and version to frontmost app
 
 ## Additional Notes
 
@@ -42,7 +42,7 @@ All workflows require constant internet connection.
 
 Workflows can break from time to time due to changes by the provider of the repo. If you notice a workflow stops working, post it at https://github.com/willfarrell/alfred-pkgman-workflow/issues.
 
-All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer then expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended. Clearing your cache is recommended after an update if the package manager you use had a bug previously.
+All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer than expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended. Clearing your cache is recommended after an update if the package manager you use had a bug previously.
 
 The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
 

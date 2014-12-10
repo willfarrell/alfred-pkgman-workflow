@@ -1,6 +1,7 @@
 <?php
 
-ini_set('memory_limit', '-1'); // required for raspbian - remove later
+ini_set('memory_limit', '-1');
+error_reporting(0);
 
 require_once('workflows.php');
 
@@ -70,7 +71,7 @@ class Cache {
 		
 		$pkgs = $this->w->read($name.'.json');
 		$timestamp = $this->w->filetime($name.'.json');
-		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) { // update - Add || 1 for debuggin
+		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400) || 1) { // update - Add || 1 for debuggin
 			$data = $this->w->request($url);
 			preg_match_all($regex, $data, $matches);
 			$data = $matches[$regex_pos];

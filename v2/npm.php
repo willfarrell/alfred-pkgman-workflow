@@ -57,24 +57,26 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://www.npmjs.org/search?q='.$query, '/<li class="search-result package">([\s\S]*?)<\/div>/i');
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://www.npmjs.com/search?q='.$query, '/<div class="package-details">([\s\S]*?)<\/div>/i');
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			preg_match('/<h2>(.*?)<\/h2>/i', $pkg, $matches);
-			$title = strip_tags($matches[1]);
+			preg_match('/<h3>([\s\S]*?)<\/h3>/i', $pkg, $matches);
+			$title = trim(strip_tags($matches[1]));
 		
-			preg_match_all('/<p class="description">([\s\S]*?)<\/p>([\s\S]*?)by([\s\S]*?)<\/span>/i', $pkg, $matches);
+			preg_match('/<p class="description">([\s\S]*?)<\/p>/i', $pkg, $matches);
 		
-			$author = trim(strip_tags($matches[3][0]));
-			$version = trim(strip_tags($matches[2][0]));
-			$description = html_entity_decode(trim(strip_tags($matches[1][0])));
+			$description = html_entity_decode(trim(strip_tags($matches[1])));
+			
+			preg_match('/<a class="version" href="[\s\S]*?">([\s\S]*?)<\/a>/i', $pkg, $matches);
+			//$author = trim(strip_tags($matches[3][0]));
+			$version = trim(strip_tags($matches[1]));
 	
 			$this->cache->w->result(
 				$title,
-				$this->makeArg($title, 'https://www.npmjs.org/package/'.$title, "*"),
-				$title.' ~ v'.$version.' by '.$author,
+				$this->makeArg($title, 'https://www.npmjs.com/package/'.$title, "*"),
+				$title.' ~ v'.$version,//.' by '.$author,
 				$description,
 				"icon-cache/{$this->id}.png"
 			);
@@ -88,7 +90,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"https://www.npmjs.org/search?q={$query}",
+				"https://www.npmjs.com/search?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -99,9 +101,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'https://www.npmjs.org/',
+			'https://www.npmjs.com/',
 			'Go to the website',
-			'https://www.npmjs.org',
+			'https://www.npmjs.com',
 			"icon-cache/{$this->id}.png"
 		);
 		

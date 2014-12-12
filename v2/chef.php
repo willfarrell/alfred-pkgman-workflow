@@ -58,7 +58,7 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "https://supermarket.getchef.com/api/v1/search?q={$query}");
+		$this->pkgs = $this->cache->get_query_json($this->id, $query, "https://supermarket.chef.io/api/v1/search?q={$query}");
 		
 		foreach ($this->pkgs->items as $pkg) {
 			if ($this->check($pkg, $query)) {
@@ -71,7 +71,7 @@ class Repo {
 		
 				$this->cache->w->result(
 					$pkg->cookbook_name,
-					$this->makeArg($pkg->cookbook_name, "https://supermarket.getchef.com/cookbooks/{$pkg->cookbook_name}", "*"),
+					$this->makeArg($pkg->cookbook_name, "https://supermarket.chef.io/cookbooks/{$pkg->cookbook_name}", "*"),
 					$title,
 					$pkg->cookbook_description,
 					"icon-cache/{$this->id}.png"
@@ -86,7 +86,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://supermarket.getchef.com/cookbooks/{$query}",
+				"https://supermarket.chef.io/cookbooks/{$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -98,9 +98,9 @@ class Repo {
 		
 		$this->cache->w->result(
 			"{$this->id}-www",
-			"http://supermarket.getchef.com/",
+			"https://supermarket.chef.io/",
 			"Go to the website",
-			"http://supermarket.getchef.com",
+			"https://supermarket.chef.io",
 			"icon-cache/{$this->id}.png"
 		);
 		

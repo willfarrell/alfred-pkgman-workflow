@@ -1,11 +1,11 @@
 <?php
 /**
-* Name: 		Workflows
-* Description: 	This PHP class object provides several useful functions for retrieving, parsing,
-* 				and formatting data to be used with Alfred 2 Workflows.
-* Author: 		David Ferguson (@jdfwarrior)
-* Revised: 		2/9/2013
-* Version:		0.3
+* Name:         Workflows
+* Description:  This PHP class object provides several useful functions for retrieving, parsing,
+*               and formatting data to be used with Alfred 2 Workflows.
+* Author:       David Ferguson (@jdfwarrior)
+* Revised:      6/6/2013
+* Version:      0.3.3
 */
 class Workflows {
 
@@ -177,16 +177,21 @@ class Workflows {
 			return false;
 		endif;
 
-		$items = new SimpleXMLElement("<items></items>"); 	// Create new XML element
+		$items = new SimpleXMLElement("<items></items>");   // Create new XML element
 
-		foreach( $a as $b ):								// Lop through each object in the array
-			$c = $items->addChild( 'item' );				// Add a new 'item' element for each object
-			$c_keys = array_keys( $b );						// Grab all the keys for that item
-			foreach( $c_keys as $key ):						// For each of those keys
+		foreach( $a as $b ):                                // Lop through each object in the array
+			$c = $items->addChild( 'item' );                // Add a new 'item' element for each object
+			$c_keys = array_keys( $b );                     // Grab all the keys for that item
+			foreach( $c_keys as $key ):                     // For each of those keys
 				if ( $key == 'uid' ):
-					$c->addAttribute( 'uid', $b[$key] );
+					if ( $b[$key] === null || $b[$key] === '' ):
+						continue;
+					else:
+						$c->addAttribute( 'uid', $b[$key] );
+					endif;
 				elseif ( $key == 'arg' ):
 					$c->addAttribute( 'arg', $b[$key] );
+					$c->$key = $b[$key];
 				elseif ( $key == 'type' ):
 					$c->addAttribute( 'type', $b[$key] );
 				elseif ( $key == 'valid' ):
@@ -194,7 +199,11 @@ class Workflows {
 						$c->addAttribute( 'valid', $b[$key] );
 					endif;
 				elseif ( $key == 'autocomplete' ):
-					$c->addAttribute( 'autocomplete', $b[$key] );
+					if ( $b[$key] === null || $b[$key] === '' ):
+						continue;
+					else:
+						$c->addAttribute( 'autocomplete', $b[$key] );
+					endif;
 				elseif ( $key == 'icon' ):
 					if ( substr( $b[$key], 0, 9 ) == 'fileicon:' ):
 						$val = substr( $b[$key], 9 );
@@ -213,7 +222,7 @@ class Workflows {
 			endforeach;
 		endforeach;
 
-		return $items->asXML();								// Return XML string representation of the array
+		return $items->asXML();                             // Return XML string representation of the array
 
 	}
 
@@ -225,8 +234,8 @@ class Workflows {
 	* @return bool
 	*/
 	private function empty_filter( $a ) {
-		if ( $a == '' || $a == null ):						// if $a is empty or null
-			return false;									// return false, else, return true
+		if ( $a == '' || $a == null ):                      // if $a is empty or null
+			return false;                                   // return false, else, return true
 		else:
 			return true;
 		endif;
@@ -296,7 +305,7 @@ class Workflows {
 			if ( file_exists( $this->path.'/'.$b ) ):
 				$b = $this->path.'/'.$b;
 			endif;
- 		elseif ( file_exists( $this->data."/".$b ) ):
+		elseif ( file_exists( $this->data."/".$b ) ):
 			$b = $this->data."/".$b;
 		elseif ( file_exists( $this->cache."/".$b ) ):
 			$b = $this->cache."/".$b;
@@ -304,14 +313,14 @@ class Workflows {
 			return false;
 		endif;
 
-		exec( 'defaults read "'. $b .'" '.$a, $out );	// Execute system call to read plist value
+		exec( 'defaults read "'. $b .'" '.$a, $out );   // Execute system call to read plist value
 
 		if ( $out == "" ):
 			return false;
 		endif;
 
 		$out = $out[0];
-		return $out;											// Return item value
+		return $out;                                            // Return item value
 	}
 
 	/**
@@ -328,9 +337,9 @@ class Workflows {
 			return false;
 		endif;
 
-		$defaults = array(									// Create a list of default curl options
-			CURLOPT_RETURNTRANSFER => true,					// Returns the result as a string
-			CURLOPT_URL => $url,							// Sets the url to request
+		$defaults = array(                                  // Create a list of default curl options
+			CURLOPT_RETURNTRANSFER => true,                 // Returns the result as a string
+			CURLOPT_URL => $url,                            // Sets the url to request
 			CURLOPT_FRESH_CONNECT => true
 		);
 
@@ -340,14 +349,14 @@ class Workflows {
 			endforeach;
 		endif;
 
-		array_filter( $defaults, 							// Filter out empty options from the array
+		array_filter( $defaults,                            // Filter out empty options from the array
 			array( $this, 'empty_filter' ) );
 
-		$ch  = curl_init();									// Init new curl object
-		curl_setopt_array( $ch, $defaults );				// Set curl options
-		$out = curl_exec( $ch );							// Request remote data
+		$ch  = curl_init();                                 // Init new curl object
+		curl_setopt_array( $ch, $defaults );                // Set curl options
+		$out = curl_exec( $ch );                            // Request remote data
 		$err = curl_error( $ch );
-		curl_close( $ch );									// End curl request
+		curl_close( $ch );                                  // End curl request
 
 		if ( $err ):
 			return $err;
@@ -368,7 +377,7 @@ class Workflows {
 		exec('mdfind "'.$query.'"', $results);
 		return $results;
 	}
-	
+
 	public function delete( $a )
 	{
 		if ( file_exists( $a ) ):
@@ -381,7 +390,7 @@ class Workflows {
 			unlink($this->cache."/".$a);
 		endif;
 	}
-	
+
 	/**
 	* Description:
 	* Accepts data and a string file name to store data to local file as cache
@@ -422,9 +431,9 @@ class Workflows {
 	*
 	* @param file - filename to read the cache data from
 	* @return false if the file cannot be found, the file data if found. If the file
-	*			format is json encoded, then a json object is returned.
+	*           format is json encoded, then a json object is returned.
 	*/
-	public function read( $a )
+	public function read( $a, $array = false )
 	{
 		if ( file_exists( $a ) ):
 			if ( file_exists( $this->path.'/'.$a ) ):
@@ -437,15 +446,17 @@ class Workflows {
 		else:
 			return false;
 		endif;
-		
+
 		$out = file_get_contents( $a );
-		if ( !is_null( json_decode( $out ) ) ):
+		if ( !is_null( json_decode( $out ) ) && !$array ):
 			$out = json_decode( $out );
+		elseif ( !is_null( json_decode( $out ) ) && !$array ):
+			$out = json_decode( $out, true );
 		endif;
 
 		return $out;
 	}
-	
+
 	public function filetime( $a )
 	{
 		if ( file_exists( $a ) ):
@@ -457,7 +468,7 @@ class Workflows {
 		elseif ( file_exists( $this->cache."/".$a ) ):
 			return filemtime($this->cache.'/'.$a);
 		endif;
-		
+
 		return false;
 	}
 

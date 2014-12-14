@@ -378,6 +378,13 @@ class Workflows {
 		return $results;
 	}
 
+	/**
+	 * Delete a cache file
+	 *
+	 * @author @willfarrell
+	 * @param  string $a Path to the file to delete
+	 * @return void
+	 */
 	public function delete( $a )
 	{
 		if ( file_exists( $a ) ):
@@ -457,6 +464,13 @@ class Workflows {
 		return $out;
 	}
 
+	/**
+	 * Check the file modification time
+	 *
+	 * @author @willfarrell
+	 * @param  string  $a Path to a file
+	 * @return integer    Returns the file modification time, or false
+	 */
 	public function filetime( $a )
 	{
 		if ( file_exists( $a ) ):

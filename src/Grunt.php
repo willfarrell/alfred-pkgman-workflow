@@ -1,18 +1,19 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-Cocoa
+grunt
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'cocoa';
-	private $kind = 'libraries'; // for none found msg
+	private $id = 'grunt';
+	private $kind = 'plugins'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -25,7 +26,7 @@ class Repo {
 		$this->cache = new Cache();
 		
 		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id);
+		$data = (array) $this->cache->get_db($this->id)->aaData;
 		$this->pkgs = $data;
 	}
 	
@@ -35,10 +36,10 @@ class Repo {
 	}
 	
 	function check($pkg, $query) {
-		if (!$query) { return true; }
-		if (strpos($pkg->name, $query) !== false) {
-			return true;
-		} else if (isset($pkg->summary) && strpos($pkg->summary, $query) !== false) {
+		if (   !$query
+			|| strpos($pkg->name, $query) !== false
+			|| strpos($pkg->ds, $query) !== false
+		) {
 			return true;
 		} 
 	
@@ -58,30 +59,29 @@ class Repo {
 			return;
 		}
 		
-		//$this->pkgs = $this->cache->get_query_json($this->id, $query, "http://cocoadocs.org/?q=you/{$query}");
+		//$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			if ($this->check($pkg,  $query)) {
-				$title = $pkg->name;
-				if (isset($pkg->main_version)) { $title .= ' ('.$pkg->main_version.')'; }
-				if (isset($pkg->user)) { $title .= ' ~ '.$pkg->user; }
+			if ($this->check($pkg, $query)) {
+				$title = str_replace('grunt-', '', $pkg->name); // remove grunt- from title
+			
+				// add author to title
+				if (isset($pkg->author)) {
+					$title .= " by " . $pkg->author;
+				}
+				$url = 'https://www.npmjs.org/package/' . $pkg->name;
 				
-				$url = (isset($pkg->url)) ? $$pkg->url : $pkg->doc_url;
-				$details = (isset($pkg->summary)) ? $pkg->summary : $pkg->framework;
-				
-				$icon = (isset($pkg->url)) ? "xcode" : "{$this->id}";
-				
+				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
 				$this->cache->w->result(
 					$pkg->name,
 					$this->makeArg($pkg->name, $url, "*"),
 					$title,
-					$details,
-					"icon-cache/{$icon}.png"
+					$pkg->ds,
+					"icon-cache/{$this->id}.png"
 				);
 			}
-			
 			
 			
 			// only search till max return reached
@@ -93,7 +93,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://cocoadocs.org/?q={$query}",
+				"http://gruntjs.com/plugins/{$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -102,14 +102,11 @@ class Repo {
 	}
 	
 	function xml() {
-		
-		
-		
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'_TEMPLATE_URL_/',
+			'http://gruntjs.com/',
 			'Go to the website',
-			'_TEMPLATE_URL_',
+			'http://gruntjs.com',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -120,9 +117,11 @@ class Repo {
 
 // ****************
 
-/*$query = "leaflet";
+/*
+$query = 'contrib';
 $repo = new Repo();
 $repo->search($query);
-echo $repo->xml();*/
+echo $repo->xml();
+*/
 
 ?>

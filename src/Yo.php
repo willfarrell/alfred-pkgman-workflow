@@ -1,18 +1,19 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-_TEMPLATE_
+yo
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = '_TEMPLATE_';
-	private $kind = 'packages'; // for none found msg
+	private $id = 'yo';
+	private $kind = 'generators'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -36,17 +37,17 @@ class Repo {
 	
 	function check($pkg, $query) {
 		if (!$query) { return true; }
-		if (strpos($pkg["name"], $query) !== false) {
+		if (strpos($pkg->name, $query) !== false) {
 			return true;
-		} else if (strpos($pkg["description"], $query) !== false) {
+		} else if (strpos($pkg->description, $query) !== false) {
 			return true;
-		} 
+		}
 	
 		return false;
 	}
 	
 	function search($query) {
-		if ( strlen($query) < $this->min_query_length ) {
+		if ( strlen($query) < $this->min_query_length) {
 			if ( strlen($query) === 0 ) { return; }
 			$this->cache->w->result(
 				"{$this->id}-min",
@@ -58,19 +59,28 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
+		//$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
+			if ($this->check($pkg, $query)) {
+				$title = $pkg->name;
+				
+				// add author to title
+				if (isset($pkg->owner)) {
+					$title .= " by " . $pkg->owner;
+				}
+				
+				$this->cache->w->result(
+					$pkg->name,
+					$this->makeArg($pkg->name, $pkg->website, "*"),
+					$title,
+					$pkg->description,
+					"icon-cache/{$this->id}.png"
+				);
+			}
 			
-			$this->cache->w->result(
-				_UNIQUE_ID,
-				$this->makeArg(_PKG_NAME_, _PKG_URL_, "*"),
-				_PKG_NAME_,
-				_PKG_DETAILS_OR_URL_,
-				"icon-cache/{$this->id}.png"
-			);
 			
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
@@ -81,7 +91,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"_TEMPLATE_SEARCH_URL_{$query}",
+				"http://yeoman.io/community-generators.html?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -92,9 +102,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'_TEMPLATE_URL_/',
+			'http://yeoman.io/',
 			'Go to the website',
-			'_TEMPLATE_URL_',
+			'http://yeoman.io',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -106,7 +116,7 @@ class Repo {
 // ****************
 
 /*
-$query = "leaflet";
+$query = "ang";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

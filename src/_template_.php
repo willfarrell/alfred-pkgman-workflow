@@ -1,18 +1,19 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-Bower
+_TEMPLATE_
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'bower';
-	private $kind = 'components'; // for none found msg
+	private $id = '_TEMPLATE_';
+	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -25,15 +26,16 @@ class Repo {
 		$this->cache = new Cache();
 		
 		// get DB here if not dynamic search
-		//$data = (array) $this->cache->get_db('.$this->id.');
+		$data = (array) $this->cache->get_db($this->id);
+		$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
 	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . "\"$id\":\"$version\",";
+		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
 	}
 	
-	/*function check($pkg, $query) {
+	function check($pkg, $query) {
 		if (!$query) { return true; }
 		if (strpos($pkg["name"], $query) !== false) {
 			return true;
@@ -42,10 +44,10 @@ class Repo {
 		} 
 	
 		return false;
-	}*/
+	}
 	
 	function search($query) {
-		if ( strlen($query) < $this->min_query_length) {
+		if ( strlen($query) < $this->min_query_length ) {
 			if ( strlen($query) === 0 ) { return; }
 			$this->cache->w->result(
 				"{$this->id}-min",
@@ -57,14 +59,17 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_json('bower', $query, 'https://bower.herokuapp.com/packages/search/'.$query);
+		$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
 		
 		foreach($this->pkgs as $pkg) {
-			$url = str_replace("git://", "https://", $pkg->url);
+			
+			// make params
+			
 			$this->cache->w->result(
-				$pkg->url,
-				$this->makeArg($pkg->name, $url, "*"),
-				$pkg->name, $url,
+				_UNIQUE_ID,
+				$this->makeArg(_PKG_NAME_, _PKG_URL_, "*"),
+				_PKG_NAME_,
+				_PKG_DETAILS_OR_URL_,
 				"icon-cache/{$this->id}.png"
 			);
 			
@@ -77,7 +82,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://sindresorhus.com/bower-components/#!/search/{$query}",
+				"_TEMPLATE_SEARCH_URL_{$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -88,9 +93,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			"http://bower.io/",
-			"Go to the website",
-			"http://bower.io",
+			'_TEMPLATE_URL_/',
+			'Go to the website',
+			'_TEMPLATE_URL_',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -101,9 +106,11 @@ class Repo {
 
 // ****************
 
-/*$query = "leaflet";
+/*
+$query = "leaflet";
 $repo = new Repo();
 $repo->search($query);
-echo $repo->xml();*/
+echo $repo->xml();
+*/
 
 ?>

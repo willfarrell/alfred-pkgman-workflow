@@ -1,18 +1,19 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-pear
+Bower
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'pear';
-	private $kind = 'packages'; // for none found msg
+	private $id = 'bower';
+	private $kind = 'components'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -25,13 +26,12 @@ class Repo {
 		$this->cache = new Cache();
 		
 		// get DB here if not dynamic search
-		//$data = (array) $this->cache->get_db($this->id);
-		//$this->pkgs = $data;
+		//$data = (array) $this->cache->get_db('.$this->id.');
 	}
 	
 	// return id | url | pkgstr
 	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
+		return $id . "|" . $url . "|" . "\"$id\":\"$version\",";
 	}
 	
 	/*function check($pkg, $query) {
@@ -58,24 +58,14 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'http://pear.php.net/search.php?q='.$query, '/<li>([\s\S]*?)<\/li>/i');
-		array_shift($this->pkgs); // remove register link
+		$this->pkgs = $this->cache->get_query_json('bower', $query, 'https://bower.herokuapp.com/packages/search/'.$query);
 		
 		foreach($this->pkgs as $pkg) {
-			
-			// make params
-			// name
-			preg_match('/<a(.*?)>(.*?)<\/a>/i', $pkg, $matches);
-			$title = strip_tags($matches[0]);
-			
-			// url
-			$details = strip_tags(substr($pkg, strpos($pkg, ":")+2));
-	
+			$url = str_replace("git://", "https://", $pkg->url);
 			$this->cache->w->result(
-				$title,
-				$this->makeArg($title, 'http://pear.php.net/package/'.$title, "*"),
-				$title,
-				$details,
+				$pkg->url,
+				$this->makeArg($pkg->name, $url, "*"),
+				$pkg->name, $url,
 				"icon-cache/{$this->id}.png"
 			);
 			
@@ -88,7 +78,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://pear.php.net/search.php?q={$query}",
+				"http://sindresorhus.com/bower-components/#!/search/{$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -99,9 +89,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'http://pear.php.net/',
-			'Go to the website',
-			'http://pear.php.net',
+			"http://bower.io/",
+			"Go to the website",
+			"http://bower.io",
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -112,11 +102,9 @@ class Repo {
 
 // ****************
 
-/*
-$query = "l";
+/*$query = "leaflet";
 $repo = new Repo();
 $repo->search($query);
-echo $repo->xml();
-*/
+echo $repo->xml();*/
 
 ?>

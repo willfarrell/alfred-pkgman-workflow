@@ -1,7 +1,7 @@
 <?php
 // ****************
 //error_reporting(0);
-require_once('cache.php');
+require_once('Cache.php');
 
 $cache = new Cache();
 

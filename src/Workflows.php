@@ -1,4 +1,8 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
+
+use SimpleXMLElement;
+
 /**
 * Name:         Workflows
 * Description:  This PHP class object provides several useful functions for retrieving, parsing,

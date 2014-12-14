@@ -1,18 +1,19 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-Chef
+rpm
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'chef';
-	private $kind = 'cookbooks'; // for none found msg
+	private $id = 'rpm';
+	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -34,16 +35,16 @@ class Repo {
 		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
 	}
 	
-	function check($pkg, $query) {
+	/*function check($pkg, $query) {
 		if (!$query) { return true; }
-
-		if (   strpos($pkg->cookbook_name, $query) !== false
-			|| strpos($pkg->cookbook_description, $query) !== false
-		) {
+		if (strpos($pkg["name"], $query) !== false) {
 			return true;
-		}
+		} else if (strpos($pkg["description"], $query) !== false) {
+			return true;
+		} 
+	
 		return false;
-	}
+	}*/
 	
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
@@ -58,25 +59,27 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "https://supermarket.chef.io/api/v1/search?q={$query}");
+		$this->pkgs = $this->cache->get_query_regex('rpm', $query, 'http://rpmfind.net/linux/rpm2html/search.php?query='.$query.'&system=&arch=', '/<tr bgcolor=\'\'>([\s\S]*?)<\/tr>/i');
 		
-		foreach ($this->pkgs->items as $pkg) {
-			if ($this->check($pkg, $query)) {
-				$title = $pkg->cookbook_name;
-		
-				// add author to title
-				if (isset($pkg->cookbook_maintainer)) {
-					$title .= " by {$pkg->cookbook_maintainer}";
-				}
-		
-				$this->cache->w->result(
-					$pkg->cookbook_name,
-					$this->makeArg($pkg->cookbook_name, "https://supermarket.chef.io/cookbooks/{$pkg->cookbook_name}", "*"),
-					$title,
-					$pkg->cookbook_description,
-					"icon-cache/{$this->id}.png"
-				);
-			}
+		foreach($this->pkgs as $pkg) {
+			
+			// make params
+			preg_match('/<a href=[\'"](.*?)[\'"]>(.*?)<\/a>/i', $pkg, $matches);
+			$title = strip_tags($matches[2]);
+			$url = strip_tags($matches[1]);
+			
+			preg_match_all('/<td>([\s\S]*?)<\/td>/i', $pkg, $matches);
+			$dist = trim(strip_tags($matches[1][2]));
+			$details = trim(strip_tags($matches[1][1]));
+	
+			$this->cache->w->result(
+				$title,
+				$this->makeArg($title, $url, "*"),
+				$title,
+				$dist.' - '.$details,
+				"icon-cache/{$this->id}.png"
+			);
+			
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;
@@ -86,7 +89,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"https://supermarket.chef.io/cookbooks/{$query}",
+				"http://rpmfind.net/linux/rpm2html/search.php?query={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -95,12 +98,11 @@ class Repo {
 	}
 	
 	function xml() {
-		
 		$this->cache->w->result(
 			"{$this->id}-www",
-			"https://supermarket.chef.io/",
-			"Go to the website",
-			"https://supermarket.chef.io",
+			'http://rpmfind.net/',
+			'Go to the website',
+			'http://rpmfind.net',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -112,7 +114,7 @@ class Repo {
 // ****************
 
 /*
-$query = "or";
+$query = "r";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

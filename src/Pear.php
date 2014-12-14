@@ -1,18 +1,19 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-maven
+pear
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'maven';
-	private $kind = 'libraries'; // for none found msg
+	private $id = 'pear';
+	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
@@ -58,18 +59,22 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = (array) $this->cache->get_query_json($this->id, $query, 'http://search.maven.org/solrsearch/select?q='.$query.'&rows=10&wt=json')->response->docs;
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'http://pear.php.net/search.php?q='.$query, '/<li>([\s\S]*?)<\/li>/i');
+		array_shift($this->pkgs); // remove register link
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			$title = $pkg->a.' ('.$pkg->latestVersion.')';
-			$url = 'http://search.maven.org/#artifactdetails%7C'.$pkg->g.'%7C'.$pkg->a.'%7C'.$pkg->latestVersion.'%7C'.$pkg->p;
-			$details = 'GroupId: '.$pkg->id;
+			// name
+			preg_match('/<a(.*?)>(.*?)<\/a>/i', $pkg, $matches);
+			$title = strip_tags($matches[0]);
+			
+			// url
+			$details = strip_tags(substr($pkg, strpos($pkg, ":")+2));
 	
 			$this->cache->w->result(
-				$pkg->a,
-				$this->makeArg($pkg->a, $url, "*"),
+				$title,
+				$this->makeArg($title, 'http://pear.php.net/package/'.$title, "*"),
 				$title,
 				$details,
 				"icon-cache/{$this->id}.png"
@@ -84,7 +89,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://mvnrepository.com/search.html?query={$query}",
+				"http://pear.php.net/search.php?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -95,9 +100,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'http://mvnrepository.com/',
+			'http://pear.php.net/',
 			'Go to the website',
-			'http://mvnrepository.com',
+			'http://pear.php.net',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -109,7 +114,7 @@ class Repo {
 // ****************
 
 /*
-$query = "j";
+$query = "l";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

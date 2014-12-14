@@ -1,4 +1,5 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
 puppet
@@ -7,7 +8,7 @@ puppet
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	

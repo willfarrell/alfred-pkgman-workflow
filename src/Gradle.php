@@ -1,17 +1,18 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-rpm
+Java gradle
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'rpm';
+	private $id = 'gradle';
 	private $kind = 'packages'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
@@ -58,24 +59,20 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex('rpm', $query, 'http://rpmfind.net/linux/rpm2html/search.php?query='.$query.'&system=&arch=', '/<tr bgcolor=\'\'>([\s\S]*?)<\/tr>/i');
+		$this->pkgs = $this->cache->get_query_json($this->id, $query, 'http://search.maven.org/solrsearch/select?q='.$query.'&rows=10&wt=json')->response->docs;
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			preg_match('/<a href=[\'"](.*?)[\'"]>(.*?)<\/a>/i', $pkg, $matches);
-			$title = strip_tags($matches[2]);
-			$url = strip_tags($matches[1]);
-			
-			preg_match_all('/<td>([\s\S]*?)<\/td>/i', $pkg, $matches);
-			$dist = trim(strip_tags($matches[1][2]));
-			$details = trim(strip_tags($matches[1][1]));
+			$title = $pkg->a.' ('.$pkg->latestVersion.')';
+			$url = 'http://search.maven.org/#artifactdetails%7C'.$pkg->g.'%7C'.$pkg->a.'%7C'.$pkg->latestVersion.'%7C'.$pkg->p;
+			$details = 'GroupId: '.$pkg->id;
 	
 			$this->cache->w->result(
+				$pkg->a,
+				$this->makeArg($pkg->a, $url, "*"),
 				$title,
-				$this->makeArg($title, $url, "*"),
-				$title,
-				$dist.' - '.$details,
+				$details,
 				"icon-cache/{$this->id}.png"
 			);
 			
@@ -88,7 +85,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://rpmfind.net/linux/rpm2html/search.php?query={$query}",
+				"http://mvnrepository.com/search.html?query={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -99,9 +96,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'http://rpmfind.net/',
+			'http://www.gradle.org/',
 			'Go to the website',
-			'http://rpmfind.net',
+			'http://www.gradle.org',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -113,7 +110,7 @@ class Repo {
 // ****************
 
 /*
-$query = "r";
+$query = "leaflet";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

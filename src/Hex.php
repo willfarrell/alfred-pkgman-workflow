@@ -1,50 +1,50 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-Java gradle
+Hex
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
-	
-	private $id = 'gradle';
-	private $kind = 'packages'; // for none found msg
+
+	private $id = 'hex';
+	private $kind = 'components'; // for none found msg
 	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
-	
+
 	private $cache;
 	private $w;
 	private $pkgs;
-	
+
 	function __construct() {
-		
+
 		$this->cache = new Cache();
-		
+
 		// get DB here if not dynamic search
-		//$data = (array) $this->cache->get_db($this->id);
-		//$this->pkgs = $data;
+		//$data = (array) $this->cache->get_db('.$this->id.');
 	}
-	
+
 	// return id | url | pkgstr
 	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
+		return $id . "|" . $url . "|" . "\"$id\":\"$version\",";
 	}
-	
+
 	/*function check($pkg, $query) {
 		if (!$query) { return true; }
 		if (strpos($pkg["name"], $query) !== false) {
 			return true;
 		} else if (strpos($pkg["description"], $query) !== false) {
 			return true;
-		} 
-	
+		}
+
 		return false;
 	}*/
-	
+
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
 			if ( strlen($query) === 0 ) { return; }
@@ -57,50 +57,44 @@ class Repo {
 			);
 			return;
 		}
-		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, 'http://search.maven.org/solrsearch/select?q='.$query.'&rows=10&wt=json')->response->docs;
-		
+
+		$this->pkgs = $this->cache->get_query_json('hex', $query, 'https://hex.pm/api/packages?search='.$query);
+
 		foreach($this->pkgs as $pkg) {
-			
-			// make params
-			$title = $pkg->a.' ('.$pkg->latestVersion.')';
-			$url = 'http://search.maven.org/#artifactdetails%7C'.$pkg->g.'%7C'.$pkg->a.'%7C'.$pkg->latestVersion.'%7C'.$pkg->p;
-			$details = 'GroupId: '.$pkg->id;
-	
+			$url = str_replace("api/", "", $pkg->url);
 			$this->cache->w->result(
-				$pkg->a,
-				$this->makeArg($pkg->a, $url, "*"),
-				$title,
-				$details,
+				$pkg->url,
+				$this->makeArg($pkg->name, $url, "*"),
+				$pkg->name, $url,
 				"icon-cache/{$this->id}.png"
 			);
-			
+
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;
 			}
 		}
-		
+
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://mvnrepository.com/search.html?query={$query}",
+				"https://hex.pm/packages?search={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
 			);
 		}
 	}
-	
+
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'http://www.gradle.org/',
-			'Go to the website',
-			'http://www.gradle.org',
+			"http://hex.pm/",
+			"Go to the website",
+			"http://hex.pm",
 			"icon-cache/{$this->id}.png"
 		);
-		
+
 		return $this->cache->w->toxml();
 	}
 
@@ -108,11 +102,9 @@ class Repo {
 
 // ****************
 
-/*
-$query = "leaflet";
+/*$query = "leaflet";
 $repo = new Repo();
 $repo->search($query);
-echo $repo->xml();
-*/
+echo $repo->xml();*/
 
 ?>

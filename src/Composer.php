@@ -1,19 +1,20 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-Python pypi
+Composer
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'pypi';
+	private $id = 'composer';
 	private $kind = 'packages'; // for none found msg
-	private $min_query_length = 3; // increase for slow DBs
+	private $min_query_length = 1; // increase for slow DBs
 	private $max_return = 25;
 	
 	private $cache;
@@ -58,24 +59,21 @@ class Repo {
 			return;
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://pypi.python.org/pypi?%3Aaction=search&term='.$query.'&submit=search', '/<tr class="(.*?)">([\s\S]*?)<\/tr>/i', 2);
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://packagist.org/search/?search_query[query]='.$query, '/<li data-url="(.*?)">([\s\S]*?)<\/li>/i', 2);
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			// name
-			preg_match('/<a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
-			$title = str_replace("&nbsp;", " ", strip_tags($matches[0]));
-			$url = strip_tags($matches[1]);
+			preg_match('/<a(.*?)<\/a>/i', $pkg, $matches);
+			$title = strip_tags($matches[0]);
 			
-			preg_match_all('/<td>([\s\S]*?)<\/td>/i', $pkg, $matches);
-			$downloads = strip_tags($matches[1][1]);
-			$details = strip_tags($matches[1][2]);
-		
+			preg_match('/<p class="package-description">([\s\S]*?)<\/p>/i', $pkg, $matches);
+			$details = strip_tags($matches[1]);
+	
 			$this->cache->w->result(
 				$title,
-				$this->makeArg($title, 'https://pypi.python.org'.$url, "*"),
-				$title."    ".$downloads,
+				$this->makeArg($title, 'https://packagist.org/packages/'.$title, "*"),
+				$title,
 				$details,
 				"icon-cache/{$this->id}.png"
 			);
@@ -89,7 +87,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"https://pypi.python.org/pypi?%3Aaction=search&term={$query}&submit=search",
+				"https://packagist.org/search/?q={$query}",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -100,9 +98,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'https://pypi.python.org/',
+			'http://getcomposer.org/',
 			'Go to the website',
-			'https://pypi.python.org',
+			'http://getcomposer.org',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -114,7 +112,7 @@ class Repo {
 // ****************
 
 /*
-$query = "lib";
+$query = "stripe";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

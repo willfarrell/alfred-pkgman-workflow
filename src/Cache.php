@@ -1,9 +1,10 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 ini_set('memory_limit', '-1');
 error_reporting(0);
 
-require_once('workflows.php');
+require_once('Workflows.php');
 
 class Cache {
 	var $cache_age = 14;

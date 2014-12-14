@@ -1,19 +1,20 @@
 <?php
+namespace WillFarrell\AlfredPkgMan;
 
 /*
-gulp
+Python pypi
 
 */
 
 // ****************
 
-require_once('cache.php');
+require_once('Cache.php');
 
 class Repo {
 	
-	private $id = 'gulp';
-	private $kind = 'plugins'; // for none found msg
-	private $min_query_length = 1; // increase for slow DBs
+	private $id = 'pypi';
+	private $kind = 'packages'; // for none found msg
+	private $min_query_length = 3; // increase for slow DBs
 	private $max_return = 25;
 	
 	private $cache;
@@ -25,8 +26,8 @@ class Repo {
 		$this->cache = new Cache();
 		
 		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id)->results;
-		$this->pkgs = $data;
+		//$data = (array) $this->cache->get_db($this->id);
+		//$this->pkgs = $data;
 	}
 	
 	// return id | url | pkgstr
@@ -34,16 +35,16 @@ class Repo {
 		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
 	}
 	
-	function check($pkg, $query) {
+	/*function check($pkg, $query) {
 		if (!$query) { return true; }
-		if (strpos($pkg->name, $query) !== false) {
+		if (strpos($pkg["name"], $query) !== false) {
 			return true;
-		} else if (strpos($pkg->description, $query) !== false) {
+		} else if (strpos($pkg["description"], $query) !== false) {
 			return true;
 		} 
 	
 		return false;
-	}
+	}*/
 	
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
@@ -58,34 +59,27 @@ class Repo {
 			return;
 		}
 		
-		//$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
+		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://pypi.python.org/pypi?%3Aaction=search&term='.$query.'&submit=search', '/<tr class="(.*?)">([\s\S]*?)<\/tr>/i', 2);
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			if ($this->check($pkg, $query)) {
-				$title = str_replace('gulp-', '', $pkg->name); // remove pulp- from title
+			// name
+			preg_match('/<a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
+			$title = str_replace("&nbsp;", " ", strip_tags($matches[0]));
+			$url = strip_tags($matches[1]);
 			
-				// add version to title
-				if (isset($pkg->version)) {
-					$title .= ' v'.$pkg->version;
-				}
-				// add author to title
-				if (isset($pkg->author)) {
-					$title .= " by " . $pkg->author;
-				}
-				
-				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
-				$this->cache->w->result(
-					$pkg->name,
-					$this->makeArg($pkg->name, $pkg->homepage, "*"),
-					$title,
-					$pkg->description,
-					"icon-cache/{$this->id}.png"
-				);
-			}
-			
-			
+			preg_match_all('/<td>([\s\S]*?)<\/td>/i', $pkg, $matches);
+			$downloads = strip_tags($matches[1][1]);
+			$details = strip_tags($matches[1][2]);
+		
+			$this->cache->w->result(
+				$title,
+				$this->makeArg($title, 'https://pypi.python.org'.$url, "*"),
+				$title."    ".$downloads,
+				$details,
+				"icon-cache/{$this->id}.png"
+			);
 			
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
@@ -96,7 +90,7 @@ class Repo {
 		if ( count( $this->cache->w->results() ) == 0) {
 			$this->cache->w->result(
 				"{$this->id}-search",
-				"http://gulpjs.com/plugins/#?q={$query}",
+				"https://pypi.python.org/pypi?%3Aaction=search&term={$query}&submit=search",
 				"No {$this->kind} were found that matched \"{$query}\"",
 				"Click to see the results for yourself",
 				"icon-cache/{$this->id}.png"
@@ -107,9 +101,9 @@ class Repo {
 	function xml() {
 		$this->cache->w->result(
 			"{$this->id}-www",
-			'http://gulpjs.com/',
+			'https://pypi.python.org/',
 			'Go to the website',
-			'http://gulpjs.com',
+			'https://pypi.python.org',
 			"icon-cache/{$this->id}.png"
 		);
 		
@@ -121,7 +115,7 @@ class Repo {
 // ****************
 
 /*
-$query = "min";
+$query = "lib";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

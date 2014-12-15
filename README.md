@@ -30,7 +30,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Linux Packages](http://rpmfind.net)
-* `yo {query}`: [Yeoman Generators](http://yoeman.io)
+* `yo {query}`: [Yeoman Generators](http://yeoman.io)
 
 ## Action Modifiers
 

@@ -7,8 +7,8 @@ error_reporting(0);
 require_once('Workflows.php');
 
 class Cache {
-	var $cache_age = 14;
-	var $dbs = array(
+	public $cache_age = 14;
+	public $dbs = array(
 		"alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",
 		"apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
 		"cocoa" => "http://cocoadocs.org/documents.jsonp",
@@ -17,25 +17,25 @@ class Cache {
 		"raspbian" => "http://archive.raspbian.org/raspbian/dists/wheezy/main/binary-armhf/Packages",
 		"yo" => "http://yeoman-generator-list.herokuapp.com/"
 	);
-	var $query_file = "queries";
+	public $query_file = "queries";
 	
-	function __construct() {
+	public function __construct() {
 		$this->w = new Workflows();
 		
 		$q = $this->w->read($this->query_file.'.json');
 		$this->queries = $q ? (array)$q : array();
 	}
 	
-	function __destruct() {
+	public function __destruct() {
 		$this->w->write($this->queries, $this->query_file.'.json');
 	}
 	
-	function get_query_data($id, $query, $url) {
+	public function get_query_data($id, $query, $url) {
 		if (!$query) { return array(); }
 		return $this->w->request($url);
 	}
 	
-	function get_db($id) {
+	public function get_db($id) {
 		if (!array_key_exists($id, $this->dbs)) { return array(); }
 		$name = $id;
 		
@@ -53,7 +53,7 @@ class Cache {
 		return $pkgs;
 	}
 	
-	function get_query_json($id, $query, $url) {
+	public function get_query_json($id, $query, $url) {
 		if (!$query) { return array(); }
 		$name = $id.'.'.$query;
 		
@@ -71,13 +71,13 @@ class Cache {
 		return $pkgs;
 	}
 	
-	function get_query_regex($id, $query, $url, $regex, $regex_pos = 1) {
+	public function get_query_regex($id, $query, $url, $regex, $regex_pos = 1) {
 		if (!$query) { return array(); }
 		$name = $id.'.'.$query;
 		
 		$pkgs = $this->w->read($name.'.json');
 		$timestamp = $this->w->filetime($name.'.json');
-		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) { // update - Add || 1 for debuggin
+		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400) || 1) { // update - Add || 1 for debuggin
 			$data = $this->w->request($url);
 			preg_match_all($regex, $data, $matches);
 			$data = $matches[$regex_pos];
@@ -90,7 +90,7 @@ class Cache {
 		return $pkgs;
 	}
 	
-	function update_db($id) {
+	public function update_db($id) {
 		$data = $this->w->request( $this->dbs[$id] );
 	
 		// clean jsonp wrapper
@@ -100,7 +100,7 @@ class Cache {
 		return $data;
 	}
 	
-	function clear() {
+	public function clear() {
 		// remove db json files
 		foreach($this->dbs as $key => $url) {
 			$this->w->delete($key.'.json');
@@ -114,5 +114,3 @@ class Cache {
 		$this->queries = array();
 	}
 }
-
-?>

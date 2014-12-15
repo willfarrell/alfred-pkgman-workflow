@@ -1,72 +1,36 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-/*
-docker
-
-*/
-
-// ****************
-
 require_once('Cache.php');
+require_once('Repo.php');
 
-class Repo {
-	
-	private $id = 'docker';
-	private $kind = 'images';
-	private $min_query_length = 1; // increase for slow DBs
-	private $max_return = 25;
-	
-	private $cache;
-	private $w;
-	private $pkgs;
-	
-	function __construct() {
-		
-		$this->cache = new Cache();
-		
-		// get DB here if not dynamic search
-		//$data = (array) $this->cache->get_db($this->id);
-		//$this->pkgs = $data;
-	}
-	
-	// return id | url | pkgstr
-	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
-	}
-	
-	/*function check($pkg, $query) {
-		if (!$query) { return true; }
-		if (strpos($pkg["name"], $query) !== false) {
-			return true;
-		} else if (strpos($pkg["description"], $query) !== false) {
-			return true;
-		} 
-	
-		return false;
-	}*/
-	
-	function search($query) {
-		if ( strlen($query) < $this->min_query_length) {
-			if ( strlen($query) === 0 ) { return; }
-			$this->cache->w->result(
-				"{$this->id}-min",
-				$query,
-				"Minimum query length of {$this->min_query_length} not met.",
-				"",
-				"icon-cache/{$this->id}.png"
-			);
-			return;
+class Docker extends Repo
+{
+	protected $id         = 'docker';
+	protected $kind       = 'images';
+	protected $url        = 'https://registry.hub.docker.com';
+	protected $search_url = 'https://registry.hub.docker.com/search?q=';
+
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml(); 
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://registry.hub.docker.com/search?q='.$query, '/(<a href="\/u\/.*"><div class="repo-list-item box">[\s\S]*?<\/a>)/i', 1);
+		$this->pkgs = $this->cache->get_query_regex(
+			$this->id,
+			$query,
+			"{$this->search_url}{$query}",
+			'/(<a href="\/(_|u)\/.*"><div class="repo-list-item box">[\s\S]*?<\/a>)/i',
+			1
+		);
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
 			preg_match('/<a href="(.*?)">[\s\S]*?<h2>([\s\S]*?)<[\s\S]*<\/h2>([\s\S]*?)<\/div>/i', $pkg, $matches);
 			$title = trim(preg_replace('/\s+/', '', $matches[2]));
-			$url = 'https://registry.hub.docker.com'. trim(preg_replace('/\s+/', '', $matches[1]));
+			$url = $this->url . trim(preg_replace('/\s+/', '', $matches[1]));
 			$description = trim(preg_replace('/\s+/', ' ', $matches[3]));
 			if (!$description || trim(preg_replace('/\s+/', '', $matches[3])) == '') {
 				$description = $url;
@@ -77,7 +41,7 @@ class Repo {
 	
 			$this->cache->w->result(
 				$title,
-				$this->makeArg($title, $url, "*"),
+				$this->makeArg($title, $url),
 				$title.' ~ '.$updated,
 				$description,
 				"icon-cache/{$this->id}.png"
@@ -88,39 +52,13 @@ class Repo {
 				break;
 			}
 		}
-		
-		if ( count( $this->cache->w->results() ) == 0) {
-			$this->cache->w->result(
-				"{$this->id}-search",
-				"https://registry.hub.docker.com/search?q={$query}",
-				"No {$this->kind} were found that matched \"{$query}\"",
-				"Click to see the results for yourself",
-				"icon-cache/{$this->id}.png"
-			);
-		}
-	}
-	
-	function xml() {
-		$this->cache->w->result(
-			"{$this->id}-www",
-			'http://www.docker.io/',
-			'Go to the website',
-			'http://www.docker.io',
-			"icon-cache/{$this->id}.png"
-		);
-		
-		return $this->cache->w->toxml();
-	}
 
+		$this->noResults($query, "{$this->search_url}{$query}");
+
+		return $this->xml();
+	}
 }
 
-// ****************
-
-/*
-$query = "ng";
-$repo = new Repo();
-$repo->search($query);
-echo $repo->xml();
-*/
-
-?>
+// Test code, uncomment to debug this script from the command-line
+// $repo = new Docker();
+// echo $repo->search('ng');

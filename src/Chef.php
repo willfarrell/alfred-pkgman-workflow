@@ -1,68 +1,29 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-/*
-Chef
-
-*/
-
-// ****************
-
 require_once('Cache.php');
+require_once('Repo.php');
 
-class Repo {
-	
-	private $id = 'chef';
-	private $kind = 'cookbooks'; // for none found msg
-	private $min_query_length = 1; // increase for slow DBs
-	private $max_return = 25;
-	
-	private $cache;
-	private $w;
-	private $pkgs;
-	
-	function __construct() {
-		
-		$this->cache = new Cache();
-		
-		// get DB here if not dynamic search
-		//$data = (array) $this->cache->get_db($this->id);
-		//$this->pkgs = $data;
-	}
-	
-	// return id | url | pkgstr
-	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
-	}
-	
-	function check($pkg, $query) {
-		if (!$query) { return true; }
+class Chef extends Repo
+{
+	protected $id     = 'chef';
+	protected $kind   = 'cookbooks';
+	protected $url    = 'https://supermarket.chef.io';
 
-		if (   strpos($pkg->cookbook_name, $query) !== false
-			|| strpos($pkg->cookbook_description, $query) !== false
-		) {
-			return true;
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml(); 
 		}
-		return false;
-	}
-	
-	function search($query) {
-		if ( strlen($query) < $this->min_query_length) {
-			if ( strlen($query) === 0 ) { return; }
-			$this->cache->w->result(
-				"{$this->id}-min",
-				$query,
-				"Minimum query length of {$this->min_query_length} not met.",
-				"",
-				"icon-cache/{$this->id}.png"
-			);
-			return;
-		}
+
+		$this->pkgs = $this->cache->get_query_json(
+			$this->id, 
+			$query, 
+			"{$this->url}/api/v1/search?q={$query}"
+		)->items;
 		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "https://supermarket.chef.io/api/v1/search?q={$query}");
-		
-		foreach ($this->pkgs->items as $pkg) {
-			if ($this->check($pkg, $query)) {
+		foreach ($this->pkgs as $pkg) {
+			if ($this->check($pkg, $query, 'cookbook_name', 'cookbook_description')) {
 				$title = $pkg->cookbook_name;
 		
 				// add author to title
@@ -72,7 +33,10 @@ class Repo {
 		
 				$this->cache->w->result(
 					$pkg->cookbook_name,
-					$this->makeArg($pkg->cookbook_name, "https://supermarket.chef.io/cookbooks/{$pkg->cookbook_name}", "*"),
+					$this->makeArg(
+						$pkg->cookbook_name, 
+						"{$this->url}/cookbooks/{$pkg->cookbook_name}"
+					),
 					$title,
 					$pkg->cookbook_description,
 					"icon-cache/{$this->id}.png"
@@ -83,40 +47,13 @@ class Repo {
 				break;
 			}
 		}
-		
-		if ( count( $this->cache->w->results() ) == 0) {
-			$this->cache->w->result(
-				"{$this->id}-search",
-				"https://supermarket.chef.io/cookbooks/{$query}",
-				"No {$this->kind} were found that matched \"{$query}\"",
-				"Click to see the results for yourself",
-				"icon-cache/{$this->id}.png"
-			);
-		}
-	}
-	
-	function xml() {
-		
-		$this->cache->w->result(
-			"{$this->id}-www",
-			"https://supermarket.chef.io/",
-			"Go to the website",
-			"https://supermarket.chef.io",
-			"icon-cache/{$this->id}.png"
-		);
-		
-		return $this->cache->w->toxml();
-	}
 
+		$this->noResults($query, "{$this->url}/cookbooks/{$query}");
+
+		return $this->xml();
+	}
 }
 
-// ****************
-
-/*
-$query = "or";
-$repo = new Repo();
-$repo->search($query);
-echo $repo->xml();
-*/
-
-?>
+// Test code, uncomment to debug this script from the command-line
+// $repo = new Chef();
+// echo $repo->search('apt');

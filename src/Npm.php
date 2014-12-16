@@ -1,65 +1,27 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-/*
-npm
-
-*/
-
-// ****************
-
 require_once('Cache.php');
+require_once('Repo.php');
 
-class Repo {
-	
-	private $id = 'npm';
-	private $kind = 'packages'; // for none found msg
-	private $min_query_length = 1; // increase for slow DBs
-	private $max_return = 25;
-	
-	private $cache;
-	private $w;
-	private $pkgs;
-	
-	function __construct() {
-		
-		$this->cache = new Cache();
-		
-		// get DB here if not dynamic search
-		//$data = (array) $this->cache->get_db($this->id);
-		//$this->pkgs = $data;
-	}
-	
-	// return id | url | pkgstr
-	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
-	}
-	
-	/*function check($pkg, $query) {
-		if (!$query) { return true; }
-		if (strpos($pkg["name"], $query) !== false) {
-			return true;
-		} else if (strpos($pkg["description"], $query) !== false) {
-			return true;
-		} 
-	
-		return false;
-	}*/
-	
-	function search($query) {
-		if ( strlen($query) < $this->min_query_length) {
-			if ( strlen($query) === 0 ) { return; }
-			$this->cache->w->result(
-				"{$this->id}-min",
-				$query,
-				"Minimum query length of {$this->min_query_length} not met.",
-				"",
-				"icon-cache/{$this->id}.png"
-			);
-			return;
+class Npm extends Repo
+{
+	protected $id         = 'npm';
+	protected $url        = 'https://www.npmjs.com';
+	protected $search_url = 'https://www.npmjs.com/search?q=';
+
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml(); 
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'https://www.npmjs.com/search?q='.$query, '/<div class="package-details">([\s\S]*?)<\/div>/i');
+		$this->pkgs = $this->cache->get_query_regex(
+			$this->id,
+			$query,
+			"{$this->search_url}{$query}",
+			'/<div class="package-details">([\s\S]*?)<\/div>/i'
+		);
 		
 		foreach($this->pkgs as $pkg) {
 			
@@ -77,8 +39,8 @@ class Repo {
 	
 			$this->cache->w->result(
 				$title,
-				$this->makeArg($title, 'https://www.npmjs.com/package/'.$title, "*"),
-				$title.' ~ v'.$version,//.' by '.$author,
+				$this->makeArg($title, "{$this->url}/package/{$title}"),
+				"{$title} ~ v{$version}", //.' by '.$author,
 				$description,
 				"icon-cache/{$this->id}.png"
 			);
@@ -89,38 +51,13 @@ class Repo {
 			}
 		}
 		
-		if ( count( $this->cache->w->results() ) == 0) {
-			$this->cache->w->result(
-				"{$this->id}-search",
-				"https://www.npmjs.com/search?q={$query}",
-				"No {$this->kind} were found that matched \"{$query}\"",
-				"Click to see the results for yourself",
-				"icon-cache/{$this->id}.png"
-			);
-		}
-	}
-	
-	function xml() {
-		$this->cache->w->result(
-			"{$this->id}-www",
-			'https://www.npmjs.com/',
-			'Go to the website',
-			'https://www.npmjs.com',
-			"icon-cache/{$this->id}.png"
-		);
 		
-		return $this->cache->w->toxml();
-	}
+		$this->noResults($query, "{$this->search_url}{$query}");
 
+		return $this->xml();
+	}
 }
 
-// ****************
-
-/*
-$query = "gr";
-$repo = new Repo();
-$repo->search($query);
-echo $repo->xml();
-*/
-
-?>
+// Test code, uncomment to debug this script from the command-line
+// $repo = new Npm();
+// echo $repo->search('gr');

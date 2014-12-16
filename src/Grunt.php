@@ -1,82 +1,44 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-/*
-grunt
-
-*/
-
-// ****************
-
 require_once('Cache.php');
+require_once('Repo.php');
 
-class Repo {
-	
-	private $id = 'grunt';
-	private $kind = 'plugins'; // for none found msg
-	private $min_query_length = 1; // increase for slow DBs
-	private $max_return = 25;
-	
-	private $cache;
-	private $w;
-	private $pkgs;
-	
-	function __construct() {
-		
-		$this->cache = new Cache();
-		
-		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id)->aaData;
-		$this->pkgs = $data;
-	}
-	
-	// return id | url | pkgstr
-	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
-	}
-	
-	function check($pkg, $query) {
-		if (   !$query
-			|| strpos($pkg->name, $query) !== false
-			|| strpos($pkg->ds, $query) !== false
-		) {
-			return true;
-		} 
-	
-		return false;
-	}
-	
-	function search($query) {
-		if ( strlen($query) < $this->min_query_length) {
-			if ( strlen($query) === 0 ) { return; }
-			$this->cache->w->result(
-				"{$this->id}-min",
-				$query,
-				"Minimum query length of {$this->min_query_length} not met.",
-				"",
-				"icon-cache/{$this->id}.png"
-			);
-			return;
+class Grunt extends Repo
+{
+	protected $id         = 'grunt';
+	protected $kind       = 'plugins';
+	protected $url        = 'http://gruntjs.com';
+	protected $search_url = 'http://gruntjs.com/plugins/';
+	protected $has_db     = true;
+
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml(); 
 		}
-		
-		//$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
-		
-		foreach($this->pkgs as $pkg) {
+
+		foreach($this->pkgs->aaData as $pkg) {
 			
 			// make params
-			if ($this->check($pkg, $query)) {
-				$title = str_replace('grunt-', '', $pkg->name); // remove grunt- from title
+			if ($this->check($pkg, $query, 'name', 'ds')) {
+				// remove grunt- from title
+				$title = str_replace('grunt-', '', $pkg->name);
 			
 				// add author to title
 				if (isset($pkg->author)) {
-					$title .= " by " . $pkg->author;
+					$title .= " by {$pkg->author}";
 				}
-				$url = 'https://www.npmjs.org/package/' . $pkg->name;
+				$url = "https://www.npmjs.org/package/{$pkg->name}";
 				
-				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
+				// Uncomment to skip deprecated plugins
+				// if (strpos($plugin->description, "DEPRECATED") !== false) { 
+				// 	continue; 
+				// }
+
 				$this->cache->w->result(
 					$pkg->name,
-					$this->makeArg($pkg->name, $url, "*"),
+					$this->makeArg($pkg->name, $url),
 					$title,
 					$pkg->ds,
 					"icon-cache/{$this->id}.png"
@@ -89,39 +51,13 @@ class Repo {
 				break;
 			}
 		}
-		
-		if ( count( $this->cache->w->results() ) == 0) {
-			$this->cache->w->result(
-				"{$this->id}-search",
-				"http://gruntjs.com/plugins/{$query}",
-				"No {$this->kind} were found that matched \"{$query}\"",
-				"Click to see the results for yourself",
-				"icon-cache/{$this->id}.png"
-			);
-		}
-	}
-	
-	function xml() {
-		$this->cache->w->result(
-			"{$this->id}-www",
-			'http://gruntjs.com/',
-			'Go to the website',
-			'http://gruntjs.com',
-			"icon-cache/{$this->id}.png"
-		);
-		
-		return $this->cache->w->toxml();
-	}
 
+		$this->noResults($query, "{$this->search_url}{$query}");
+
+		return $this->xml();
+	}
 }
 
-// ****************
-
-/*
-$query = 'contrib';
-$repo = new Repo();
-$repo->search($query);
-echo $repo->xml();
-*/
-
-?>
+// Test code, uncomment to debug this script from the command-line
+// $repo = new Grunt();
+// echo $repo->search('contrib');

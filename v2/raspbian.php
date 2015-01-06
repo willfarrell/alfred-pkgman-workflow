@@ -81,6 +81,7 @@ class Repo {
 	
 	function search($query) {
 		if ( strlen($query) < $this->min_query_length) {
+			if ( strlen($query) === 0 ) { return; }
 			$this->cache->w->result(
 				"{$this->id}-min",
 				$query,

@@ -1,4 +1,4 @@
-# Package Managers ([Download v2.5](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
+# Package Managers ([Download v2.6](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -11,6 +11,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
 * `apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
+* `atom {query}`: [Atom Packages](https://atom.io)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Plugins](http://braumeister.org)
 * `chef {query}`: [Chef Cookbooks](http://supermarket.getchef.com)

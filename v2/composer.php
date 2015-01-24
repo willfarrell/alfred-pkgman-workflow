@@ -67,7 +67,7 @@ class Repo {
 			$title = strip_tags($matches[0]);
 			
 			preg_match('/<p class="package-description">([\s\S]*?)<\/p>/i', $pkg, $matches);
-			$details = strip_tags(substr($matches[1], 2));
+			$details = strip_tags($matches[1]);
 	
 			$this->cache->w->result(
 				$title,
@@ -111,7 +111,7 @@ class Repo {
 // ****************
 
 /*
-$query = "c";
+$query = "stripe";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

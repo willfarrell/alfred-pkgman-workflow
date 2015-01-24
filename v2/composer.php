@@ -110,11 +110,11 @@ class Repo {
 
 // ****************
 
-
+/*
 $query = "c";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();
-
+*/
 
 ?>

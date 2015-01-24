@@ -152,9 +152,11 @@ class Repo {
 
 // ****************
 
+/*
 $query = "lib";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();
+*/
 
 ?>

@@ -29,6 +29,11 @@ class Cache {
 		$this->w->write($this->queries, $this->query_file.'.json');
 	}
 	
+	function get_query_data($id, $query, $url) {
+		if (!$query) { return array(); }
+		return $this->w->request($url);
+	}
+	
 	function get_db($id) {
 		if (!array_key_exists($id, $this->dbs)) { return array(); }
 		$name = $id;
@@ -71,7 +76,7 @@ class Cache {
 		
 		$pkgs = $this->w->read($name.'.json');
 		$timestamp = $this->w->filetime($name.'.json');
-		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400) || 1) { // update - Add || 1 for debuggin
+		if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) { // update - Add || 1 for debuggin
 			$data = $this->w->request($url);
 			preg_match_all($regex, $data, $matches);
 			$data = $matches[$regex_pos];

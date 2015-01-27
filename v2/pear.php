@@ -59,6 +59,7 @@ class Repo {
 		}
 		
 		$this->pkgs = $this->cache->get_query_regex($this->id, $query, 'http://pear.php.net/search.php?q='.$query, '/<li>([\s\S]*?)<\/li>/i');
+		array_shift($this->pkgs); // remove register link
 		
 		foreach($this->pkgs as $pkg) {
 			
@@ -112,7 +113,7 @@ class Repo {
 // ****************
 
 /*
-$query = "leaflet";
+$query = "l";
 $repo = new Repo();
 $repo->search($query);
 echo $repo->xml();

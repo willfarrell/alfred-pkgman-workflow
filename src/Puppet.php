@@ -8,7 +8,7 @@ class Puppet extends Repo
 {
 	protected $id         = 'puppet';
 	protected $url        = 'https://forge.puppetlabs.com';
-	protected $search_url = 'https://forge.puppetlabs.com/modules?utf-8=✓&sort=rank&q=';
+	protected $search_url = 'https://forgeapi.puppetlabs.com/v3/modules?query=';
 	protected $kind       = 'modules';
 
 	public function search($query) {
@@ -16,24 +16,17 @@ class Puppet extends Repo
 			return $this->xml(); 
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex(
+		$this->pkgs = $this->cache->get_query_json(
 			$this->id,
-			$query,
-			"{$this->search_url}{$query}",
-			'/<li class="clearfix supported ">([\s\S]*?)<\/li>/i'
-		);
-		
+			$query, 
+			"{$this->search_url}{$query}&limit={$this->max_return}"
+		)->results;
+
 		foreach($this->pkgs as $pkg) {
-			// make params
-			preg_match('/<h3>([\s\S]*?)<\/h3>/i', $pkg, $matches);
-			$name = trim(strip_tags($matches[1]));
-			
-			preg_match('/<p class="summary">([\s\S]*?)<\/p>/i', $pkg, $matches);
-			$description = trim(strip_tags($matches[1]));
-			
-			preg_match('/Version\s([\S]*?)\s&bull;/i', $pkg, $matches);
-			$version = trim(strip_tags($matches[1]));
-	
+			$name        = "{$pkg->owner->username}/{$pkg->name}";
+			$version     = $pkg->current_release->version;
+			$description = $pkg->current_release->metadata->summary;
+
 			$this->cache->w->result(
 				$name,
 				$this->makeArg($name, "{$this->url}/{$name}"),
@@ -56,4 +49,4 @@ class Puppet extends Repo
 
 // Test code, uncomment to debug this script from the command-line
 // $repo = new Puppet();
-// echo $repo->search('mysql');
+// echo $repo->search('nginx');

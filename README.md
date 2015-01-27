@@ -16,7 +16,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `brew {query}`: [Homebrew Plugins](http://braumeister.org)
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
-* `composer {query}`: PHP [Composer Packages](http://getcomposer.org)
+* `composer {query}`: PHP [Composer Packages](https://packagist.org)
 * `docker {query}`: [Docker Images](http://www.docker.io)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)

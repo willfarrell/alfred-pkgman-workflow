@@ -20,7 +20,7 @@ class Puppet extends Repo
 			$this->id,
 			$query,
 			"{$this->search_url}{$query}",
-			'/<li class="clearfix ">([\s\S]*?)<\/li>/i'
+			'/<li class="clearfix supported ">([\s\S]*?)<\/li>/i'
 		);
 		
 		foreach($this->pkgs as $pkg) {
@@ -28,10 +28,10 @@ class Puppet extends Repo
 			preg_match('/<h3>([\s\S]*?)<\/h3>/i', $pkg, $matches);
 			$name = trim(strip_tags($matches[1]));
 			
-			preg_match('/<p>([\s\S]*?)<\/p>/i', $pkg, $matches);
+			preg_match('/<p class="summary">([\s\S]*?)<\/p>/i', $pkg, $matches);
 			$description = trim(strip_tags($matches[1]));
 			
-			preg_match('/Version([\s\S]*?)<\/a>/i', $pkg, $matches);
+			preg_match('/Version\s([\S]*?)\s&bull;/i', $pkg, $matches);
 			$version = trim(strip_tags($matches[1]));
 	
 			$this->cache->w->result(

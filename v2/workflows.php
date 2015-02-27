@@ -28,7 +28,7 @@ class Workflows {
 	function __construct( $bundleid=null )
 	{
 		$this->path = exec('pwd');
-		$this->home = exec('printf $HOME');
+		$this->home = exec('printf "$HOME"');
 
 		if ( file_exists( 'info.plist' ) ):
 			$this->bundle = $this->get( 'bundleid', 'info.plist' );

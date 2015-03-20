@@ -1,4 +1,4 @@
-# Package Managers ([Download v2.10](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
+# Package Managers ([Download v2.12](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -22,6 +22,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
 * `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
 * `gulp {query}`: nodeJS task-runner [Gulp plugins](http://gulpjs.com)
+* `hex {query}`: Elixir [Hex Packages](http://hex.pm)
 * `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
 * `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
 * `pear {query}`: PHP [Pear Packages](http://pear.php.net)
@@ -63,6 +64,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][rpm]
 ![][docker]
 ![][chef]
+![][hex]
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
 [bower]: ./screenshots/bower.png "Sample bower result"
@@ -74,6 +76,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 [gems]: ./screenshots/gems.png "Sample gems result"
 [grunt]: ./screenshots/grunt.png "Sample grunt result"
 [gulp]: ./screenshots/gulp.png "Sample gulp result"
+[hex]: ./screenshots/hex.png "Sample hex resuls"
 [maven]: ./screenshots/maven.png "Sample maven result"
 [npm]: ./screenshots/npm.png "Sample npm result"
 [pear]: ./screenshots/pear.png "Sample pear result"

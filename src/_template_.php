@@ -1,73 +1,47 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-/*
-_TEMPLATE_
+require_once('Repo.php');
 
-*/
+/**
+ * A template to use for creating a new repository search
+ *
+ * This template makes the assumption that you're searching a repo that 
+ * offers a JSON API endpoint.
+ * 
+ * Look to AptGet for an example of a regex-based search (there are others).
+ *
+ * Additional protected variables are available if you look at Repo, if you do not 
+ * override them here, this class will inherit their values.
+ *
+ * Make sure, once you've tested your code, that the debug lines at the end are 
+ * commented out, or you're gonna have a confusing repo search when you package
+ * it up for release.
+ */
+class RepoName extends Repo
+{
+	protected $id         = '_TEMPLATE_';
+	protected $url        = '_BASE_URL_';
+	protected $search_url = '_SEARCH_URL_';
 
-// ****************
-
-require_once('Cache.php');
-
-class Repo {
-	
-	private $id = '_TEMPLATE_';
-	private $kind = 'packages'; // for none found msg
-	private $min_query_length = 1; // increase for slow DBs
-	private $max_return = 25;
-	
-	private $cache;
-	private $w;
-	private $pkgs;
-	
-	function __construct() {
-		
-		$this->cache = new Cache();
-		
-		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id);
-		$this->pkgs = $data;
-	}
-	
-	// return id | url | pkgstr
-	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . $id;//"\"$id\":\"$version\",";
-	}
-	
-	function check($pkg, $query) {
-		if (!$query) { return true; }
-		if (strpos($pkg["name"], $query) !== false) {
-			return true;
-		} else if (strpos($pkg["description"], $query) !== false) {
-			return true;
-		} 
-	
-		return false;
-	}
-	
-	function search($query) {
-		if ( strlen($query) < $this->min_query_length ) {
-			if ( strlen($query) === 0 ) { return; }
-			$this->cache->w->result(
-				"{$this->id}-min",
-				$query,
-				"Minimum query length of {$this->min_query_length} not met.",
-				"",
-				"icon-cache/{$this->id}.png"
-			);
-			return;
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml(); 
 		}
-		
-		$this->pkgs = $this->cache->get_query_json($this->id, $query, "_TEMPLATE_SEARCH_URL_{$query}");
-		
+
+		$this->pkgs = $this->cache->get_query_json(
+			$this->id,
+			$query,
+			"{$this->search_url}{$query}"
+		);
+
 		foreach($this->pkgs as $pkg) {
-			
 			// make params
 			
 			$this->cache->w->result(
-				_UNIQUE_ID,
-				$this->makeArg(_PKG_NAME_, _PKG_URL_, "*"),
+				$this->id,
+				$this->makeArg(_PKG_NAME_, _PKG_URL_),
 				_PKG_NAME_,
 				_PKG_DETAILS_OR_URL_,
 				"icon-cache/{$this->id}.png"
@@ -78,39 +52,13 @@ class Repo {
 				break;
 			}
 		}
-		
-		if ( count( $this->cache->w->results() ) == 0) {
-			$this->cache->w->result(
-				"{$this->id}-search",
-				"_TEMPLATE_SEARCH_URL_{$query}",
-				"No {$this->kind} were found that matched \"{$query}\"",
-				"Click to see the results for yourself",
-				"icon-cache/{$this->id}.png"
-			);
-		}
-	}
-	
-	function xml() {
-		$this->cache->w->result(
-			"{$this->id}-www",
-			'_TEMPLATE_URL_/',
-			'Go to the website',
-			'_TEMPLATE_URL_',
-			"icon-cache/{$this->id}.png"
-		);
-		
-		return $this->cache->w->toxml();
-	}
 
+		$this->noResults($query, "{$this->search_url}{$query}");
+
+		return $this->xml();
+	}
 }
 
-// ****************
-
-/*
-$query = "leaflet";
-$repo = new Repo();
-$repo->search($query);
-echo $repo->xml();
-*/
-
-?>
+// Test code, uncomment to debug this script from the command-line
+// $repo = new RepoName();
+// $repo->search('leaflet');

@@ -1,118 +1,63 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-/*
-Raspbian
+require_once('Repo.php');
 
-*/
+class Raspbian extends Repo
+{
+	protected $id         = 'raspbian';
+	protected $url        = 'http://www.raspbian.org';
+	protected $search_url = 'https://packages.debian.org/wheezy/';
+	protected $has_db     = true;
 
-// ****************
+	public function __construct()
+	{
+		parent::__construct();
 
-require_once('Cache.php');
-
-class Repo {
-	
-	private $id = 'raspbian';
-	private $kind = 'packages'; // for none found msg
-	private $min_query_length = 1; // increase for slow DBs
-	private $max_return = 25;
-	
-	private $cache;
-	private $w;
-	private $pkgs;
-	
-	function __construct() {
-		
-		$this->cache = new Cache();
-		
-		// get DB here if not dynamic search
-		$data = (array) $this->cache->get_db($this->id);
-		$pkgs = explode("\n\n", $data[0]);
+		// Clean up & update cached DB
+		$pkgs = explode("\n\n", $this->pkgs);
 		array_pop($pkgs); // remove file end
 		
 		$this->pkgs = [];
 		for ($i = 0, $l = count($pkgs); $i < $l; $i++) {
-			$pkg = $pkgs[$i];
-			
-			preg_match("/Package: ([^\n]+)/i", $pkg, $name);
-			preg_match("/Version: ([^\n]+)/i", $pkg, $version);
-			preg_match("/Installed-Size: ([^\n]+)/i", $pkg, $installed_size);
-			preg_match("/Maintainer: ([^\n]+?) <([^\n]+?)>/i", $pkg, $maintainer);
-			preg_match("/Size: ([^\n]+)/i", $pkg, $size);
-			preg_match("/Description: (.*?)\n/i", $pkg, $description);
-			//preg_match("/Homepage: ([^\n]+)/i", $pkg, $homepage);
-			preg_match("/Filename: ([^\n]+)/i", $pkg, $filename);
-			
-			//print_r($description);
-			//if (!count($homepage)) {
-				//echo $pkg;
-				//$homepage[1] = '';
-			//}
-			
-			$this->pkgs[] = [
-				"name" => $name[1],
-				"version" => $version[1],
-				"installed-size" => $installed_size[1],
-				"maintainer" => $maintainer[1]." <".$maintainer[2].">",
-				"author" => $maintainer[1],
-				"email" => $maintainer[2],
-				"size" => $size[1],
-				"description" => $description[1],
-				//"homepage" => $homepage[1],
-				"filename" => $filename[1]
-			];
+			$pkg = explode("\n", $pkgs[$i]);
+			// TODO: Figure out why `new stdClass()` doesn't work
+			$new_pkg = (object) array();
+			foreach ($pkg as $datum) {
+				$data = explode(': ', $datum);
+				$new_pkg->$data[0] = $data[1];
+			}
+			$this->pkgs[] = $new_pkg;
 		}
 	}
-	
-	// return id | url | pkgstr
-	function makeArg($id, $url, $version) {
-		return $id . "|" . $url . "|" . "$id";
-	}
-	
-	function check($pkg, $query) {
-		if (!$query) { return true; }
-		if (strpos($pkg["name"], $query) !== false) {
-			return true;
-		} else if (strpos($pkg["description"], $query) !== false) {
-			return true;
-		} 
-	
-		return false;
-	}
-	
-	function search($query) {
-		if ( strlen($query) < $this->min_query_length) {
-			if ( strlen($query) === 0 ) { return; }
-			$this->cache->w->result(
-				"{$this->id}-min",
-				$query,
-				"Minimum query length of {$this->min_query_length} not met.",
-				"",
-				"icon-cache/{$this->id}.png"
-			);
-			return;
+
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml(); 
 		}
-		
+
 		foreach($this->pkgs as $pkg) {
-			if ($this->check($pkg, $query)) {
-				$title = $pkg["name"];
+			if ($this->check($pkg, $query, 'Package', 'Description')) {
+				$title = $pkg->Package;
 			
 				// add version to title
-				if (isset($pkg["version"])) {
-					$title .= " v".$pkg["version"];
+				if (isset($pkg->Version)) {
+					$title .= " ~ v{$pkg->Version}";
 				}
 				// add author to title
-				if (isset($pkg->author)) {
-					$title .= " by " . $pkg["author"];
+				if (isset($pkg->Maintainer)) {
+					preg_match("/([^\\n]+?) <[^\\n]+?>/i", $pkg->Maintainer, $matches);
+					$title .= " ~ by {$matches[1]}";
 				}
-				$url = "https://packages.debian.org/wheezy/".$pkg["name"];
-				//if (strpos($plugin->description, "DEPRECATED") !== false) { continue; } // skip DEPRECATED repos
+				$url = "{$this->search_url}{$pkg->Package}";
+
 				$this->cache->w->result(
-					$pkg["name"],
-					$this->makeArg($pkg["name"], $url, $pkg["version"]),
+					$pkg->Package,
+					$this->makeArg($pkg->Package, $url),
 					$title,
-					$pkg["description"],
-					"icon-cache/".$this->id.".png"
+					$pkg->description,
+					"icon-cache/{$this->id}.png"
 				);
 			}
 			
@@ -121,43 +66,13 @@ class Repo {
 				break;
 			}
 		}
-		
-		if ( count( $this->cache->w->results() ) == 0) {
-			
-			$this->cache->w->result(
-				"{$this->id}-search",
-				"https://packages.debian.org/wheezy/{$query}",
-				"No {$this->kind} were found that matched \"{$query}\"",
-				"Click to see the results for yourself",
-				"icon-cache/{$this->id}.png"
-			);
-			
-		}
-	}
-	
-	function xml() {
-		
-		
-		$this->cache->w->result(
-			"{$this->id}-www",
-			'http://www.raspbian.org/',
-			'Go to the website',
-			'http://www.raspbian.org',
-			"icon-cache/".$this->id.".png"
-		);
-		
-		return $this->cache->w->toxml();
-	}
 
+		$this->noResults($query, "{$this->search_url}{$query}");
+
+		return $this->xml();
+	}
 }
 
-// ****************
-
-/*
-$query = "lib";
-$repo = new Repo();
-$repo->search($query);
-echo $repo->xml();
-*/
-
-?>
+// Test code, uncomment to debug this script from the command-line
+// $repo = new Raspbian();
+// echo $repo->search('lib');

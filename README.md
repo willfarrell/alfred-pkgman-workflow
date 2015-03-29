@@ -1,4 +1,4 @@
-# Package Managers ([Download v2.12](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
+# Package Managers ([Download v3.00](https://raw.github.com/willfarrell/alfred-pkgman-workflow/master/Package%20Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -14,10 +14,10 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `atom {query}`: [Atom Packages](https://atom.io)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Plugins](http://braumeister.org)
-* `chef {query}`: [Chef Cookbooks](http://supermarket.getchef.com)
+* `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
-* `composer {query}`: PHP [Composer Packages](http://getcomposer.org)
-* `docker {query}`: [Docker Images](http://www.docker.io)
+* `composer {query}`: PHP [Composer Packages](https://packagist.org)
+* `docker {query}`: [Docker Images](http://registry.hub.docker.io)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
 * `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
@@ -30,7 +30,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Linux Packages](http://rpmfind.net)
-* `yo {query}`: [Yeoman Generators](http://yoeman.io)
+* `yo {query}`: [Yeoman Generators](http://yeoman.io)
 
 ## Action Modifiers
 

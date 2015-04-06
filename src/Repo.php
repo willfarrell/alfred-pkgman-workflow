@@ -88,12 +88,14 @@ class Repo
 	 *
 	 * @param  string $id      The unique ID of a package/repo item
 	 * @param  string $url     The URL to the package/item in question
+	 * @param  string $pkgstr  The package string  used in a config file ie `"$pkgname": "$version"`
 	 * @return string          A pipe-delimited string of these values
 	 *                           Corresponds to `id | url | pkgstr` in Alfred
 	 */
-	protected function makeArg($id, $url)
+	protected function makeArg($id, $url, $pkgstr = null)
 	{
-		return "{$id}|{$url}|{$id}";
+		if ($pkgstr == null) { $pkgstr = $id; }
+		return "{$id}|{$url}|{$pkgstr}";
 	}
 
 	/**

@@ -25,9 +25,10 @@ class Bower extends Repo
 		
 		foreach($this->pkgs as $pkg) {
 			$url = str_replace("git://", "https://", $pkg->url);
+			$version = "*";
 			$this->cache->w->result(
 				$pkg->url,
-				$this->makeArg($pkg->name, $url),
+				$this->makeArg($pkg->name, $url, "\"{$pkg->name}\": \"{$version}\""),
 				$pkg->name,
 				$url,
 				"icon-cache/{$this->id}.png"

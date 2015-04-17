@@ -7,7 +7,7 @@ require_once('Repo.php');
 class Composer extends Repo
 {
 	protected $id         = 'composer';
-	protected $url        = 'https://packagist.org/';
+	protected $url        = 'https://packagist.org';
 	protected $search_url = 'https://packagist.org/search/?q=';
 
 	public function search($query)

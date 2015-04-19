@@ -4,7 +4,7 @@ namespace WillFarrell\AlfredPkgMan;
 require_once('Cache.php');
 require_once('Repo.php');
 
-class Atom extends Repo
+class Apm extends Repo
 {
 	protected $id         = 'apm';
 	protected $url        = 'https://atom.io';

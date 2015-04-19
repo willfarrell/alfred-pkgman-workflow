@@ -6,14 +6,14 @@ require_once('Repo.php');
 
 class Atom extends Repo
 {
-	protected $id         = 'atom';
+	protected $id         = 'apm';
 	protected $url        = 'https://atom.io';
 	protected $search_url = 'https://atom.io/packages/search?q=';
 
 	public function search($query)
 	{
 		if (!$this->hasMinQueryLength($query)) {
-			return $this->xml(); 
+			return $this->xml();
 		}
 
 		$data = $this->cache->get_query_regex(
@@ -22,23 +22,23 @@ class Atom extends Repo
 			"{$this->search_url}{$query}",
 			'/<div class="package-list">([\s\S]*?)<div class="footer-pad">/i'
 		);
-		
+
 		$this->pkgs = explode('<div class="grid-cell">', $data[0]);
 		array_shift($this->pkgs);
-		
+
 		foreach($this->pkgs as $pkg) {
 			// make params
 			preg_match('/<h4 class="card-name">([\s\S]*?)<\/h4>/i', $pkg, $matches);
 			$title = trim(strip_tags($matches[1]));
-		
+
 			preg_match(
 				'/<span class="css-truncate-target card-description">([\s\S]*?)<\/span>/i',
 				$pkg,
 				$matches
 			);
-		
+
 			$description = html_entity_decode(trim(strip_tags($matches[1])));
-			
+
 			preg_match('/<a href="[\s\S]*?" class="author">([\s\S]*?)<\/a>/i', $pkg, $matches);
 			$author = trim(strip_tags($matches[1]));
 			// $version = trim(strip_tags($matches[1]));
@@ -50,7 +50,7 @@ class Atom extends Repo
 				$description,
 				"icon-cache/{$this->id}.png"
 			);
-			
+
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;

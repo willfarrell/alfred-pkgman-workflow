@@ -1,4 +1,4 @@
-# Package Managers ([Download v3.01](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.01/Package.Managers.alfredworkflow))
+# Package Managers ([Download v3.02](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.01/Package.Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -11,7 +11,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
 * `apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
-* `atom {query}`: [Atom Packages](https://atom.io)
+* `apm {query}`: [Atom Packages](https://atom.io)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Plugins](http://braumeister.org)
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
@@ -64,11 +64,13 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][rpm]
 ![][docker]
 ![][chef]
+![][atom]
 ![][hex]
 
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
+[atom]: ./screenshots/atom.png "Sample apm result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
 [chef]: ./screenshots/chef.png "Sample chef result"

@@ -64,13 +64,13 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][rpm]
 ![][docker]
 ![][chef]
-![][atom]
+![][apm]
 ![][hex]
 
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
-[atom]: ./screenshots/atom.png "Sample apm result"
+[apm]: ./screenshots/apm.png "Sample apm result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
 [chef]: ./screenshots/chef.png "Sample chef result"

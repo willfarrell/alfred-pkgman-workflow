@@ -1,6 +1,6 @@
 # Package Manager Comparison Table
 
-| Name     | Full Name | For            | Repo File | Home URL                           | Search URL              | API URL | Version | Author | Popularity | Details | Notes |
+| Name     | Full Name | For            | Repo File | Home URL                           | Search URL              | API URL | Version | Author | Popularity | Details | Slow | Notes |
 | -------- | --------- | -------------- | --------- | ---------------------------------- | ----------------------- | ------- | ------- | ------ | ---------- | ------- | ----- |
 | alcatraz | Alcatraz  | Cocoa Packages | ??        | [alcatraz.io](http://alcatraz.io/) | ??                      | ??      | No      | No     | No         | Yes     |       |
 
@@ -20,4 +20,5 @@ Version: does the site and/or API supply the version
 Author:  does the site and/or API supply the author
 Popularity:  does the site and/or API supply a popularity indicator, ie number of downloads
 Details: does the site and/or API supply additional details
+Slow: Does it feel slow, request response time
 Notes: Notes related to the any part of the workflow

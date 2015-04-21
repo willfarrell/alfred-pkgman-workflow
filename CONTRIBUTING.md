@@ -22,12 +22,12 @@ Before you submit your PR please make sure everything is in order.
 - [ ] Installed `.alfredworkflow` file from repo before making changes.
 - [ ] Update the version in the workflow title. Double-click the workflow to edit.
 - [ ] Increase the version number in `update.json`. Right-click the workflow in Alfred, click `Show in Finder`. The `update.json` file will be in that folder.
-
 - [ ] Increase the version number in `current-version.json`.
+- [ ] Adjust the URL in `update.json` & `curent-version.json` to match the new version number
 - [ ] If needed include a large icon in the `src/icon-src/` folder that has square dimensions.
 - [ ] If needed include a cached icon in the `src/icon-cache/` folder that 256x256 pixels. Alfred creates these when you insert an image into a workflow. You can get this from inside the `.alfredworkflow`. Right-click the workflow in Alfred, click `Show in Finder`. The `--hash-value--.png` file will be in that folder. Copy to `/src/icon-cache` and rename.
 - [ ] If needed add a screenshot. Use ⌘ (command) + ⇧ (shift) + 4, press ␣ (space), then click on the Alfred window to create a clean screen shot. Place in the `screenshots` folder.
-- [ ] Update README.md with new version and any additional screenshots.
+- [ ] Update README.md with new version (number and URL) and any additional screenshots.
 - [ ] Export workflow to repo folder. Right-click the workflow in Alfred, click `Export...`. Don't include the `(v1.0)` in the name.
 
 ## Pull Request Process

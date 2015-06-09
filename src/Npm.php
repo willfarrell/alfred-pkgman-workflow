@@ -26,21 +26,26 @@ class Npm extends Repo
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
-			preg_match('/<h3>([\s\S]*?)<\/h3>/i', $pkg, $matches);
+			preg_match('/<a class="name" href="[\s\S]*?">([\s\S]*?)<\/a>/i', $pkg, $matches);
 			$title = trim(strip_tags($matches[1]));
+
+            //preg_match('/<a class="author" href="[\s\S]*?">([\s\S]*?)<\/a>/i', $pkg, $matches);
+			//$author = trim(strip_tags($matches[1]));
 		
 			preg_match('/<p class="description">([\s\S]*?)<\/p>/i', $pkg, $matches);
 		
 			$description = html_entity_decode(trim(strip_tags($matches[1])));
 			
-			preg_match('/<a class="version" href="[\s\S]*?">([\s\S]*?)<\/a>/i', $pkg, $matches);
-			//$author = trim(strip_tags($matches[3][0]));
+			//preg_match('/<span class="stars"><i class="icon-star"></i>([\s\S]*?)<\/span>/i', $pkg, $matches);
+            //$stars = trim(strip_tags($matches[1]));
+
+			preg_match('/<span class="version">([\s\S]*?)<\/span>/i', $pkg, $matches);
 			$version = trim(strip_tags($matches[1]));
 	
 			$this->cache->w->result(
 				$title,
 				$this->makeArg($title, "{$this->url}/package/{$title}"),
-				"{$title} ~ v{$version}", //.' by '.$author,
+				"{$title} ~ {$version}", //.' by '.$author,
 				$description,
 				"icon-cache/{$this->id}.png"
 			);

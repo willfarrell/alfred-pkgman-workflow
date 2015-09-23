@@ -8,8 +8,8 @@ class Docker extends Repo
 {
 	protected $id         = 'docker';
 	protected $kind       = 'images';
-	protected $url        = 'https://registry.hub.docker.com';
-	protected $search_url = 'https://registry.hub.docker.com/search?q=';
+	protected $url        = 'https://hub.docker.com';
+	protected $search_url = 'https://index.docker.io/v1/search?q=';
 
 	public function search($query)
 	{
@@ -17,32 +17,24 @@ class Docker extends Repo
 			return $this->xml(); 
 		}
 		
-		$this->pkgs = $this->cache->get_query_regex(
+		$this->pkgs = $this->cache->get_query_json(
 			$this->id,
 			$query,
-			"{$this->search_url}{$query}",
-			'/(<a href="\/(_|u)\/.*"><div class="repo-list-item box">[\s\S]*?<\/a>)/i',
-			1
-		);
+			"{$this->search_url}{$query}"
+        );
 		
-		foreach($this->pkgs as $pkg) {
+		foreach($this->pkgs->results as $pkg) {
 			
 			// make params
-			preg_match('/<a href="(.*?)">[\s\S]*?<h2>([\s\S]*?)<[\s\S]*<\/h2>([\s\S]*?)<\/div>/i', $pkg, $matches);
-			$title = trim(preg_replace('/\s+/', '', $matches[2]));
-			$url = $this->url . trim(preg_replace('/\s+/', '', $matches[1]));
-			$description = trim(preg_replace('/\s+/', ' ', $matches[3]));
-			if (!$description || trim(preg_replace('/\s+/', '', $matches[3])) == '') {
-				$description = $url;
-			}
+            $title = $pkg->name;
+            $repository = ($pkg->is_official ) ? '_' : 'r';
+			$url = $this->url . '/'. $repository . '/'. $pkg->name;
+            $description = $pkg->description;
 		
-			preg_match('/<span class="timesince" data-time=".*">\s?([\s\S]*?)\s?<\/span>/i', $pkg, $matches);
-			$updated = trim(preg_replace('/\s+/', ' ', $matches[1]));
-	
 			$this->cache->w->result(
 				$title,
 				$this->makeArg($title, $url),
-				$title.' ~ '.$updated,
+				$title.' ~ '.$pkg->star_count,
 				$description,
 				"icon-cache/{$this->id}.png"
 			);

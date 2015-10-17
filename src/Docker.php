@@ -52,5 +52,5 @@ class Docker extends Repo
 }
 
 // Test code, uncomment to debug this script from the command-line
-// $repo = new Docker();
-// echo $repo->search('ng');
+ $repo = new Docker();
+ echo $repo->search('ng');

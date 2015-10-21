@@ -25,7 +25,6 @@ class Gulp extends Repo
         );
 
 		foreach($this->pkgs->results as $pkg) {
-            print_r($pkg);
 
             $title = str_replace('gulp-', '', $pkg->name[0]); // remove gulp- from title
 

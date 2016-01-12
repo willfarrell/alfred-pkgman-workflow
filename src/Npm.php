@@ -6,36 +6,26 @@ require_once('Repo.php');
 
 class Npm extends Repo
 {
-	protected $id         = 'npm';
-	protected $url        = 'https://www.npmjs.com';
-	protected $search_url = 'https://www.npmjs.com/search?q=';
+	protected $id          = 'npm';
+	protected $url         = 'https://www.npmjs.com';
+	protected $search_url  = 'https://www.npmjs.com/search?q=';
+	protected $keyword_url = 'https://www.npmjs.com/browse/keyword/';
 
-	public function search($query)
+	protected function parse_pkgs()
 	{
-		if (!$this->hasMinQueryLength($query)) {
-			return $this->xml(); 
-		}
-		
-		$this->pkgs = $this->cache->get_query_regex(
-			$this->id,
-			$query,
-			"{$this->search_url}{$query}",
-			'/<div class="package-details">([\s\S]*?)<\/div>/i'
-		);
-		
 		foreach($this->pkgs as $pkg) {
-			
+
 			// make params
 			preg_match('/<a class="name" href="[\s\S]*?">([\s\S]*?)<\/a>/i', $pkg, $matches);
 			$title = trim(strip_tags($matches[1]));
 
             //preg_match('/<a class="author" href="[\s\S]*?">([\s\S]*?)<\/a>/i', $pkg, $matches);
 			//$author = trim(strip_tags($matches[1]));
-		
+
 			preg_match('/<p class="description">([\s\S]*?)<\/p>/i', $pkg, $matches);
-		
+
 			$description = html_entity_decode(trim(strip_tags($matches[1])));
-			
+
 			//preg_match('/<span class="stars"><i class="icon-star"></i>([\s\S]*?)<\/span>/i', $pkg, $matches);
             //$stars = trim(strip_tags($matches[1]));
 
@@ -49,14 +39,49 @@ class Npm extends Repo
 				$description,
 				"icon-cache/{$this->id}.png"
 			);
-			
+
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;
 			}
 		}
-		
-		
+	}
+
+	public function keyword($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml();
+		}
+
+		$this->pkgs = $this->cache->get_query_regex(
+			$this->id,
+			$query,
+			"{$this->keyword_url}{$query}",
+			'/<div class="package-details">([\s\S]*?)<\/div>/i'
+		);
+
+		$this->parse_pkgs();
+
+		$this->noResults($query, "{$this->keyword_url}{$query}");
+
+		return $this->xml();
+	}
+
+	public function search($query)
+	{
+		if (!$this->hasMinQueryLength($query)) {
+			return $this->xml();
+		}
+
+		$this->pkgs = $this->cache->get_query_regex(
+			$this->id,
+			$query,
+			"{$this->search_url}{$query}",
+			'/<div class="package-details">([\s\S]*?)<\/div>/i'
+		);
+
+		$this->parse_pkgs();
+
 		$this->noResults($query, "{$this->search_url}{$query}");
 
 		return $this->xml();

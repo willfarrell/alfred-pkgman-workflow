@@ -9,7 +9,7 @@ class Maven extends Repo
 	protected $id         = 'maven';
 	protected $kind       = 'libraries';
 	protected $url        = 'http://search.maven.org';
-	protected $search_url = 'http://search.maven.org/#search|ga|1|';
+	protected $search_url = 'http://search.maven.org/#search%7Cga%7C1%7C';
 
 	public function search($query)
 	{
@@ -27,7 +27,7 @@ class Maven extends Repo
 			
 			// make params
 			$title = "{$pkg->a} (v{$pkg->latestVersion})";
-			$url = "{$this->url}/#artifactdetails|{$pkg->g}|{$pkg->a}|{$pkg->latestVersion}|{$pkg->p}";
+			$url = "{$this->url}/#artifactdetails%7C{$pkg->g}%7C{$pkg->a}%7C{$pkg->latestVersion}%7C{$pkg->p}";
 			$details = "GroupId: {$pkg->id}";
 	
 			$this->cache->w->result(

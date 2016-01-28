@@ -10,7 +10,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pkgman cachedb`: Update local database cache files
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
-* `apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
+* `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
 * `apm {query}`: [Atom Packages](https://atom.io)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Plugins](http://braumeister.org)

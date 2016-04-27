@@ -180,7 +180,7 @@ class Repo
 	public function xml()
 	{
 		$this->cache->w->result(
-			"{$this->id}-www",
+			"{$this->id}-www-".time(),
 			"{$this->url}/",
 			'Go to the website',
 			"{$this->url}",

@@ -8,8 +8,8 @@ class Gradle extends Repo
 {
 	protected $id         = 'gradle';
 	protected $kind       = 'libraries';
-	protected $url        = 'http://search.maven.org';
-	protected $search_url = 'http://search.maven.org/#search%7Cga%7C1%7C';
+	protected $url        = 'https://bintray.com/bintray/jcenter';
+	protected $search_url = 'https://bintray.com/search?query=';
 
 	public function search($query)
 	{
@@ -20,19 +20,19 @@ class Gradle extends Repo
 		$this->pkgs = $this->cache->get_query_json(
 			$this->id,
 			$query,
-			"{$this->url}/solrsearch/select?q={$query}&rows=10&wt=json"
+			"https://api.bintray.com/search/packages/maven?q=*{$query}*"
 		)->response->docs;
 		
 		foreach($this->pkgs as $pkg) {
 			
 			// make params
 			$title = "{$pkg->a} (v{$pkg->latestVersion})";
-			$url = "{$this->url}/#artifactdetails%7C{$pkg->g}%7C{$pkg->a}%7C{$pkg->latestVersion}%7C{$pkg->p}";
+			$url = "{$this->url}/{$pkg->id}/view";
 			$details = "GroupId: {$pkg->id}";
 	
 			$this->cache->w->result(
 				$pkg->a,
-				$this->makeArg($pkg->a, $url),
+				$this->makeArg($pkg->id, $url, "{$pkg->id}:{$pkg->latestVersion}"),
 				$title,
 				$details,
 				"icon-cache/{$this->id}.png"

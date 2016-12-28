@@ -1,4 +1,4 @@
-# Package Managers ([Download v3.12](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.12/Package.Managers.alfredworkflow))
+# Package Managers ([Download v3.13](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.13/Package.Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -31,6 +31,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Linux Packages](http://rpmfind.net)
+* `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)
 
 ## Action Modifiers
@@ -68,6 +69,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][chef]
 ![][apm]
 ![][hex]
+![][st]
 
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
 
@@ -89,4 +91,5 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [pear]: ./screenshots/pear.png "Sample pear result"
 [pypi]: ./screenshots/pypi.png "Sample pypi result"
 [rpm]: ./screenshots/rpm.png "Sample rpm result"
+[st]: ./screenshots/stpm.png "Sample stpm result"
 [yo]: ./screenshots/yo.png "Sample yo result"

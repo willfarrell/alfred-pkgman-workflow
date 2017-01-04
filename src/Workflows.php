@@ -22,7 +22,7 @@ class Workflows {
 
 	/**
 	* Description:
-	* Class constructor function. Intializes all class variables. Accepts one optional parameter
+	* Class constructor function. Initializes all class variables. Accepts one optional parameter
 	* of the workflow bundle id in the case that you want to specify a different bundle id. This
 	* would adjust the output directories for storing data.
 	*
@@ -42,8 +42,8 @@ class Workflows {
 			$this->bundle = $bundleid;
 		endif;
 
-		$this->cache = $this->home. "/Library/Caches/com.runningwithcrayons.Alfred-2/Workflow Data/".$this->bundle;
-		$this->data  = $this->home. "/Library/Application Support/Alfred 2/Workflow Data/".$this->bundle;
+		$this->cache = getenv('alfred_workflow_cache');
+		$this->data  = getenv('alfred_workflow_data');
 
 		if ( !file_exists( $this->cache ) ):
 			exec("mkdir '".$this->cache."'");

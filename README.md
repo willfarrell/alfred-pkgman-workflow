@@ -1,4 +1,4 @@
-# Package Managers ([Download v3.15](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.15/Package.Managers.alfredworkflow))
+# Package Managers ([Download v3.16](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.15/Package.Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -19,6 +19,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)
 * `crates {query}`: [Rust Crates](https://crates.io)
 * `docker {query}`: [Docker Images](http://registry.hub.docker.io)
+* `dt {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
 * `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)

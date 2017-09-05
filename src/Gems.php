@@ -14,28 +14,28 @@ class Gems extends Repo
 	public function search($query)
 	{
 		if (!$this->hasMinQueryLength($query)) {
-			return $this->xml(); 
+			return $this->xml();
 		}
-		
+
 		$this->pkgs = $this->cache->get_query_json(
-			$this->id, 
-			$query, 
+			$this->id,
+			$query,
 			"{$this->url}/api/v1/search?query={$query}"
 		);
-		
+
 		foreach($this->pkgs as $pkg) {
 			if ($this->check($pkg, $query, 'name', 'info')) {
 				$title = $pkg->name;
-				
+				$version = $pkg->version;
 				$this->cache->w->result(
 					$title,
 					$this->makeArg($title, $pkg->project_uri),
 					$title,
-					$pkg->info,
+					"{$version} - $pkg->info",
 					"icon-cache/{$this->id}.png"
 				);
 			}
-			
+
 			// only search till max return reached
 			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
 				break;

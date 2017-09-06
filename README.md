@@ -1,4 +1,4 @@
-# Package Managers ([Download v3.18](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.18/Package.Managers.alfredworkflow))
+# Package Managers ([Download v3.19](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.19/Package.Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -33,6 +33,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Linux Packages](http://rpmfind.net)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
+* `yarn {query}`: [Yarn Packages](https://yarnpkg.com/lang/en/)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)
 
 ## Action Modifiers
@@ -93,4 +94,5 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [pypi]: ./screenshots/pypi.png "Sample pypi result"
 [rpm]: ./screenshots/rpm.png "Sample rpm result"
 [st]: ./screenshots/stpm.png "Sample stpm result"
+[yarn]: ./screenshots/yarn.png "Sample yarn result"
 [yo]: ./screenshots/yo.png "Sample yo result"

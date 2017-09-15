@@ -13,6 +13,7 @@ class Yarn extends Repo
 
   public function search($query)
   {
+    $query = str_replace(' ', '+', $query);
     if (!$this->hasMinQueryLength($query)) {
       return $this->xml();
     }

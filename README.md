@@ -1,4 +1,4 @@
-# Package Managers ([Download v3.20](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.20/Package.Managers.alfredworkflow))
+# Package Managers ([Download v3.21](https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.21/Package.Managers.alfredworkflow))
 
 Package Repo Search
 
@@ -30,6 +30,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pear {query}`: PHP [Pear Packages](http://pear.php.net)
 * `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
+* `r {query}`: [R Packages](https://www.r-pkg.org/)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Linux Packages](http://rpmfind.net)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
@@ -92,6 +93,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [npm]: ./screenshots/npm.png "Sample npm result"
 [pear]: ./screenshots/pear.png "Sample pear result"
 [pypi]: ./screenshots/pypi.png "Sample pypi result"
+[r]: ./screenshots/r.png "Sample r result"
 [rpm]: ./screenshots/rpm.png "Sample rpm result"
 [st]: ./screenshots/stpm.png "Sample stpm result"
 [yarn]: ./screenshots/yarn.png "Sample yarn result"

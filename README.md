@@ -27,6 +27,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `hex {query}`: Elixir [Hex Packages](http://hex.pm)
 * `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
 * `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
+* `nuget {query}`: .Net [NuGet Packages](http://nuget.org)
 * `pear {query}`: PHP [Pear Packages](http://pear.php.net)
 * `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
 * `pypi {query}`: [Python Packages](https://pypi.python.org)

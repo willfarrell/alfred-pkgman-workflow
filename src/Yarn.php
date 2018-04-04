@@ -30,7 +30,7 @@ class Yarn extends Repo
 
       $this->cache->w->result(
         $this->id,
-        $this->makeArg($name, $yarn_url . $p->name, "{$p->name}: {$p->version}"),
+        $this->makeArg($name, $this->yarn_url . $p->name, "{$p->name}: {$p->version}"),
         $name,
         $p->description,
         "icon-cache/{$this->id}.png"

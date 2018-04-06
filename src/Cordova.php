@@ -6,17 +6,17 @@ require_once('Repo.php');
 
 class Cordova extends Repo
 {
-	protected $id         = 'cordova';
-	protected $kind       = 'plugins';
-	protected $url        = 'https://cordova.apache.org/plugins/?q=';
-	protected $search_url = 'https://npmsearch.com/query?fields=name,keywords,license,description,author,modified,homepage,version,rating&q=keywords:%22ecosystem:cordova%22&sort=rating:desc&size=20&start=0&q=';
-	//protected $has_db     = true;
+    protected $id         = 'cordova';
+    protected $kind       = 'plugins';
+    protected $url        = 'https://cordova.apache.org/plugins/?q=';
+    protected $search_url = 'https://npmsearch.com/query?fields=name,keywords,license,description,author,modified,homepage,version,rating&q=keywords:%22ecosystem:cordova%22&sort=rating:desc&size=20&start=0&q=';
+    //protected $has_db     = true;
 
-	public function search($query)
-	{
-		if (!$this->hasMinQueryLength($query)) {
-			return $this->xml(); 
-		}
+    public function search($query)
+    {
+        if (!$this->hasMinQueryLength($query)) {
+            return $this->xml();
+        }
 
         $this->pkgs = $this->cache->get_query_json(
             $this->id,
@@ -24,8 +24,7 @@ class Cordova extends Repo
             "{$this->search_url}{$query}"
         );
 
-		foreach($this->pkgs->results as $pkg) {
-
+        foreach ($this->pkgs->results as $pkg) {
             $title = str_replace('gulp-', '', $pkg->name[0]); // remove gulp- from title
 
             // add version to title
@@ -39,7 +38,7 @@ class Cordova extends Repo
 
             // skip DEPRECATED repos
             // if (strpos($plugin->description, "DEPRECATED") !== false) {
-            // 	continue;
+            //     continue;
             // }
 
             $this->cache->w->result(
@@ -50,19 +49,18 @@ class Cordova extends Repo
                 "icon-cache/{$this->id}.png"
             );
 
-			// only search till max return reached
-			if ( count ( $this->cache->w->results() ) == $this->max_return ) {
-				break;
-			}
-		}
+            // only search till max return reached
+            if (count($this->cache->w->results()) == $this->max_return) {
+                break;
+            }
+        }
 
-		$this->noResults($query, "{$this->search_url}{$query}");
+        $this->noResults($query, "{$this->search_url}{$query}");
 
-		return $this->xml();
-	}
+        return $this->xml();
+    }
 }
 
 // Test code, uncomment to debug this script from the command-line
 // $repo = new Cordova();
 // echo $repo->search('min');
-?>

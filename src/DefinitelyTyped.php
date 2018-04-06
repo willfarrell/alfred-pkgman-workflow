@@ -22,7 +22,7 @@ class DefinitelyTyped extends Repo
             "{$this->search_url}{$query}&size={$this->max_return}"
         );
 
-        foreach($this->pkgs->results as $pkg) {
+        foreach ($this->pkgs->results as $pkg) {
             $p = $pkg->package;
             $name = $p->name;
 
@@ -35,7 +35,7 @@ class DefinitelyTyped extends Repo
             );
 
             // only search till max return reached
-            if ( count ( $this->cache->w->results() ) == $this->max_return ) {
+            if (count($this->cache->w->results()) == $this->max_return) {
                 break;
             }
         }

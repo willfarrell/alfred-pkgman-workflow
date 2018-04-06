@@ -5,8 +5,7 @@ require_once('Cache.php');
 
 $cache = new Cache();
 
-foreach($cache->dbs as $key => $url) {
-	$cache->update_db($key);
+foreach ($cache->dbs as $key => $url) {
+    $cache->update_db($key);
 }
 // ****************
-?>

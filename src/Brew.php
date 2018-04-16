@@ -43,7 +43,7 @@ class Brew extends Repo
                 $this->id,
                 $query,
                 "{$this->search_url}{$query}",
-                '/<div class="formula (odd|even)">([\s\S]*?)<\/div>/i',
+                '/<tr class="formula (odd|even)">([\s\S]*?)<\/tr>/i',
                 2
             );
         }

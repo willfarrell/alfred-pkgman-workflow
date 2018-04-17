@@ -24,6 +24,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
 * `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
 * `gulp {query}`: nodeJS task-runner [Gulp Plugins](http://gulpjs.com)
+* `hackage {query}`: Haskell [package archive](https://hackage.haskell.org)
 * `hex {query}`: Elixir [Hex Packages](http://hex.pm)
 * `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
 * `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)

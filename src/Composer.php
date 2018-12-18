@@ -45,7 +45,7 @@ class Composer extends Repo
                 $pkg->name,
                 $this->makeArg(
                     $pkg->name,
-                    $this->url
+                    "{$this->url}/{$this->kind}/{$pkg->name}"
                 ),
                 $title,
                 $pkg->description,

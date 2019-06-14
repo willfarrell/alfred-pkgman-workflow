@@ -1,4 +1,4 @@
-# Package Managers ([Download latest release](https://github.com/willfarrell/alfred-pkgman-workflow/releases/latest/downloadPackage.Managers.alfredworkflow))
+# Package Managers ([Download latest release](https://github.com/willfarrell/alfred-pkgman-workflow/releases/latest/download/Package.Managers.alfredworkflow))
 
 Package Repo Search
 

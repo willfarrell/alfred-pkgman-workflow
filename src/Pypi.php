@@ -7,8 +7,8 @@ require_once('Repo.php');
 class Pypi extends Repo
 {
     protected $id               = 'pypi';
-    protected $url              = 'https://pypi.python.org';
-    protected $search_url       = 'https://pypi.python.org/pypi?%3Aaction=search&submit=search&term=';
+    protected $url              = 'https://pypi.org';
+    protected $search_url       = 'https://pypi.org/search/?q=';
     protected $min_query_length = 3;
 
     public function search($query)

@@ -344,7 +344,8 @@ class Workflows {
 		$defaults = array(                                  // Create a list of default curl options
 			CURLOPT_RETURNTRANSFER => true,                 // Returns the result as a string
 			CURLOPT_URL => $url,                            // Sets the url to request
-			CURLOPT_FRESH_CONNECT => true
+			CURLOPT_FRESH_CONNECT => true,
+			CURLOPT_USERAGENT => 'AlfredPkgMan-Workflow'
 		);
 
 		if ( $options ):

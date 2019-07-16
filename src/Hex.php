@@ -9,7 +9,7 @@ class Hex extends Repo
     protected $id         = 'hex';
     protected $kind       = 'components';
     protected $url        = 'https://hex.pm';
-    protected $search_url = 'https://hex.pm/api/packages?search=';
+    protected $search_url = 'https://hex.pm/api/packages?sort=downloads&search=';
 
     public function search($query)
     {

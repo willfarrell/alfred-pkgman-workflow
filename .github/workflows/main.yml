@@ -1,10 +1,11 @@
 name: CI
 
 on:
-  tags:
-  - '*'
-  paths:
-  - Package Managers.alfredworkflow
+  push:
+    tags:
+    - '*'
+    paths:
+    - Package Managers.alfredworkflow
 
 jobs:
   build:

@@ -26,5 +26,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        args:
-        - Package.Managers.alfredworkflow
+        args: Package.Managers.alfredworkflow

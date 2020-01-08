@@ -25,9 +25,10 @@ class Npm extends Repo
         foreach ($this->pkgs->results as $pkg) {
             $p = $pkg->package;
             $name = $p->name;
+            $uid = "{$this->id}-{$name}-{$p->version}";
 
             $this->cache->w->result(
-                $this->id,
+                $uid,
                 $this->makeArg($name, $p->links->npm, "{$p->name}: {$p->version}"),
                 $name,
                 $p->description,

@@ -8,8 +8,8 @@ class Maven extends Repo
 {
     protected $id         = 'maven';
     protected $kind       = 'libraries';
-    protected $url        = 'http://search.maven.org';
-    protected $search_url = 'http://search.maven.org/#search%7Cga%7C1%7C';
+    protected $url        = 'https://search.maven.org';
+    protected $search_url = 'https://search.maven.org/#search%7Cga%7C1%7C';
 
     public function search($query)
     {
@@ -26,7 +26,7 @@ class Maven extends Repo
         foreach ($this->pkgs as $pkg) {
             // make params
             $title = "{$pkg->a} (v{$pkg->latestVersion})";
-            $url = "{$this->url}/#artifactdetails%7C{$pkg->g}%7C{$pkg->a}%7C{$pkg->latestVersion}%7C{$pkg->p}";
+            $url = "{$this->url}/artifact/{$pkg->g}/{$pkg->a}/{$pkg->latestVersion}/{$pkg->p}";
             $details = "GroupId: {$pkg->id}";
 
             $this->cache->w->result(

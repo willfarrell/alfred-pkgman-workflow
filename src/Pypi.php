@@ -21,20 +21,24 @@ class Pypi extends Repo
             $this->id,
             $query,
             "{$this->search_url}{$query}",
-            '/<tr class="(.*?)">([\s\S]*?)<\/tr>/i',
-            2
+            '/<a class="package-snippet" ([\s\S]*?)<\/a>/i',
+            1
         );
 
         foreach ($this->pkgs as $pkg) {
             // make params
             // name
-            preg_match('/<a href="(.*?)">(.*?)<\/a>/i', $pkg, $matches);
-            $title = str_replace("&nbsp;", " ", strip_tags($matches[0]));
-            $url = strip_tags($matches[1]);
+            preg_match('/<span class="package-snippet__name">(.*?)<\/span>/i', $pkg, $matches);
+            $title = str_replace("&nbsp;", " ", $matches[1]);
 
-            preg_match_all('/<td>([\s\S]*?)<\/td>/i', $pkg, $matches);
-            $downloads = strip_tags($matches[1][1]);
-            $details = strip_tags($matches[1][2]);
+            preg_match('/href="(.*?)">/i', $pkg, $matches);
+            $url = $matches[1];
+
+            preg_match('/<span class="package-snippet__version">(.*?)<\/span>/i', $pkg, $matches);
+            $downloads = $matches[1];
+
+            preg_match('/<p class="package-snippet__description">(.*?)<\/p>/i', $pkg, $matches);
+            $details = $matches[1];
 
             $this->cache->w->result(
                 $title,

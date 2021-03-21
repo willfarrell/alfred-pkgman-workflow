@@ -1,8 +1,6 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Cache.php');
-require_once('Repo.php');
 
 class Yarn extends Repo
 {
@@ -15,7 +13,7 @@ class Yarn extends Repo
     {
         $query = str_replace(' ', '+', $query);
         if (!$this->hasMinQueryLength($query)) {
-            return $this->xml();
+            return $this->asJson();
         }
 
         $this->pkgs = $this->cache->get_query_json(
@@ -30,21 +28,21 @@ class Yarn extends Repo
 
             $this->cache->w->result(
                 $this->id,
-                $this->makeArg($name, $this->yarn_url . $p->name, "{$p->name}: {$p->version}"),
+                $this->makeArg($name, $this->yarn_url.$p->name, "{$p->name}: {$p->version}"),
                 $name,
                 $p->description,
                 "icon-cache/{$this->id}.png"
             );
 
             // only search till max return reached
-            if (count($this->cache->w->results()) == $this->max_return) {
+            if (count($this->cache->w->results()) === $this->max_return) {
                 break;
             }
         }
 
         $this->noResults($query, "{$this->search_url}{$query}");
 
-        return $this->xml();
+        return $this->asJson();
     }
 }
 

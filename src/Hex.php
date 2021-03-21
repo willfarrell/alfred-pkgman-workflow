@@ -1,8 +1,6 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Cache.php');
-require_once('Repo.php');
 
 class Hex extends Repo
 {
@@ -14,7 +12,7 @@ class Hex extends Repo
     public function search($query)
     {
         if (!$this->hasMinQueryLength($query)) {
-            return $this->xml();
+            return $this->asJson();
         }
 
         $this->pkgs = $this->cache->get_query_json(
@@ -34,14 +32,14 @@ class Hex extends Repo
             );
 
             // only search till max return reached
-            if (count($this->cache->w->results()) == $this->max_return) {
+            if (count($this->cache->w->results()) === $this->max_return) {
                 break;
             }
         }
 
         $this->noResults($query, "{$this->search_url}{$query}");
 
-        return $this->xml();
+        return $this->asJson();
     }
 }
 

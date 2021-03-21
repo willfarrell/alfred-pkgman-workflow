@@ -1,8 +1,6 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Cache.php');
-require_once('Repo.php');
 
 class Stpm extends Repo
 {
@@ -13,7 +11,7 @@ class Stpm extends Repo
     public function search($query)
     {
         if (!$this->hasMinQueryLength($query)) {
-            return $this->xml();
+            return $this->asJson();
         }
 
         $data = $this->cache->get_query_regex(
@@ -52,14 +50,14 @@ class Stpm extends Repo
             );
 
             // only search till max return reached
-            if (count($this->cache->w->results()) == $this->max_return) {
+            if (count($this->cache->w->results()) === $this->max_return) {
                 break;
             }
         }
 
         $this->noResults($query, "{$this->search_url}{$query}");
 
-        return $this->xml();
+        return $this->asJson();
     }
 }
 

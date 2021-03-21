@@ -1,42 +1,49 @@
 <?php
+
+
 namespace WillFarrell\AlfredPkgMan;
 
-ini_set('memory_limit', '-1');
-error_reporting(0);
 
-require_once('Workflows.php');
+ini_set('memory_limit', '-1');
+
 
 class Cache
 {
+    /**
+     * @var Workflows
+     */
+    public $w;
+
     public $cache_age = 14;
-    public $dbs = array(
+    public $dbs = [
         "alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",
         "apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
         "cocoa" => "http://cocoadocs.org/documents.jsonp",
         "grunt" => "http://gruntjs.com/plugin-list.json",
         //"gulp" => "http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version&q=keywords:gulpfriendly&q=keywords:gulpplugin&size=9999&sort=rating:desc&start=0",
         "raspbian" => "http://archive.raspbian.org/raspbian/dists/wheezy/main/binary-armhf/Packages",
-        "yo" => "http://yeoman-generator-list.herokuapp.com/"
-    );
+        "yo" => "http://yeoman-generator-list.herokuapp.com/",
+        'brew' => ['formula' => 'https://formulae.brew.sh/api/formula.json', 'cask' => 'https://formulae.brew.sh/api/cask.json',],
+    ];
     public $query_file = "queries";
 
     public function __construct()
     {
         $this->w = new Workflows();
 
-        $q = $this->w->read($this->query_file.'.json');
-        $this->queries = $q ? (array)$q : array();
+        $q = $this->w->read($this->query_file . '.json');
+        $this->queries = $q ? (array)$q : [];
     }
 
     public function __destruct()
     {
-        $this->w->write($this->queries, $this->query_file.'.json');
+        $this->w->write($this->queries, $this->query_file . '.json');
     }
 
     public function get_query_data($id, $query, $url)
     {
         if (!$query) {
-            return array();
+            return [];
         }
         return $this->w->request($url);
     }
@@ -44,25 +51,25 @@ class Cache
     public function get_db($id)
     {
         if (!array_key_exists($id, $this->dbs)) {
-            return array();
+            return [];
         }
 
         $name = $id;
 
-        $pkgs = $this->w->read($name.'.json');
-        $timestamp = $this->w->filetime($name.'.json');
+        $pkgs = $this->w->read($name . '.json');
+        $timestamp = $this->w->filetime($name . '.json');
         if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
             $data = $this->w->request($this->dbs[$id]);
 
             // clean jsonp wrapper
-            if (substr($this->dbs[$id], -5) == 'jsonp') {
+            if (substr($this->dbs[$id], -5) === 'jsonp') {
                 $data = preg_replace('/.+?([\[{].+[\]}]).+/', '$1', $data);
             }
 
-            $this->w->write($data, $name.'.json');
+            $this->w->write($data, $name . '.json');
             $pkgs = json_decode($data);
         } elseif (!$pkgs) {
-            $pkgs = array();
+            $pkgs = [];
         }
         return $pkgs;
     }
@@ -70,26 +77,26 @@ class Cache
     public function get_query_json($id, $query, $url)
     {
         if (!$query) {
-            return array();
+            return [];
         }
 
-        $name = $id.'.'.$query;
+        $name = $id . '.' . $query;
 
-        $pkgs = $this->w->read($name.'.json');
-        $timestamp = $this->w->filetime($name.'.json');
+        $pkgs = $this->w->read($name . '.json');
+        $timestamp = $this->w->filetime($name . '.json');
         if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
             $data = $this->w->request($url);
 
             // clean jsonp wrapper
-            if (substr($url, -5) == 'jsonp') {
+            if (substr($url, -5) === 'jsonp') {
                 $data = preg_replace('/.+?([\[{].+[\]}]).+/', '$1', $data);
             }
 
-            $this->w->write($data, $name.'.json');
+            $this->w->write($data, $name . '.json');
             $this->queries[$name] = time();
             $pkgs = json_decode($data);
         } elseif (!$pkgs) {
-            $pkgs = array();
+            $pkgs = [];
         }
 
         return $pkgs;
@@ -98,36 +105,47 @@ class Cache
     public function get_query_regex($id, $query, $url, $regex, $regex_pos = 1)
     {
         if (!$query) {
-            return array();
+            return [];
         }
 
-        $name = $id.'.'.$query;
+        $name = $id . '.' . $query;
 
-        $pkgs = $this->w->read($name.'.json');
-        $timestamp = $this->w->filetime($name.'.json');
+        $pkgs = $this->w->read($name . '.json');
+        $timestamp = $this->w->filetime($name . '.json');
 
         // update - Add || 1 for debuggin
         if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400) || 1) {
             $data = $this->w->request($url);
             preg_match_all($regex, $data, $matches);
             $data = $matches[$regex_pos];
-            $this->w->write($data, $name.'.json');
+            $this->w->write($data, $name . '.json');
             $pkgs = is_string($data) ? json_decode($data) : $data;
             $this->queries[$name] = time();
         } elseif (!$pkgs) {
-            $pkgs = array();
+            $pkgs = [];
         }
         return $pkgs;
     }
 
     public function update_db($id)
     {
-        $data = $this->w->request($this->dbs[$id]);
+        $url = $this->dbs[$id];
+        if (is_array($url)) {
+            foreach ($url as $index => $u) {
+                $part = $this->w->request($u);
+                $this->w->write($part, "$id-$index.json");
+                $data[] = $part;
+            }
+
+            return $data;
+        }
+
+        $data = $this->w->request($url);
 
         // clean jsonp wrapper
         $data = preg_replace('/.+?({.+}).+/', '$1', $data);
 
-        $this->w->write($data, $id.'.json');
+        $this->w->write($data, $id . '.json');
         return $data;
     }
 
@@ -135,13 +153,19 @@ class Cache
     {
         // remove db json files
         foreach ($this->dbs as $key => $url) {
-            $this->w->delete($key.'.json');
+            if (is_array($url)) {
+                array_map(function($part) use ($key) {
+                    $this->w->delete("$key-$part.json");
+                }, array_keys($url));
+            } else {
+                $this->w->delete($key . '.json');
+            }
         }
 
         // remove query json files
         foreach ($this->queries as $key => $timestamp) {
-            $this->w->delete($key.'.json');
+            $this->w->delete($key . '.json');
         }
-        $this->queries = array();
+        $this->queries = [];
     }
 }

@@ -1,8 +1,6 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Cache.php');
-require_once('Repo.php');
 
 class Alcatraz extends Repo
 {
@@ -13,7 +11,7 @@ class Alcatraz extends Repo
     public function search($query)
     {
         if (!$this->hasMinQueryLength($query)) {
-            return $this->xml();
+            return $this->asJson();
         }
 
         foreach ($this->pkgs as $categories) {
@@ -31,7 +29,7 @@ class Alcatraz extends Repo
                     }
 
                     // only search till max return reached
-                    if (count($this->cache->w->results()) == $this->max_return) {
+                    if (count($this->cache->w->results()) === $this->max_return) {
                         break;
                     }
                 }
@@ -42,7 +40,7 @@ class Alcatraz extends Repo
         // a web UI for its "repo"
         $this->noResults($query, $this->cache->dbs[$this->id]);
 
-        return $this->xml();
+        return $this->asJson();
     }
 }
 

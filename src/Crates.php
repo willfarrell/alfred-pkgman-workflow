@@ -27,7 +27,7 @@ class Crates extends Repo
                 $pkg->id,
                 $this->makeArg($pkg->name, $url, "\"{$pkg->name}\"=\"{$pkg->max_version}\""),
                 $pkg->name,
-                count($pkg->description) ? $pkg->description : $url,
+                $pkg->description ? $pkg->description : $url,
                 "icon-cache/{$this->id}.png"
             );
 

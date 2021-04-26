@@ -1,8 +1,6 @@
 <?php
-namespace WillFarrell\AlfredPkgMan;
 
-require_once('Cache.php');
-require_once('Repo.php');
+namespace WillFarrell\AlfredPkgMan;
 
 class Apm extends Repo
 {
@@ -13,7 +11,7 @@ class Apm extends Repo
     public function search($query)
     {
         if (!$this->hasMinQueryLength($query)) {
-            return $this->xml();
+            return $this->asJson();
         }
 
         $data = $this->cache->get_query_regex(
@@ -59,7 +57,7 @@ class Apm extends Repo
 
         $this->noResults($query, "{$this->search_url}{$query}");
 
-        return $this->xml();
+        return $this->asJson();
     }
 }
 

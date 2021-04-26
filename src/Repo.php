@@ -1,9 +1,9 @@
 <?php
+
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Cache.php');
 
-class Repo
+abstract class Repo
 {
     /**
      * The ID of the Repo we will search
@@ -95,7 +95,7 @@ class Repo
      */
     protected function makeArg($id, $url, $pkgstr = null)
     {
-        if ($pkgstr == null) {
+        if ($pkgstr === null) {
             $pkgstr = $id;
         }
 
@@ -147,7 +147,8 @@ class Repo
         $name_key = 'name',
         $desc_key = 'description'
     ) {
-        if (stripos($pkg->$name_key, $query) !== false
+        if (
+            stripos($pkg->$name_key, $query) !== false
             || (isset($pkg->$desc_key) && stripos($pkg->$desc_key, $query) !== false)
         ) {
             return true;
@@ -164,7 +165,7 @@ class Repo
      */
     protected function noResults($query, $search_url)
     {
-        if (count($this->cache->w->results()) == 0) {
+        if (count($this->cache->w->results()) === 0) {
             $this->cache->w->result(
                 "{$this->id}-search",
                 $search_url,
@@ -181,16 +182,18 @@ class Repo
      *
      * @return string XML  string representation of the array
      */
-    public function xml()
+    public function asJson()
     {
         $this->cache->w->result(
-            "{$this->id}-www-".time(),
+            "{$this->id}-www-" . time(),
             "{$this->url}/",
             'Go to the website',
             "{$this->url}",
             "icon-cache/{$this->id}.png"
         );
 
-        return $this->cache->w->toxml();
+        return $this->cache->w->toJson();
     }
+
+    abstract public function search($query);
 }

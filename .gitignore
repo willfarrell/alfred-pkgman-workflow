@@ -1,3 +1,7 @@
 *.iml
 .DS_Store
 .idea/*
+dist/
+vendor/
+.rsync
+workflow

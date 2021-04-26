@@ -1,0 +1,20 @@
+{
+  "autoload": {
+    "psr-4": {
+      "WillFarrell\\AlfredPkgMan\\": "src/"
+    }
+  },
+  "description": "https://github.com/willfarrell/alfred-pkgman-workflow",
+  "require": {
+    "php": ">=7.1",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "joetannenbaum/alfred-workflow": "^0.1.2",
+    "samdark/hydrator": "^1.0.4"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.18"
+  },
+  "version": "3.47",
+  "name": "willfarrell/alfred-pkgman-workflow"
+}

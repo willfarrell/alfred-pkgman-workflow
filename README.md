@@ -17,6 +17,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)
+* `cordova {query}`: [Apache Cordova plugins](https://cordova.apache.org/plugins/)
 * `crates {query}`: [Rust Crates](https://crates.io)
 * `docker {query}`: [Docker Images](http://registry.hub.docker.io)
 * `dt {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)

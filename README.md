@@ -35,7 +35,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
-* `rpm {query}`: [Linux Packages](http://rpmfind.net)
+* `rpm {query}`: [Red Hat Linux Packages](http://rpmfind.net)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
 * `yarn {query}`: [Yarn Packages](https://yarnpkg.com/lang/en/)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)

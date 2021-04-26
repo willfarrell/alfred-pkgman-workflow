@@ -76,6 +76,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][pypi]
 ![][rpm]
 ![][st]
+![][yarn]
 ![][yo]
 
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)

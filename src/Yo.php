@@ -6,8 +6,6 @@ class Yo extends Repo
 {
     protected $id         = 'yo';
     protected $kind       = 'generators';
-    protected $url        = 'http://yeoman.io';
-    protected $search_url = 'http://yeoman.io/generators/';
     protected $has_db     = true;
 
     public function search($query)
@@ -16,14 +14,15 @@ class Yo extends Repo
             return $this->asJson();
         }
 
-        foreach ($this->pkgs as $pkg) {
+        foreach ($this->pkgs->results as $pkg) {
             // make params
+            $pkg = $pkg->package;
             if ($this->check($pkg, $query)) {
                 $title = $pkg->name;
 
                 // add author to title
-                if (isset($pkg->owner)) {
-                    $title .= " by {$pkg->owner}";
+                if (isset($pkg->author->name)) {
+                    $title .= " by {$pkg->author->name}";
                 }
 
                 $this->cache->w->result(

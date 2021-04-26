@@ -4,16 +4,19 @@ namespace WillFarrell\AlfredPkgMan;
 
 use Alfred\Workflows\Workflow;
 use RuntimeException;
-use GeneratedHydrator\Configuration;
 use samdark\hydrator\Hydrator;
 
 /**
  * Name:         Workflows
  * Description:  This PHP class object provides several useful functions for retrieving, parsing,
- *               and formatting data to be used with Alfred 2 Workflows.
+ *               and formatting data to be used with Alfred 3+ Workflows.
+ * ChangeLog:
+ *   - 4/26/2021 by Vardan Pogosian (@varp) - Under the hood the original class was refactored to be compatible
+ *                                            with Alfred 3+ for which the core functions are returning back data to the
+ *                                            Alfred now use `joetannenbaum/alfred-workflow`
  * Author:       David Ferguson (@jdfwarrior)
- * Revised:      6/6/2013
- * Version:      0.3.3
+ * Revised:      4/26/2021
+ * Version:      0.4.0
  */
 class Workflows
 {
@@ -35,9 +38,6 @@ class Workflows
      * Class constructor function. Initializes all class variables. Accepts one optional parameter
      * of the workflow bundle id in the case that you want to specify a different bundle id. This
      * would adjust the output directories for storing data.
-     *
-     * @param $bundleid - optional bundle id if not found automatically
-     * @return none
      */
     public function __construct()
     {
@@ -66,7 +66,6 @@ class Workflows
      * Accepts no parameter and returns the value of the bundle id for the current workflow.
      * If no value is available, then false is returned.
      *
-     * @param none
      * @return false if not available, bundle id value if available.
      */
     public function bundle()
@@ -81,7 +80,6 @@ class Workflows
      * Accepts no parameter and returns the value of the path to the cache directory for your
      * workflow if it is available. Returns false if the value isn't available.
      *
-     * @param none
      * @return false if not available, path to the cache directory for your workflow if available.
      */
     public function cache()
@@ -98,7 +96,6 @@ class Workflows
      * Accepts no parameter and returns the value of the path to the storage directory for your
      * workflow if it is available. Returns false if the value isn't available.
      *
-     * @param none
      * @return false if not available, path to the storage directory for your workflow if available.
      */
     public function data()
@@ -114,7 +111,6 @@ class Workflows
      * Accepts no parameter and returns the value of the path to the current directory for your
      * workflow if it is available. Returns false if the value isn't available.
      *
-     * @param none
      * @return false if not available, path to the current directory for your workflow if available.
      */
     public function path()
@@ -131,7 +127,6 @@ class Workflows
      * Accepts no parameter and returns the value of the home path for the current user
      * Returns false if the value isn't available.
      *
-     * @param none
      * @return false if not available, home path for the current user if available.
      */
     public function home()
@@ -147,7 +142,6 @@ class Workflows
      * Description:
      * Returns an array of available result items
      *
-     * @param none
      * @return array - list of result items
      */
     public function results()
@@ -157,10 +151,10 @@ class Workflows
 
     /**
      * Description:
-     * Convert an associative array into XML format
+     * Convert an associative array into JSON format
      *
      * @param $data - An associative array to convert
-     * @return false - XML string representation of the array
+     * @return false - JSON string representation of the array
      */
     public function toJson($data = null)
     {
@@ -168,11 +162,12 @@ class Workflows
 
         if (is_string($data)) {
             $data = json_decode($data, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new RuntimeException('Invalid JSON');
+            }
         }
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException('Invalid JSON');
-        }
 
         if (empty($data)) {
             return $this->workflow->output();
@@ -290,7 +285,7 @@ class Workflows
      *
      * @param $url - URL to request
      * @param $options - Array of curl options
-     * @return result from curl_exec
+     * @return string|bool from curl_exec
      */
     public function request($url = null, $options = null)
     {
@@ -369,7 +364,7 @@ class Workflows
      *
      * @param array - data to save to file
      * @param file - filename to write the cache data to
-     * @return none
+     * @return bool
      */
     public function write($a, $b)
     {
@@ -396,9 +391,9 @@ class Workflows
             file_put_contents($b, $a);
 
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

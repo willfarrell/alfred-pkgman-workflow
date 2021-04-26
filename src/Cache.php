@@ -4,9 +4,6 @@
 namespace WillFarrell\AlfredPkgMan;
 
 
-ini_set('memory_limit', '-1');
-
-
 class Cache
 {
     /**
@@ -14,15 +11,15 @@ class Cache
      */
     public $w;
 
+
     public $cache_age = 14;
     public $dbs = [
         "alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",
         "apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
         "cocoa" => "http://cocoadocs.org/documents.jsonp",
         "grunt" => "http://gruntjs.com/plugin-list.json",
-        //"gulp" => "http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version&q=keywords:gulpfriendly&q=keywords:gulpplugin&size=9999&sort=rating:desc&start=0",
         "raspbian" => "http://archive.raspbian.org/raspbian/dists/wheezy/main/binary-armhf/Packages",
-        "yo" => "http://yeoman-generator-list.herokuapp.com/",
+        "yo" => "https://api.npms.io/v2/search?q=keywords:yeoman-generator%20generator-*",
         'brew' => ['formula' => 'https://formulae.brew.sh/api/formula.json', 'cask' => 'https://formulae.brew.sh/api/cask.json',],
     ];
     public $query_file = "queries";
@@ -71,6 +68,8 @@ class Cache
         } elseif (!$pkgs) {
             $pkgs = [];
         }
+
+
         return $pkgs;
     }
 
@@ -143,7 +142,9 @@ class Cache
         $data = $this->w->request($url);
 
         // clean jsonp wrapper
-        $data = preg_replace('/.+?({.+}).+/', '$1', $data);
+        if (strpos($url, 'jsonp') !== false){
+            $data = preg_replace('/.+?({.+}).+/', '$1', $data);
+        }
 
         $this->w->write($data, $id . '.json');
         return $data;

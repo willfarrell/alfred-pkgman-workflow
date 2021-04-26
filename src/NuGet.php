@@ -1,7 +1,6 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Repo.php');
 
 class NuGet extends Repo
 {

@@ -1,8 +1,6 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-require_once('Repo.php');
-
 class Hackage extends Repo
 {
     protected $id               = 'hackage';
@@ -24,7 +22,7 @@ class Hackage extends Repo
 
         foreach ($this->pkgs as $pkg) {
             $name = $pkg->name;
-            $url = "{$package_url}$pkg->name";
+            $url = "{$this->package_url}$pkg->name";
             $this->cache->w->result(
                 $name,
                 $this->makeArg($name, $url, "- {$name}"),

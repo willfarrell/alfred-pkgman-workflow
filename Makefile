@@ -14,7 +14,7 @@ clean:
 @copy:
 	$(shell [ ! -d "$(distDir)" ] && mkdir -p "$(distDir)")
 	cp -frv bin dist/
-	cp -frv src dist/code
+	cp -frv src dist/
 	cp -fv composer.* dist/
 	cp -frv icon-cache dist/
 	cp -frv vendor dist/

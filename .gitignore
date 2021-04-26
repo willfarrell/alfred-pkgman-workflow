@@ -3,3 +3,5 @@
 .idea/*
 dist/
 vendor/
+.rsync
+workflow

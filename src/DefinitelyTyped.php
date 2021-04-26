@@ -1,11 +1,10 @@
 <?php
 namespace WillFarrell\AlfredPkgMan;
 
-
 class DefinitelyTyped extends Repo
 {
     protected $id         = 'dt';
-    protected $url        = 'http://definitelytyped.org';
+    protected $url        = 'https://definitelytyped.org';
     protected $search_url = 'https://api.npms.io/v2/search?q=scope:types+';
 
     public function search($query)
@@ -38,7 +37,7 @@ class DefinitelyTyped extends Repo
             }
         }
 
-        $this->noResults($query, "{$this->search_url}{$query}");
+        $this->noResults($query, "https://www.typescriptlang.org/dt/search?search={$query}");
 
         return $this->asJson();
     }

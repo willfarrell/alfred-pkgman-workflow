@@ -17,6 +17,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)
+* `cordova {query}`: [Apache Cordova plugins](https://cordova.apache.org/plugins/)
 * `crates {query}`: [Rust Crates](https://crates.io)
 * `docker {query}`: [Docker Images](http://registry.hub.docker.io)
 * `dt {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
@@ -27,14 +28,14 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `hackage {query}`: Haskell [package archive](https://hackage.haskell.org)
 * `hex {query}`: Elixir [Hex Packages](http://hex.pm)
 * `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
+* `metacran {query}`: [R Packages](https://www.r-pkg.org/)
 * `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
 * `nuget {query}`: .Net [NuGet Packages](http://nuget.org)
 * `pear {query}`: PHP [Pear Packages](http://pear.php.net)
 * `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
-* `r {query}`: [R Packages](https://www.r-pkg.org/)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
-* `rpm {query}`: [Linux Packages](http://rpmfind.net)
+* `rpm {query}`: [Red Hat Linux Packages](http://rpmfind.net)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
 * `yarn {query}`: [Yarn Packages](https://yarnpkg.com/lang/en/)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)
@@ -69,12 +70,13 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][gulp]
 ![][hex]
 ![][maven]
+![][metacran]
 ![][npm]
 ![][pear]
 ![][pypi]
-![][r]
 ![][rpm]
 ![][st]
+![][yarn]
 ![][yo]
 
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
@@ -93,10 +95,10 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [gulp]: ./screenshots/gulp.png "Sample gulp result"
 [hex]: ./screenshots/hex.png "Sample hex resuls"
 [maven]: ./screenshots/maven.png "Sample maven result"
+[metacran.png]: ./screenshots/metacran.png "Sample metacran.png result"
 [npm]: ./screenshots/npm.png "Sample npm result"
 [pear]: ./screenshots/pear.png "Sample pear result"
 [pypi]: ./screenshots/pypi.png "Sample pypi result"
-[r]: ./screenshots/r.png "Sample r result"
 [rpm]: ./screenshots/rpm.png "Sample rpm result"
 [st]: ./screenshots/stpm.png "Sample stpm result"
 [yarn]: ./screenshots/yarn.png "Sample yarn result"

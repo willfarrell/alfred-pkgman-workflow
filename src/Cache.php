@@ -1,8 +1,6 @@
 <?php
 
-
 namespace WillFarrell\AlfredPkgMan;
-
 
 class Cache
 {
@@ -16,11 +14,14 @@ class Cache
     public $dbs = [
         "alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",
         "apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
+        "brew" => [
+          "formula" => "https://formulae.brew.sh/api/formula.json",
+          "cask" => "https://formulae.brew.sh/api/cask.json",
+        ],
         "cocoa" => "http://cocoadocs.org/documents.jsonp",
         "grunt" => "http://gruntjs.com/plugin-list.json",
         "raspbian" => "http://archive.raspbian.org/raspbian/dists/wheezy/main/binary-armhf/Packages",
         "yo" => "https://api.npms.io/v2/search?q=keywords:yeoman-generator%20generator-*",
-        'brew' => ['formula' => 'https://formulae.brew.sh/api/formula.json', 'cask' => 'https://formulae.brew.sh/api/cask.json',],
     ];
     public $query_file = "queries";
 

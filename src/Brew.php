@@ -56,7 +56,13 @@ class Brew extends Repo
     private function findMatch(array $pkgs, $query)
     {
         return array_filter($pkgs, static function ($pkg) use ($query) {
-            return is_array($pkg->name) ? soundex($query) == soundex($pkg->name[0]) : soundex($query) == soundex($pkg->name);
+            $match = is_array($pkg->name)
+                ? soundex($query) == soundex($pkg->name[0])
+                : soundex($query) == soundex($pkg->name);
+
+            if (!$match) {
+                return preg_grep("/.*{$query}.*/i", $pkg->name);
+            }
         });
     }
 }

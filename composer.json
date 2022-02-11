@@ -15,6 +15,6 @@
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^2.18"
   },
-  "version": "3.47",
+  "version": "4.1.0",
   "name": "willfarrell/alfred-pkgman-workflow"
 }

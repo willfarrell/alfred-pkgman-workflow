@@ -4,11 +4,15 @@ namespace WillFarrell\AlfredPkgMan;
 
 class Brew extends Repo
 {
-    protected $id         = 'brew';
-    protected $kind       = 'plugins';
-    protected $url        = 'https://brew.sh/#search-bar';
-    protected $baseUrl    = 'https://formulae.brew.sh/api';
-    protected $search_url = ['cask', 'formula'];
+    protected $id = 'brew';
+
+    protected $kind = 'plugins';
+
+    protected $url = 'https://brew.sh/#search-bar';
+
+    protected $baseUrl = 'https://formulae.brew.sh/api';
+
+    protected $search_url = ['formula', 'cask'];
 
     public function search($query)
     {
@@ -31,15 +35,16 @@ class Brew extends Repo
         }
 
         foreach ($this->pkgs as $pkg) {
-            $title = is_array($pkg->name) ? $pkg->name[0]: $pkg->name;
-            $id = is_array($pkg->name) ? $pkg->token: $pkg->name;
+            $title = is_array($pkg->name) ? $pkg->name[0] : $pkg->name;
+            $id = is_array($pkg->name) ? $pkg->token : $pkg->name;
+            $icon = is_array($pkg->name) ? $this->id . '-cask' : $this->id;
 
             $this->cache->w->result(
                 $id,
                 $this->makeArg($id, $pkg->homepage),
                 $title,
                 $pkg->desc,
-                "icon-cache/{$this->id}.png"
+                "icon-cache/{$icon}.png"
             );
 
             // only search till max return reached
@@ -56,7 +61,10 @@ class Brew extends Repo
     private function findMatch(array $pkgs, $query)
     {
         return array_filter($pkgs, static function ($pkg) use ($query) {
-            return is_array($pkg->name) ? soundex($query) == soundex($pkg->name[0]) : soundex($query) == soundex($pkg->name);
+            $pkgName = is_array($pkg->name) ? $pkg->name[0] : $pkg->name;
+            $match = levenshtein($query, $pkgName, 4,2,3);
+
+            return stripos($pkgName, $query) !== false || $match < 4;
         });
     }
 }

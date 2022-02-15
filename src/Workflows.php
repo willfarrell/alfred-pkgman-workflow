@@ -475,7 +475,10 @@ class Workflows
         $autocomplete = null,
         $type = null
     ): array {
-        $temp = compact('uid', 'arg', 'title', 'subtitle', 'icon', 'valid', 'autocomplete', 'type');
+        $temp = compact('uid', 'arg', 'title', 'subtitle', 'valid', 'autocomplete', 'type');
+        $temp['icon'] = [
+            'path' => $icon
+        ];
 
         if (is_null($type)) {
             unset($temp['type']);

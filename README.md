@@ -13,7 +13,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `apm {query}`: [Atom Packages](https://atom.io)
 * `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
-* `brew {query}`: [Homebrew Plugins](http://braumeister.org)
+* `brew {query}`: [Homebrew Forumale/Cask](http://brew.sh)
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)

@@ -3252,15 +3252,17 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 	</dict>
 	<key>variables</key>
 	<dict>
-		<key>XDEBUG_CONFIG</key>
-		<string>idekey=PHPSTORM remote_host=localhost remote_port=9000</string>
+		<key>PATH</key>
+		<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>XDEBUG_TRIGGER</key>
+		<string>1</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
-		<string>XDEBUG_CONFIG</string>
+		<string>PATH</string>
 	</array>
 	<key>version</key>
-	<string>4.2.0</string>
+	<string>4.2.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

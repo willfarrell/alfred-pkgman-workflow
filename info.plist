@@ -1050,7 +1050,8 @@
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
-				<string>php ./bin/update.php</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/update.php</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1115,7 +1116,8 @@
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
-				<string>php ./bin/clear.php</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/clear.php</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1179,7 +1181,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php bower {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php bower {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1228,7 +1231,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php yo {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php yo {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1277,7 +1281,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php grunt {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php grunt {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1326,7 +1331,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php gulp {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php gulp {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1375,7 +1381,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php npm {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php npm {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1424,7 +1431,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php composer {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php composer {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1473,7 +1481,8 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php pear {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php pear {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1613,7 +1622,8 @@ fi</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php gems {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php gems {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1699,7 +1709,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php pypi {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php pypi {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1748,7 +1759,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php alcatraz {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php alcatraz {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1797,7 +1809,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php cocoa {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php cocoa {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1846,7 +1859,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searcing for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php brew {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php brew {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1895,7 +1909,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching hex for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php hex {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php hex {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1944,7 +1959,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php aptGet {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php aptGet {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1993,7 +2009,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php puppet {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php puppet {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2042,7 +2059,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php rpm {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php rpm {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2091,7 +2109,8 @@ open $url</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php maven {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php maven {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2196,7 +2215,8 @@ echo $id</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php gradle {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php gradle {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2245,7 +2265,8 @@ echo $id</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php chef {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php chef {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2294,7 +2315,8 @@ echo $id</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php yarn {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php yarn {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2343,7 +2365,8 @@ echo $id</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php docker {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php docker {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2421,7 +2444,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php raspbian {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php raspbian {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2497,7 +2521,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php cordova {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php cordova {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2546,7 +2571,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php apm {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php apm {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2595,7 +2621,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php crates {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php crates {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2644,7 +2671,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php stpm {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php stpm {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2693,7 +2721,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php hackage {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php hackage {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2742,7 +2771,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php definitelytyped {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php definitelytyped {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2791,7 +2821,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php metacran {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php metacran {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -2840,7 +2871,8 @@ echo $pkgstr</string>
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>php ./bin/index.php nuget {query}</string>
+                                <string>export PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}"
+php ./bin/index.php nuget {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -3262,7 +3294,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<string>PATH</string>
 	</array>
 	<key>version</key>
-	<string>4.2.1</string>
+	<string>4.2.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

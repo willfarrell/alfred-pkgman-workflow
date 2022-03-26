@@ -20,7 +20,7 @@ jobs:
       - name: Create GitHub Release
         uses: elgohr/Github-Release-Action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         with:
           args: ${{ github.ref }}
 

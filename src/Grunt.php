@@ -5,43 +5,36 @@ namespace WillFarrell\AlfredPkgMan;
 class Grunt extends Repo
 {
     protected $id         = 'grunt';
-    protected $kind       = 'plugins';
-    protected $url        = 'http://gruntjs.com';
-    protected $search_url = 'http://gruntjs.com/plugins/';
+    protected $kind       = 'gruntplugin';
     protected $has_db     = true;
+    protected $url        = 'https://npms.io';
+    protected $search_url = 'https://api.npms.io/v2/search?q=keywords:gruntplugin+';
 
     public function search($query)
     {
+        $query = str_replace(' ', '+', $query);
         if (!$this->hasMinQueryLength($query)) {
             return $this->asJson();
         }
 
-        foreach ($this->pkgs->aaData as $pkg) {
-            // make params
-            if ($this->check($pkg, $query, 'name', 'ds')) {
-                // remove grunt- from title
-                $title = str_replace('grunt-', '', $pkg->name);
+        $this->pkgs = $this->cache->get_query_json(
+            $this->id,
+            $query,
+            "{$this->search_url}{$query}&size={$this->max_return}"
+        );
 
-                // add author to title
-                if (isset($pkg->author)) {
-                    $title .= " by {$pkg->author}";
-                }
-                $url = "https://www.npmjs.org/package/{$pkg->name}";
+        foreach ($this->pkgs->results as $pkg) {
+            $p = $pkg->package;
+            $name = $p->name;
+            $uid = "{$this->id}-{$name}-{$p->version}";
 
-                // Uncomment to skip deprecated plugins
-                // if (strpos($plugin->description, "DEPRECATED") !== false) {
-                //     continue;
-                // }
-
-                $this->cache->w->result(
-                    $pkg->name,
-                    $this->makeArg($pkg->name, $url),
-                    $title,
-                    $pkg->ds,
-                    "icon-cache/{$this->id}.png"
-                );
-            }
-
+            $this->cache->w->result(
+                $uid,
+                $this->makeArg($name, $p->links->npm, "{$p->name}: {$p->version}"),
+                $name,
+                $p->description,
+                "icon-cache/{$this->id}.png"
+            );
 
             // only search till max return reached
             if (count($this->cache->w->results()) === $this->max_return) {
@@ -49,7 +42,7 @@ class Grunt extends Repo
             }
         }
 
-        $this->noResults($query, "{$this->search_url}{$query}");
+        $this->noResults($query, "{$this->url}/search?q=keywords:gruntplugin+{$query}");
 
         return $this->asJson();
     }

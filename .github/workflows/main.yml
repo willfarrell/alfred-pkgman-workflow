@@ -18,7 +18,7 @@ jobs:
         run: mv "Package Managers.alfredworkflow" Package.Managers.alfredworkflow
 
       - name: Create GitHub Release
-        uses: elgohr/Github-Release-Action@1.1
+        uses: elgohr/Github-Release-Action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

@@ -5,7 +5,7 @@
 	<key>bundleid</key>
 	<string>com.farrell.pkgman.alfredworkflow</string>
 	<key>category</key>
-	<string>Development</string>
+	<string>Internet</string>
 	<key>connections</key>
 	<dict>
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
@@ -3262,7 +3262,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<string>PATH</string>
 	</array>
 	<key>version</key>
-	<string>4.2.1</string>
+	<string>4.2.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

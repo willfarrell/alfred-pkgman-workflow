@@ -7,32 +7,34 @@ class Yo extends Repo
     protected $id         = 'yo';
     protected $kind       = 'generators';
     protected $has_db     = true;
+    protected $url        = 'https://npms.io';
+    protected $search_url = 'https://api.npms.io/v2/search?q=keywords:yeoman-generator+';
 
     public function search($query)
     {
+        $query = str_replace(' ', '+', $query);
         if (!$this->hasMinQueryLength($query)) {
             return $this->asJson();
         }
 
+        $this->pkgs = $this->cache->get_query_json(
+            $this->id,
+            $query,
+            "{$this->search_url}{$query}&size={$this->max_return}"
+        );
+
         foreach ($this->pkgs->results as $pkg) {
-            // make params
-            $pkg = $pkg->package;
-            if ($this->check($pkg, $query)) {
-                $title = $pkg->name;
+            $p = $pkg->package;
+            $name = $p->name;
+            $uid = "{$this->id}-{$name}-{$p->version}";
 
-                // add author to title
-                if (isset($pkg->author->name)) {
-                    $title .= " by {$pkg->author->name}";
-                }
-
-                $this->cache->w->result(
-                    $pkg->name,
-                    $this->makeArg($pkg->name, $pkg->website),
-                    $title,
-                    $pkg->description,
-                    "icon-cache/{$this->id}.png"
-                );
-            }
+            $this->cache->w->result(
+                $uid,
+                $this->makeArg($name, $p->links->npm, "{$p->name}: {$p->version}"),
+                $name,
+                $p->description,
+                "icon-cache/{$this->id}.png"
+            );
 
             // only search till max return reached
             if (count($this->cache->w->results()) === $this->max_return) {
@@ -40,7 +42,7 @@ class Yo extends Repo
             }
         }
 
-        $this->noResults($query, $this->search_url);
+        $this->noResults($query, "{$this->url}/search?q=keywords:yeoman-generator+{$query}");
 
         return $this->asJson();
     }

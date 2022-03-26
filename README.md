@@ -18,7 +18,6 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)
 * `cordova {query}`: [Apache Cordova plugins](https://cordova.apache.org/plugins/)
-* `crates {query}`: [Rust Crates](https://crates.io)
 * `docker {query}`: [Docker Images](http://registry.hub.docker.io)
 * `dt {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
@@ -63,7 +62,6 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 ![][chef]
 ![][cocoa]
 ![][composer]
-![][crates]
 ![][docker]
 ![][gems]
 ![][grunt]
@@ -88,7 +86,6 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [chef]: ./screenshots/chef.png "Sample chef result"
 [cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
 [composer]: ./screenshots/composer.png "Sample composer result"
-[crates]: ./screenshots/crates.png "Sample crates result"
 [docker]: ./screenshots/docker.png "Sample docker result"
 [gems]: ./screenshots/gems.png "Sample gems result"
 [grunt]: ./screenshots/grunt.png "Sample grunt result"

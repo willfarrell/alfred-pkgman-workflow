@@ -25,7 +25,7 @@ jobs:
           args: ${{ github.ref }}
 
       - name: GitHub Upload Release Artifacts
-        uses: Roang-zero1/github-upload-release-artifacts-action@v2.0.0
+        uses: Roang-zero1/github-upload-release-artifacts-action@v2.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

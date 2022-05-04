@@ -4,6 +4,15 @@ Package Repo Search
 
 Quick package/plugin/component (repo) lookup for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
 
+## PATH Variable
+
+With MacOS 12.3 Monterey losing it's native php, it's now a prerequisite to install your own.
+Simplest way to do it may be to get it via `homebrew install php` for most.
+
+The PATH variable needs to capture not only where PHP is installed, but also where bash is.
+`/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin` for INTEL
+`/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin` for ARM
+
 ## Commands
 
 * `pkgman cleardb`: Clear local database cache files

@@ -6,12 +6,15 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 
 ## PATH Variable
 
-With MacOS 12.3 Monterey losing it's native php, it's now a prerequisite to install your own.
-Simplest way to do it may be to get it via `homebrew install php` for most.
+With macOS ≥12.3 Monterey no longer providing PHP, it's now a prerequisite to install your own.
+Simplest way to install it yourself is via `homebrew install php`.
 
-The PATH variable needs to capture not only where PHP is installed, but also where bash is.
-`/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin` for INTEL
-`/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin` for ARM
+If you don’t have Homebrew, you can install it via [instructions on their homepage, brew.sh](https://brew.sh).
+
+The `PATH` variable needs to capture not only where PHP is installed, but also where Bash is. Here are two variations:
+
+* Intel Macs: `/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin`
+* Apple Silicon Macs: `/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin`
 
 ## Commands
 
@@ -109,3 +112,4 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [st]: ./screenshots/stpm.png "Sample stpm result"
 [yarn]: ./screenshots/yarn.png "Sample yarn result"
 [yo]: ./screenshots/yo.png "Sample yo result"
+

@@ -596,39 +596,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>A43C7C1D-6687-4F87-8C0E-45EAB012AB05</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>78E1FDBC-68BA-4F6C-96C4-ADD386DF59CC</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>D6D1B349-B61B-4CD4-BAF6-A2315284C4BE</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string>Copy package name to front most app.</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>A7CD4656-328C-4B54-B34C-F38C9B4B7984</string>
-				<key>modifiers</key>
-				<integer>131072</integer>
-				<key>modifiersubtext</key>
-				<string>Inject package into Cargo.toml (paste to front most app).</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>A6F75F15-2128-4002-A841-2872651A1640</key>
 		<array>
 			<dict>
@@ -2583,55 +2550,6 @@ echo $pkgstr</string>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>keyword</key>
-				<string>crates</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>php ./bin/index.php crates {query}</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search crates for "{query}"</string>
-				<key>title</key>
-				<string>Search crates</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>A43C7C1D-6687-4F87-8C0E-45EAB012AB05</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>1</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>keyword</key>
 				<string>st</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
@@ -2863,7 +2781,11 @@ echo $pkgstr</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Quick package/plugin/component (repo) lookup for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
+	<string># Package Managers ([Download latest release](https://github.com/willfarrell/alfred-pkgman-workflow/releases/latest/download/Package.Managers.alfredworkflow))
+
+Package Repo Search
+
+Quick package/plugin/component (repo) lookup for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
 
 ## Commands
 
@@ -2874,12 +2796,11 @@ echo $pkgstr</string>
 * `apm {query}`: [Atom Packages](https://atom.io)
 * `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
-* `brew {query}`: [Homebrew Plugins](http://braumeister.org)
+* `brew {query}`: [Homebrew Forumale/Cask](http://brew.sh)
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
 * `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)
 * `cordova {query}`: [Apache Cordova plugins](https://cordova.apache.org/plugins/)
-* `crates {query}`: [Rust Crates](https://crates.io)
 * `docker {query}`: [Docker Images](http://registry.hub.docker.io)
 * `dt {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
@@ -2915,7 +2836,53 @@ Workflows can break from time to time due to changes by the provider of the repo
 
 All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer than expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended. Clearing your cache is recommended after an update if the package manager you use had a bug previously.
 
-The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.</string>
+The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
+
+![][alcatraz]
+![][apm]
+![][bower]
+![][brew]
+![][chef]
+![][cocoa]
+![][composer]
+![][docker]
+![][gems]
+![][grunt]
+![][gulp]
+![][hex]
+![][maven]
+![][metacran]
+![][npm]
+![][pear]
+![][pypi]
+![][rpm]
+![][st]
+![][yarn]
+![][yo]
+
+Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
+
+[alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
+[apm]: ./screenshots/apm.png "Sample apm result"
+[bower]: ./screenshots/bower.png "Sample bower result"
+[brew]: ./screenshots/brew.png "Sample brew result"
+[chef]: ./screenshots/chef.png "Sample chef result"
+[cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
+[composer]: ./screenshots/composer.png "Sample composer result"
+[docker]: ./screenshots/docker.png "Sample docker result"
+[gems]: ./screenshots/gems.png "Sample gems result"
+[grunt]: ./screenshots/grunt.png "Sample grunt result"
+[gulp]: ./screenshots/gulp.png "Sample gulp result"
+[hex]: ./screenshots/hex.png "Sample hex resuls"
+[maven]: ./screenshots/maven.png "Sample maven result"
+[metacran.png]: ./screenshots/metacran.png "Sample metacran.png result"
+[npm]: ./screenshots/npm.png "Sample npm result"
+[pear]: ./screenshots/pear.png "Sample pear result"
+[pypi]: ./screenshots/pypi.png "Sample pypi result"
+[rpm]: ./screenshots/rpm.png "Sample rpm result"
+[st]: ./screenshots/stpm.png "Sample stpm result"
+[yarn]: ./screenshots/yarn.png "Sample yarn result"
+[yo]: ./screenshots/yo.png "Sample yo result"</string>
 	<key>uidata</key>
 	<dict>
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
@@ -3106,13 +3073,6 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>ypos</key>
 			<integer>1160</integer>
 		</dict>
-		<key>A43C7C1D-6687-4F87-8C0E-45EAB012AB05</key>
-		<dict>
-			<key>xpos</key>
-			<integer>35</integer>
-			<key>ypos</key>
-			<integer>2660</integer>
-		</dict>
 		<key>A6F75F15-2128-4002-A841-2872651A1640</key>
 		<dict>
 			<key>xpos</key>
@@ -3258,11 +3218,9 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<string>1</string>
 	</dict>
 	<key>variablesdontexport</key>
-	<array>
-		<string>PATH</string>
-	</array>
+	<array/>
 	<key>version</key>
-	<string>4.2.3</string>
+	<string>5.0.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

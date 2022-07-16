@@ -7,7 +7,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 ## PATH Variable
 
 With macOS ≥12.3 Monterey no longer providing PHP, it's now a prerequisite to install your own.
-Simplest way to install it yourself is via `homebrew install php`.
+Simplest way to install it yourself is via `brew install php`.
 
 If you don’t have Homebrew, you can install it via [instructions on their homepage, brew.sh](https://brew.sh).
 

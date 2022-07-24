@@ -3215,10 +3215,14 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 	<key>variables</key>
 	<dict>
 		<key>PATH</key>
-		<string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}</string>
 		<key>XDEBUG_TRIGGER</key>
 		<string>1</string>
 	</dict>
+	<key>variablesdontexport</key>
+	<array>
+		<string>XDEBUG_TRIGGER</string>
+	</array>
 	<key>version</key>
 	<string>5.1.0</string>
 	<key>webaddress</key>

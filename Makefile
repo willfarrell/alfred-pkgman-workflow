@@ -1,8 +1,9 @@
-.PHONY: dist clean updateInfoPlist copyIcons buildWorkflow linkSourceFoldersToWorkflow
+.PHONY: dist clean copyIcons buildWorkflow release linkSourceFoldersToWorkflow
 
 distDir=./dist
+workflowName="Package Managers.alfredworkflow"
 
-dist: | composer copySources copyIcons
+dist: | composer copySources copyIcons buildWorkflow
 clean:
 	rm -rf $(distDir)/*
 
@@ -19,19 +20,19 @@ copySources:
 	cp -frv icon-cache $(distDir)
 	cp -frv vendor $(distDir)
 
-updateInfoPlist:
-	-[[ "${ALFRED_PKGMAN_WORKFLOW_DIR}" == "" ]] && { echo "ALFRED_PKGMAN_WORKFLOW_DIR is not set! Aborting!"; exit 1; }
-	cp -fv "${ALFRED_PKGMAN_WORKFLOW_DIR}"/info.plist .
-
 copyIcons:
 	-[[ "${ALFRED_PKGMAN_WORKFLOW_DIR}" == "" ]] && { echo "ALFRED_PKGMAN_WORKFLOW_DIR is not set! Aborting!"; exit 1; }
 	find "${ALFRED_PKGMAN_WORKFLOW_DIR}" -type f -name "*.png" -depth 1 -exec cp -fv {} $(distDir) \;
 
-buildWorkflow: | dist
-	mkdir -p $(distDir)/"Package Managers.alfredworkflow"
-	find $(distDir) -type d ! -name "Package Managers.alfredworkflow" -depth 1 -exec cp -rvf {} $(distDir)/"Package Managers.alfredworkflow" \;
-	find $(distDir) -type f ! -name "Package Managers.alfredworkflow" -depth 1 -exec cp -vf {} $(distDir)/"Package Managers.alfredworkflow" \;
-	cp -vf info.plist $(distDir)/"Package Managers.alfredworkflow"
+buildWorkflow:
+	-[[ "${ALFRED_PKGMAN_WORKFLOW_DIR}" == "" ]] && { echo "ALFRED_PKGMAN_WORKFLOW_DIR is not set! Aborting!"; exit 1; }
+	cp -fv "${ALFRED_PKGMAN_WORKFLOW_DIR}"/info.plist $(distDir)
+	cd $(distDir) && zip -r $(workflowName) * -x "*.DS_Store"
+
+release: | dist
+	cp -fv $(distDir)/info.plist .
+	cp -fv $(distDir)/$(workflowName) .
+
 
 linkSourceFoldersToWorkflow:
 	-[[ "${ALFRED_PKGMAN_WORKFLOW_DIR}" == "" ]] && { echo "ALFRED_PKGMAN_WORKFLOW_DIR is not set! Aborting!"; exit 1; }

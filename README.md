@@ -67,6 +67,37 @@ All repos have caching enabled to speed up common queries. These caches are refr
 
 The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
 
+## Contribution
+
+There is the Makefile to automate the contribution steps. Makefile have one prerequisite: you should set `ALFRED_PKGMAN_WORKFLOW_DIR`
+shell environment variable targeting to workflow path installed in Alfred. To get the path you should:
+ 1. go Alfred Preferences -> Workflows
+ 2. find Package Managers 
+ 3. right click on it and select Open in Finder   
+
+To make a contribution you need to:
+1. make desired changes to workflow / underlying code base
+2. build distributive - the Alfred workflow
+3. prepare a new release
+    1. update `Package Managers.alfredworkflow` file in the root of repository
+    2. update `info.plist` in the root of the repository
+
+### make changes to workflow / underlying code base
+
+`make linkSourceFoldersToWorkflow` - links src, bin, vendor folders from your local cloned source code folder 
+of the workflow to corresponding folders that installed in Alfred, located at `ALFRED_PKGMAN_WORKFLOW_DIR`.
+
+### build distributive - the Alfred workflow
+
+`make dist` - runs composer install, copies sources to `./dist`, copies icons and `info.plist` from `ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`,
+zips `./dist` to `Package Managers.alfredworkflow`
+
+### prepare a new release
+
+`make release` builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
+
+
+
 ![][alcatraz]
 ![][apm]
 ![][bower]

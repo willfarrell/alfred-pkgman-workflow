@@ -94,7 +94,7 @@ zips `./dist` to `Package Managers.alfredworkflow`
 
 ### prepare a new release
 
-`make release` builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
+`make release` - builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
 
 
 

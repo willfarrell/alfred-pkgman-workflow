@@ -421,7 +421,7 @@ class Workflows
         $out = file_get_contents($a);
         if (!is_null(json_decode($out)) && !$array) {
             $out = json_decode($out);
-        } elseif (!is_null(json_decode($out)) && !$array) {
+        } elseif (!is_null(json_decode($out)) && $array) {
             $out = json_decode($out, true);
         }
 

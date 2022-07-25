@@ -4,13 +4,13 @@ namespace WillFarrell\AlfredPkgMan;
 
 use Symfony\Component\DomCrawler\Crawler;
 
-class AptGet extends Repo
+class Snap extends Repo
 {
-    protected $id = 'apt-get';
+    protected $id = 'snap';
 
-    protected $url = 'https://packages.ubuntu.com';
+    protected $url = 'https://snapcraft.io';
 
-    protected $search_url = 'https://packages.ubuntu.com/search?searchon=names&suite=jammy&section=all&keywords=';
+    protected $search_url = 'https://snapcraft.io/search?q=';
 
     public function search($query)
     {
@@ -25,24 +25,13 @@ class AptGet extends Repo
         );
 
         $crawler = new Crawler($html);
-        foreach ($crawler->filter('#psearchres h3') as $node) {
+        foreach ($crawler->filter('a.p-media-object--snap') as $node) {
             $node = new Crawler($node);
 
-            $name = str_replace('Package ', '', $node->text());
-            $href = $node->nextAll()->first()->filter('a.resultlink')->attr('href');
-
-            preg_match('#</a>(.*)<br>#siU', $node->nextAll()->first()->children('li')->html(), $matches);
-            if (count($matches) < 2) {
-                preg_match('#</a>:(.*)<a.*>(.*)</a#siU', $node->nextAll()->first()->children('li')->html(), $matches);
-                $matches = [
-                    $matches[0],
-                    $matches[1] . $matches[2],
-                ];
-            }
-
-            $desc = (count($matches) < 2)
-                ? ''
-                : preg_replace('/([\n\t]+|[\s]+)/', ' ', trim(strip_tags($matches[1])));
+            $href = str_replace('/', '', $node->attr('href'));
+            $title = explode('–', htmlspecialchars_decode($node->attr('title')));
+            $name = trim(array_shift($title));
+            $desc = trim($title[0] ?? '');
 
             $this->pkgs[] = compact('name', 'desc', 'href');
 

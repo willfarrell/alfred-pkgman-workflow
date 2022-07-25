@@ -18,8 +18,12 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 
 ## Commands
 
+### Local Cache Management Commands
+
 * `pkgman cleardb`: Clear local database cache files
 * `pkgman cachedb`: Update local database cache files
+
+## Package Repository Search Commands
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
 * `atom {query}`: [Atom Packages](https://atom.io)

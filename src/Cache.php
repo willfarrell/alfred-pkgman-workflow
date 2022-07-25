@@ -113,17 +113,43 @@ class Cache
         $pkgs = $this->w->read($name . '.json');
         $timestamp = $this->w->filetime($name . '.json');
 
-        // update - Add || 1 for debuggin
-        if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400) || 1) {
+        if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
             $data = $this->w->request($url);
+
             preg_match_all($regex, $data, $matches);
             $data = $matches[$regex_pos];
+
             $this->w->write($data, $name . '.json');
             $pkgs = is_string($data) ? json_decode($data) : $data;
             $this->queries[$name] = time();
         } elseif (!$pkgs) {
             $pkgs = [];
         }
+
+        return $pkgs;
+    }
+
+    public function get_query_raw($id, $query, $url)
+    {
+        if (empty($query)) {
+            return [];
+        }
+
+        $name = $id . '.' . $query;
+
+        $pkgs = $this->w->read($name . '.json');
+        $timestamp = $this->w->filetime($name . '.json');
+
+        if ($pkgs === false || $timestamp < (time() - $this->cache_age * 86400)) {
+            $data = $this->w->request($url);
+            $this->w->write($data, $name . '.json');
+            $pkgs = $data;
+
+            $this->queries[$name] = time();
+
+            return $pkgs;
+        }
+
         return $pkgs;
     }
 

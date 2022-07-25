@@ -8,6 +8,29 @@
 	<string>Development</string>
 	<key>connections</key>
 	<dict>
+		<key>032F44D0-0189-4EFE-AA93-B98F8E342845</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>78E1FDBC-68BA-4F6C-96C4-ADD386DF59CC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>D6D1B349-B61B-4CD4-BAF6-A2315284C4BE</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Copy package name to front most app.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
 		<array>
 			<dict>
@@ -937,7 +960,7 @@
 				<key>destinationuid</key>
 				<string>78E1FDBC-68BA-4F6C-96C4-ADD386DF59CC</string>
 				<key>modifiers</key>
-				<integer>0</integer>
+				<integer>1048576</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 				<key>vitoclose</key>
@@ -1948,6 +1971,55 @@ open $url</string>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>keyword</key>
+				<string>snap</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>php ./bin/index.php snap {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search snap for "{query}"</string>
+				<key>title</key>
+				<string>Search snap</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>032F44D0-0189-4EFE-AA93-B98F8E342845</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>1</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
 				<string>puppet</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
@@ -2033,55 +2105,6 @@ open $url</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>1</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>55</integer>
-				<key>keyword</key>
-				<string>maven</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>php ./bin/index.php maven {query}</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search Maven for "{query}"</string>
-				<key>title</key>
-				<string>Search Maven</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>2F314483-5E76-477B-BB7E-574CA71131B4</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -2134,6 +2157,55 @@ echo $id</string>
 			<string>D6D1B349-B61B-4CD4-BAF6-A2315284C4BE</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>1</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>55</integer>
+				<key>keyword</key>
+				<string>maven</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>php ./bin/index.php maven {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search Maven for "{query}"</string>
+				<key>title</key>
+				<string>Search Maven</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>2F314483-5E76-477B-BB7E-574CA71131B4</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2285,6 +2357,62 @@ echo $id</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>query="{query}";
+
+id=$(echo $query | cut -d "|" -f1)
+url=$(echo $query | cut -d "|" -f2)
+pkgstr=$(echo $query | cut -d "|" -f3)
+
+echo $pkgstr</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<true/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>A6F75F15-2128-4002-A841-2872651A1640</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>A7CD4656-328C-4B54-B34C-F38C9B4B7984</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -2334,35 +2462,6 @@ echo $id</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>127</integer>
-				<key>script</key>
-				<string>query="{query}";
-
-id=$(echo $query | cut -d "|" -f1)
-url=$(echo $query | cut -d "|" -f2)
-pkgstr=$(echo $query | cut -d "|" -f3)
-
-echo $pkgstr</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -2408,33 +2507,6 @@ echo $pkgstr</string>
 			<string>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</string>
 			<key>version</key>
 			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<true/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-				<key>ignoredynamicplaceholders</key>
-				<false/>
-				<key>transient</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>A6F75F15-2128-4002-A841-2872651A1640</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.junction</string>
-			<key>uid</key>
-			<string>A7CD4656-328C-4B54-B34C-F38C9B4B7984</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -2794,7 +2866,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
 * `apm {query}`: [Atom Packages](https://atom.io)
-* `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
+* `apt-get {query}`: [Ubuntu Packages](https://packages.ubuntu.com)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Forumale/Cask](http://brew.sh)
 * `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
@@ -2818,6 +2890,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Red Hat Linux Packages](http://rpmfind.net)
+* `snap {query}`: [Ubuntu Snap packages](https://snapcraft.io)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
 * `yarn {query}`: [Yarn Packages](https://yarnpkg.com/lang/en/)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)
@@ -2885,12 +2958,19 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [yo]: ./screenshots/yo.png "Sample yo result"</string>
 	<key>uidata</key>
 	<dict>
+		<key>032F44D0-0189-4EFE-AA93-B98F8E342845</key>
+		<dict>
+			<key>xpos</key>
+			<real>35</real>
+			<key>ypos</key>
+			<real>1675</real>
+		</dict>
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
 		<dict>
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2360</real>
+			<real>2500</real>
 		</dict>
 		<key>0A704625-29E6-450E-8F2C-8E4EC7179899</key>
 		<dict>
@@ -2927,7 +3007,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2160</real>
+			<real>2300</real>
 		</dict>
 		<key>1A806429-BBAB-4227-B0C9-46E96CD3E492</key>
 		<dict>
@@ -2957,7 +3037,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>1860</real>
+			<real>2000</real>
 		</dict>
 		<key>348251C4-2B72-432F-A923-B082C6740DEA</key>
 		<dict>
@@ -2971,7 +3051,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2060</real>
+			<real>2200</real>
 		</dict>
 		<key>4F9B49BB-0F1E-4D72-A339-08C76E2D2C2A</key>
 		<dict>
@@ -2992,7 +3072,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2460</real>
+			<real>2600</real>
 		</dict>
 		<key>5F73C46B-877B-4BC6-A231-E72525BBCEB2</key>
 		<dict>
@@ -3027,7 +3107,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2560</real>
+			<real>2700</real>
 		</dict>
 		<key>6DA4E86D-6897-4E36-811B-EA9340364E48</key>
 		<dict>
@@ -3064,7 +3144,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2260</real>
+			<real>2400</real>
 		</dict>
 		<key>98FB2C27-091A-41A9-B3E1-109EA8523BBF</key>
 		<dict>
@@ -3115,7 +3195,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>1960</real>
+			<real>2100</real>
 		</dict>
 		<key>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</key>
 		<dict>
@@ -3161,7 +3241,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>1760</real>
+			<real>1900</real>
 		</dict>
 		<key>E106723F-9932-431B-8250-64F2983338FC</key>
 		<dict>
@@ -3200,7 +3280,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>1660</real>
+			<real>1800</real>
 		</dict>
 		<key>F79627F4-5450-4A78-A93A-73EDCFB50A2B</key>
 		<dict>
@@ -3224,7 +3304,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<string>XDEBUG_TRIGGER</string>
 	</array>
 	<key>version</key>
-	<string>5.1.0</string>
+	<string>6.0.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

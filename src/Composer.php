@@ -17,7 +17,7 @@ class Composer extends Repo
         $this->pkgs = $this->cache->get_query_json(
             $this->id,
             $query,
-            "{$this->url}/search.json?q={$query}"
+            sprintf('%s/search.json?q=%s', $this->url, urlencode($query))
         )->results;
 
         // foreach ($this->pkgs as $pkg) {

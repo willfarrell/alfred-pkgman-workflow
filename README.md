@@ -69,34 +69,33 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 
 ## Contribution
 
-There is the Makefile to automate the contribution steps. Makefile have one prerequisite: you should set `ALFRED_PKGMAN_WORKFLOW_DIR`
-shell environment variable targeting to workflow path installed in Alfred. To get the path you should:
- 1. go Alfred Preferences -> Workflows
- 2. find Package Managers 
- 3. right click on it and select Open in Finder   
+There is a `Makefile` to automate the contribution steps. This `Makefile` have one prerequisite: you should set `ALFRED_PKGMAN_WORKFLOW_DIR` shell environment variable targeting to workflow path installed in Alfred. To get the path you should:
 
-To make a contribution you need to:
-1. make desired changes to workflow / underlying code base
-2. build distributive - the Alfred workflow
-3. prepare a new release
-    1. update `Package Managers.alfredworkflow` file in the root of repository
-    2. update `info.plist` in the root of the repository
+1. Go Alfred Preferences → Workflows
+2. Find “Package Managers”
+3. Right click on it and select “Open in Finder”
 
-### make changes to workflow / underlying code base
+To make a contribution:
 
-`make linkSourceFoldersToWorkflow` - links src, bin, vendor folders from your local cloned source code folder 
-of the workflow to corresponding folders that installed in Alfred, located at `ALFRED_PKGMAN_WORKFLOW_DIR`.
+1. Make desired changes to workflow / underlying code base
+2. Build the Alfred workflow
+3. Prepare a new release:
+    1. Update `Package Managers.alfredworkflow` file in the root of repository from your newly-built one
+    2. Update `info.plist` in the root of the repository
 
-### build distributive - the Alfred workflow
+See below for how to run the automation that handles these steps.
 
-`make dist` - runs composer install, copies sources to `./dist`, copies icons and `info.plist` from `ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`,
-zips `./dist` to `Package Managers.alfredworkflow`
+### Make changes to workflow / underlying code base
 
-### prepare a new release
+`make linkSourceFoldersToWorkflow` - links src, bin, vendor folders from your local cloned source code folder of the workflow to corresponding folders that installed in Alfred, located at `ALFRED_PKGMAN_WORKFLOW_DIR`.
+
+### Build the Alfred workflow
+
+`make dist` - runs `composer install`, copies sources to `./dist`, copies icons and `info.plist` from `ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`, zips `./dist` to `Package Managers.alfredworkflow`
+
+### Prepare a new release
 
 `make release` - builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
-
-
 
 ![][alcatraz]
 ![][apm]
@@ -143,4 +142,3 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 [st]: ./screenshots/stpm.png "Sample stpm result"
 [yarn]: ./screenshots/yarn.png "Sample yarn result"
 [yo]: ./screenshots/yo.png "Sample yo result"
-

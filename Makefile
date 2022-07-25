@@ -22,7 +22,7 @@ copySources:
 
 copyIcons:
 	-[[ "${ALFRED_PKGMAN_WORKFLOW_DIR}" == "" ]] && { echo "ALFRED_PKGMAN_WORKFLOW_DIR is not set! Aborting!"; exit 1; }
-	find "${ALFRED_PKGMAN_WORKFLOW_DIR}" -type f -name "*.png" -depth 1 -exec cp -fv {} $(distDir) \;
+	/usr/bin/find "${ALFRED_PKGMAN_WORKFLOW_DIR}" -type f -name "*.png" -depth 1 -exec cp -fv {} $(distDir) \;
 
 buildWorkflow:
 	-[[ "${ALFRED_PKGMAN_WORKFLOW_DIR}" == "" ]] && { echo "ALFRED_PKGMAN_WORKFLOW_DIR is not set! Aborting!"; exit 1; }

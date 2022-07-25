@@ -22,7 +22,7 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 * `pkgman cachedb`: Update local database cache files
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
-* `apm {query}`: [Atom Packages](https://atom.io)
+* `atom {query}`: [Atom Packages](https://atom.io)
 * `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Forumale/Cask](http://brew.sh)
@@ -31,7 +31,7 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 * `composer {query}`: PHP [Composer Packages](https://packagist.org)
 * `cordova {query}`: [Apache Cordova plugins](https://cordova.apache.org/plugins/)
 * `docker {query}`: [Docker Images](http://registry.hub.docker.io)
-* `dt {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
+* `definitelytyped {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
 * `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
@@ -98,7 +98,7 @@ See below for how to run the automation that handles these steps.
 `make release` - builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
 
 ![Alcatraz logo][alcatraz]
-![Atom package manager logo][apm]
+![Atom logo][atom]
 ![Bower logo][bower]
 ![Homebrew logo][brew]
 ![Chef logo][chef]

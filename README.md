@@ -51,6 +51,7 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Red Hat Linux Packages](http://rpmfind.net)
+* `snap {query}`: [Snapcraft Packages](https://snapcraft.io)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
 * `yarn {query}`: [Yarn Packages](https://yarnpkg.com/lang/en/)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)

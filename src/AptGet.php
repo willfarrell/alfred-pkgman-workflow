@@ -1,11 +1,16 @@
 <?php
+
 namespace WillFarrell\AlfredPkgMan;
+
+use Symfony\Component\DomCrawler\Crawler;
 
 class AptGet extends Repo
 {
-    protected $id         = 'apt-get';
-    protected $url        = 'https://apps.ubuntu.com';
-    protected $search_url = 'https://apps.ubuntu.com/cat/search/?q=';
+    protected $id = 'apt-get';
+
+    protected $url = 'https://packages.ubuntu.com';
+
+    protected $search_url = 'https://packages.ubuntu.com/search?searchon=names&suite=jammy&section=all&keywords=';
 
     public function search($query)
     {
@@ -13,25 +18,47 @@ class AptGet extends Repo
             return $this->asJson();
         }
 
-        $this->pkgs = $this->cache->get_query_regex(
+        $html = $this->cache->get_query_raw(
             $this->id,
             $query,
-            "{$this->search_url}{$query}",
-            '/<tr>([\s\S]*?)<\/tr>/i'
+            sprintf('%s%s', $this->search_url, urlencode($query)),
         );
 
+        $crawler = new Crawler($html);
+        foreach ($crawler->filter('#psearchres h3') as $node) {
+            $node = new Crawler($node);
+
+            $name = str_replace('Package ', '', $node->text());
+            $href = $node->nextAll()->first()->filter('a.resultlink')->attr('href');
+
+            preg_match('#</a>(.*)<br>#siU', $node->nextAll()->first()->children('li')->html(), $matches);
+            if (count($matches) < 2) {
+                preg_match('#</a>:(.*)<a.*>(.*)</a#siU', $node->nextAll()->first()->children('li')->html(), $matches);
+                $matches = [
+                    $matches[0],
+                    $matches[1] . $matches[2],
+                ];
+            }
+
+            $desc = (count($matches) < 2)
+                ? ''
+                : preg_replace('/([\n\t]+|[\s]+)/', ' ', trim(strip_tags($matches[1])));
+
+            $this->pkgs[] = compact('name', 'desc', 'href');
+
+            // only search till max return reached
+            if (count($this->pkgs) === $this->max_return) {
+                break;
+            }
+        }
+
         foreach ($this->pkgs as $item) {
-            preg_match('/<p>(.*?)<\/p>/i', $item, $matches);
-            $name = trim(strip_tags($matches[1]));
-
-            preg_match('/<h3>([\s\S]*?)<\/h3>/i', $item, $matches);
-            $description = trim(strip_tags($matches[1]));
-
+            $name = $item['name'];
             $this->cache->w->result(
                 $name,
-                $this->makeArg($name, "{$this->url}/cat/applications/{$name}"),
+                $this->makeArg($name, "{$this->url}/{$item['href']}"),
                 $name,
-                $description,
+                $item['desc'],
                 "icon-cache/{$this->id}.png"
             );
 
@@ -47,6 +74,6 @@ class AptGet extends Repo
     }
 }
 
-// Test code, uncomment to debug this script from the command-line
-// $repo = new AptGet();
-// echo $repo->search('leaflet');
+//Test code, uncomment to debug this script from the command-line
+//$repo = new AptGet();
+//echo $repo->search('leaflet');

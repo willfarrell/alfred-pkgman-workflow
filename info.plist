@@ -852,6 +852,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>DA9B59E6-4F87-4643-8A81-81A5FF2A586A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>78E1FDBC-68BA-4F6C-96C4-ADD386DF59CC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>D6D1B349-B61B-4CD4-BAF6-A2315284C4BE</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Copy package name to front most app.</string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>E106723F-9932-431B-8250-64F2983338FC</key>
 		<array>
 			<dict>
@@ -1909,7 +1932,7 @@ open $url</string>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
+				<string>Searching for "{query}"…</string>
 				<key>script</key>
 				<string>php ./bin/index.php aptGet {query}</string>
 				<key>scriptargtype</key>
@@ -1917,9 +1940,9 @@ open $url</string>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Search apt-get for "{query}"</string>
+				<string>Search Ubuntu packages for "{query}"</string>
 				<key>title</key>
-				<string>Search apt-get</string>
+				<string>Search Ubuntu packages</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -2546,6 +2569,55 @@ echo $pkgstr</string>
 				<key>argumenttrimmode</key>
 				<integer>1</integer>
 				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>snap</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"…</string>
+				<key>script</key>
+				<string>php ./bin/index.php snap {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search Snaps for "{query}"</string>
+				<key>title</key>
+				<string>Search Snaps</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>DA9B59E6-4F87-4643-8A81-81A5FF2A586A</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>1</integer>
+				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
 				<integer>63</integer>
@@ -2818,6 +2890,7 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pypi {query}`: [Python Packages](https://pypi.python.org)
 * `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
 * `rpm {query}`: [Red Hat Linux Packages](http://rpmfind.net)
+* `snap {query}`: [Snapcraft Packages](https://snapcraft.io)
 * `st {query}`: [Sublime Text Packages](https://packagecontrol.io)
 * `yarn {query}`: [Yarn Packages](https://yarnpkg.com/lang/en/)
 * `yo {query}`: [Yeoman Generators](http://yeoman.io)
@@ -3163,6 +3236,13 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>ypos</key>
 			<real>1760</real>
 		</dict>
+		<key>DA9B59E6-4F87-4643-8A81-81A5FF2A586A</key>
+		<dict>
+			<key>xpos</key>
+			<real>35</real>
+			<key>ypos</key>
+			<real>2660</real>
+		</dict>
 		<key>E106723F-9932-431B-8250-64F2983338FC</key>
 		<dict>
 			<key>xpos</key>
@@ -3219,8 +3299,6 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<key>XDEBUG_TRIGGER</key>
 		<string>1</string>
 	</dict>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
 	<string>5.1.1</string>
 	<key>webaddress</key>

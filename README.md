@@ -61,7 +61,7 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 
 All workflows require constant internet connection.
 
-Workflows can break from time to time due to changes by the provider of the repo. If you notice a workflow stops working, post it at https://github.com/willfarrell/alfred-pkgman-workflow/issues.
+Workflows can break from time to time due to changes by the provider of the repo. If you notice a workflow stops working, please [file an Issue](https://github.com/willfarrell/alfred-pkgman-workflow/issues).
 
 All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer than expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended. Clearing your cache is recommended after an update if the package manager you use had a bug previously.
 

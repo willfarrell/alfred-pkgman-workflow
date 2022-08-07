@@ -1,0 +1,25 @@
+# https://EditorConfig.org
+
+# top-most EditorConfig file
+root=true
+
+# Unix-style newlines with a newline ending every file
+# 2 space indentation
+# Enforce character set & remove trailing whitespace
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{json,yml,yaml}]
+indent_size = 2
+
+[*.md]
+# Trailing whitespace is used for line breaks in Markdown
+trim_trailing_whitespace = false
+
+[{Makefile,*.plist}]
+indent_style = tab

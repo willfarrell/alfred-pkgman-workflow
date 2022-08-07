@@ -11,5 +11,3 @@ $query = $argc > 2 ? $argv[2]: '';
  */
 $r = new $repo();
 echo $r->search($query);
-
-

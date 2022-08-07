@@ -95,7 +95,7 @@ See below for how to run the automation that handles these steps.
 
 ### Build the Alfred workflow
 
-`make dist` - runs `composer install`, copies sources to `./dist`, copies icons and `info.plist` from `ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`, zips `./dist` to `Package Managers.alfredworkflow`
+`make dist` - runs `composer install`, copies sources to `./dist`, copies icons and `info.plist` from `ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`, zips `./dist` to `./dist/Package Managers.alfredworkflow`
 
 ### Prepare a new release
 

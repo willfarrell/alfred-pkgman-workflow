@@ -2888,234 +2888,234 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2360</integer>
+			<real>2360</real>
 		</dict>
 		<key>0A704625-29E6-450E-8F2C-8E4EC7179899</key>
 		<dict>
 			<key>xpos</key>
-			<integer>370</integer>
+			<real>370</real>
 			<key>ypos</key>
-			<integer>135</integer>
+			<real>135</real>
 		</dict>
 		<key>0C5C8FC6-44C4-4EF6-B764-AA6026E0585C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2960</integer>
+			<real>2960</real>
 		</dict>
 		<key>135ECB8C-557A-41D9-BF9A-6439A5EA949E</key>
 		<dict>
 			<key>note</key>
 			<string>Command modifier</string>
 			<key>xpos</key>
-			<integer>795</integer>
+			<real>795</real>
 			<key>ypos</key>
-			<integer>1930</integer>
+			<real>1930</real>
 		</dict>
 		<key>18B0C07D-A101-4267-B306-7925DE8A30C9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>200</integer>
+			<real>200</real>
 			<key>ypos</key>
-			<integer>135</integer>
+			<real>135</real>
 		</dict>
 		<key>19F2BEFA-1474-4B56-B384-503F761B4C22</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2160</integer>
+			<real>2160</real>
 		</dict>
 		<key>1A806429-BBAB-4227-B0C9-46E96CD3E492</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<integer>770</integer>
+			<real>770</real>
 			<key>ypos</key>
-			<integer>965</integer>
+			<real>965</real>
 		</dict>
 		<key>265DF548-7D96-4F94-AB0E-6AD26F31B4A1</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1260</integer>
+			<real>1260</real>
 		</dict>
 		<key>2BECD5EE-3FDE-434C-8ADA-2FEAE34FBF34</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>2F314483-5E76-477B-BB7E-574CA71131B4</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1860</integer>
+			<real>1860</real>
 		</dict>
 		<key>348251C4-2B72-432F-A923-B082C6740DEA</key>
 		<dict>
 			<key>xpos</key>
-			<integer>370</integer>
+			<real>370</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>436DF03B-19A8-47CA-A8C6-27C31A52BB22</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2060</integer>
+			<real>2060</real>
 		</dict>
 		<key>4F9B49BB-0F1E-4D72-A339-08C76E2D2C2A</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>135</integer>
+			<real>135</real>
 		</dict>
 		<key>52E889A1-1A44-49FD-AEE9-5CBD1DC38AC4</key>
 		<dict>
 			<key>xpos</key>
-			<integer>200</integer>
+			<real>200</real>
 			<key>ypos</key>
-			<integer>10</integer>
+			<real>15</real>
 		</dict>
 		<key>5D46DE45-AD0E-4A12-8AE6-BFC129AA4C0F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2460</integer>
+			<real>2460</real>
 		</dict>
 		<key>5F73C46B-877B-4BC6-A231-E72525BBCEB2</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>560</integer>
+			<real>560</real>
 		</dict>
 		<key>63EA1045-A58C-414D-AD3A-A9E218A90606</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>3160</integer>
+			<real>3160</real>
 		</dict>
 		<key>641E4359-7656-456E-93F2-11FE0F755254</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1460</integer>
+			<real>1460</real>
 		</dict>
 		<key>67851157-5987-4B55-BDD9-90A9347C46A5</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>760</integer>
+			<real>760</real>
 		</dict>
 		<key>689DD809-6CBA-476F-9299-4D22CAF07D9F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2560</integer>
+			<real>2560</real>
 		</dict>
 		<key>6DA4E86D-6897-4E36-811B-EA9340364E48</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>360</integer>
+			<real>360</real>
 		</dict>
 		<key>77B09783-CED1-4CD9-9D3B-5FD63FD247BD</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>3060</integer>
+			<real>3060</real>
 		</dict>
 		<key>78A70680-7C8A-4CC4-AE71-A070E3E8CCD9</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1360</integer>
+			<real>1360</real>
 		</dict>
 		<key>78E1FDBC-68BA-4F6C-96C4-ADD386DF59CC</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>xpos</key>
-			<integer>700</integer>
+			<real>700</real>
 			<key>ypos</key>
-			<integer>995</integer>
+			<real>995</real>
 		</dict>
 		<key>8CEC2062-2484-4200-AE7A-BED7DA65E298</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2260</integer>
+			<real>2260</real>
 		</dict>
 		<key>98FB2C27-091A-41A9-B3E1-109EA8523BBF</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1160</integer>
+			<real>1160</real>
 		</dict>
 		<key>A6F75F15-2128-4002-A841-2872651A1640</key>
 		<dict>
 			<key>xpos</key>
-			<integer>825</integer>
+			<real>825</real>
 			<key>ypos</key>
-			<integer>2360</integer>
+			<real>2360</real>
 		</dict>
 		<key>A7CD4656-328C-4B54-B34C-F38C9B4B7984</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>8</integer>
 			<key>xpos</key>
-			<integer>585</integer>
+			<real>585</real>
 			<key>ypos</key>
-			<integer>2390</integer>
+			<real>2390</real>
 		</dict>
 		<key>A83F18D3-B34F-4AA7-A164-F19D8CE1C790</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>860</integer>
+			<real>860</real>
 		</dict>
 		<key>B9D9D59E-5B75-418E-8D5D-75EADD6D162A</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>960</integer>
+			<real>960</real>
 		</dict>
 		<key>C0190356-1EDC-4E5C-8187-9E3C4C69FBD1</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>460</integer>
+			<real>460</real>
 		</dict>
 		<key>CDC59D6D-6D7A-48F9-BFC3-72DAF712EF19</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1960</integer>
+			<real>1960</real>
 		</dict>
 		<key>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</key>
 		<dict>
@@ -3124,65 +3124,65 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>note</key>
 			<string>Shift modifier</string>
 			<key>xpos</key>
-			<integer>660</integer>
+			<real>660</real>
 			<key>ypos</key>
-			<integer>2360</integer>
+			<real>2360</real>
 		</dict>
 		<key>D1C46D46-4367-44BE-9E88-EB7BF6BFE049</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2860</integer>
+			<real>2860</real>
 		</dict>
 		<key>D22F4CD1-A38D-4D9A-B910-E82A467AB0CC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1060</integer>
+			<real>1060</real>
 		</dict>
 		<key>D6D1B349-B61B-4CD4-BAF6-A2315284C4BE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>720</integer>
+			<real>720</real>
 			<key>ypos</key>
-			<integer>1960</integer>
+			<real>1960</real>
 		</dict>
 		<key>D882F2C5-CA0E-4D23-B1CC-28AC8AD1DB0E</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1560</integer>
+			<real>1560</real>
 		</dict>
 		<key>D8F2FDC0-B462-4C50-8A42-9E6A511395A8</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1760</integer>
+			<real>1760</real>
 		</dict>
 		<key>E106723F-9932-431B-8250-64F2983338FC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>660</integer>
+			<real>660</real>
 		</dict>
 		<key>E894CAC8-3680-4863-B8A5-EFCFD78B56F3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>260</integer>
+			<real>260</real>
 		</dict>
 		<key>E928110A-9651-4404-BCF3-CCF77B35BB0B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>960</integer>
+			<real>960</real>
 			<key>ypos</key>
-			<integer>1930</integer>
+			<real>1930</real>
 		</dict>
 		<key>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</key>
 		<dict>
@@ -3191,25 +3191,27 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<key>note</key>
 			<string>OneUpdater</string>
 			<key>xpos</key>
-			<integer>1150</integer>
+			<real>1150</real>
 			<key>ypos</key>
-			<integer>935</integer>
+			<real>935</real>
 		</dict>
 		<key>F1559F42-7F85-4A26-A604-6E31BD686380</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>1660</integer>
+			<real>1660</real>
 		</dict>
 		<key>F79627F4-5450-4A78-A93A-73EDCFB50A2B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>35</integer>
+			<real>35</real>
 			<key>ypos</key>
-			<integer>2760</integer>
+			<real>2760</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array/>
 	<key>variables</key>
 	<dict>
 		<key>PATH</key>
@@ -3217,8 +3219,10 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<key>XDEBUG_TRIGGER</key>
 		<string>1</string>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>5.1.0</string>
+	<string>5.1.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

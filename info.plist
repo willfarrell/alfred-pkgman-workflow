@@ -3304,7 +3304,7 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 		<string>XDEBUG_TRIGGER</string>
 	</array>
 	<key>version</key>
-	<string>6.0.0</string>
+	<string>6.0.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

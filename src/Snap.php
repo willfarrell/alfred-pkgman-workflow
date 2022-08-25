@@ -2,15 +2,13 @@
 
 namespace WillFarrell\AlfredPkgMan;
 
-use Symfony\Component\DomCrawler\Crawler;
-
 class Snap extends Repo
 {
     protected $id = 'snap';
 
     protected $url = 'https://snapcraft.io';
 
-    protected $search_url = 'https://snapcraft.io/search?q=';
+    protected $search_url = 'https://api.snapcraft.io/api/v1/snaps/search?scope=wide&arch=wide&exclude_non_free=false&confinement=strict,classic&q=';
 
     public function search($query)
     {
@@ -18,20 +16,22 @@ class Snap extends Repo
             return $this->asJson();
         }
 
-        $html = $this->cache->get_query_raw(
+        $data = $this->cache->get_query_json(
             $this->id,
             $query,
-            sprintf('%s%s', $this->search_url, urlencode($query)),
+            sprintf('%s%s', $this->search_url, urlencode($query))
         );
 
-        $crawler = new Crawler($html);
-        foreach ($crawler->filter('a.p-media-object--snap') as $node) {
-            $node = new Crawler($node);
+        if (count($data->_embedded->{'clickindex:package'}) === 0) {
+            $this->noResults($query, "{$this->search_url}{$query}");
 
-            $href = str_replace('/', '', $node->attr('href'));
-            $title = explode('–', htmlspecialchars_decode($node->attr('title')));
-            $name = trim(array_shift($title));
-            $desc = trim($title[0] ?? '');
+            return $this->asJson();
+        }
+
+        foreach ($data->_embedded->{'clickindex:package'} as $snap) {
+            $href = $snap->package_name;
+            $name = $snap->package_name;
+            $desc = $snap->summary;
 
             $this->pkgs[] = compact('name', 'desc', 'href');
 

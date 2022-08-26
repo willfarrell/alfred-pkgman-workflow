@@ -1,12 +1,15 @@
 # How to contribute
+
 First off, thanks for you interest in contributing. Everyone who uses this repos really appreciates it.
 
 ![alt text][alfred]
 
 ## Issues
+
 All are welcome.
 
 ## Pull Requests
+
 Good pull requests - patches, improvements, new features - are a fantastic help.
 They should remain focused in scope and avoid containing unrelated commits. If
 your contribution involves a significant amount of work or substantial changes
@@ -17,6 +20,7 @@ Make sure to adhere to the coding conventions used throughout a project
 relevant to the change you're making.
 
 ## Pull Request Checklist
+
 Before you submit your PR please make sure everything is in order.
 
 - [ ] Installed `.alfredworkflow` file from repo before making changes.
@@ -28,6 +32,7 @@ Before you submit your PR please make sure everything is in order.
 - [ ] Export workflow to repo folder. Right-click the workflow in Alfred, click `Export...`. Don't include the `(v1.0)` in the name.
 
 ## Pull Request Process
+
 Please follow this process; it's the best way to get your work included in the
 project:
 

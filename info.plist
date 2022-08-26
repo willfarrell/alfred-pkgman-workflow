@@ -415,39 +415,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>689DD809-6CBA-476F-9299-4D22CAF07D9F</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>78E1FDBC-68BA-4F6C-96C4-ADD386DF59CC</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>D6D1B349-B61B-4CD4-BAF6-A2315284C4BE</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string>Copy package name to front most app.</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>A7CD4656-328C-4B54-B34C-F38C9B4B7984</string>
-				<key>modifiers</key>
-				<integer>131072</integer>
-				<key>modifiersubtext</key>
-				<string>Inject package into Brewfile (paste to front most app).</string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>6DA4E86D-6897-4E36-811B-EA9340364E48</key>
 		<array>
 			<dict>
@@ -2520,55 +2487,6 @@ echo $pkgstr</string>
 				<key>argumenttrimmode</key>
 				<integer>1</integer>
 				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>keyword</key>
-				<string>atom</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>php ./bin/index.php apm {query}</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Search apm for "{query}"</string>
-				<key>title</key>
-				<string>Search apm</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>689DD809-6CBA-476F-9299-4D22CAF07D9F</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>1</integer>
-				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
 				<integer>63</integer>
@@ -2865,7 +2783,6 @@ Quick package/plugin/component (repo) lookup for your favourite package managers
 * `pkgman cachedb`: Update local database cache files
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
-* `apm {query}`: [Atom Packages](https://atom.io)
 * `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Forumale/Cask](http://brew.sh)
@@ -2912,7 +2829,6 @@ All repos have caching enabled to speed up common queries. These caches are refr
 The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
 
 ![][alcatraz]
-![][apm]
 ![][bower]
 ![][brew]
 ![][chef]
@@ -2936,7 +2852,6 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
-[apm]: ./screenshots/apm.png "Sample apm result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
 [chef]: ./screenshots/chef.png "Sample chef result"
@@ -3094,13 +3009,6 @@ Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidde
 			<real>35</real>
 			<key>ypos</key>
 			<real>760</real>
-		</dict>
-		<key>689DD809-6CBA-476F-9299-4D22CAF07D9F</key>
-		<dict>
-			<key>xpos</key>
-			<real>35</real>
-			<key>ypos</key>
-			<real>2560</real>
 		</dict>
 		<key>6DA4E86D-6897-4E36-811B-EA9340364E48</key>
 		<dict>

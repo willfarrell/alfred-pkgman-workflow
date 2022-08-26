@@ -26,7 +26,6 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 ## Package Repository Search Commands
 
 * `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
-* `atom {query}`: [Atom Packages](https://atom.io)
 * `apt-get {query}`: [Ubuntu Packages](https://apps.ubuntu.com)
 * `bower {query}`: [Bower Components](http://bower.io) for JavaScript
 * `brew {query}`: [Homebrew Forumale/Cask](http://brew.sh)
@@ -103,7 +102,6 @@ See below for how to run the automation that handles these steps.
 `make release` - builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
 
 ![Alcatraz logo][alcatraz]
-![Atom logo][atom]
 ![Bower logo][bower]
 ![Homebrew logo][brew]
 ![Chef logo][chef]
@@ -127,7 +125,6 @@ See below for how to run the automation that handles these steps.
 Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
 
 [alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
-[apm]: ./screenshots/apm.png "Sample apm result"
 [bower]: ./screenshots/bower.png "Sample bower result"
 [brew]: ./screenshots/brew.png "Sample brew result"
 [chef]: ./screenshots/chef.png "Sample chef result"

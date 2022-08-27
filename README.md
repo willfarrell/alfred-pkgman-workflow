@@ -2,7 +2,9 @@
 
 Package Repo Search
 
-Quick package/plugin/component (repo) lookup for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
+Quick package/plugin/component (repo) lookup for your favourite package managers.
+
+[Featured on Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/) in 2013.
 
 ## PATH Variable
 
@@ -15,6 +17,12 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 
 * Intel Macs: `/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin`
 * Apple Silicon Macs: `/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin`
+
+The workflow has this set as its default `$PATH` so it will work on either style of Mac.
+
+```bash
+/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}
+```
 
 ## Commands
 
@@ -37,13 +45,13 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 * `definitelytyped {query}`: DefinitelyTyped [TypeScript Definitions](http://definitelytyped.org)
 * `gems {query}`: [Ruby Gems](http://rubygems.org)
 * `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
-* `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
-* `gulp {query}`: nodeJS task-runner [Gulp Plugins](http://gulpjs.com)
+* `grunt {query}`: Node.js task-runner [Grunt Plugins](http://gruntjs.com)
+* `gulp {query}`: Node.js task-runner [Gulp Plugins](http://gulpjs.com)
 * `hackage {query}`: Haskell [package archive](https://hackage.haskell.org)
 * `hex {query}`: Elixir [Hex Packages](http://hex.pm)
 * `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
 * `metacran {query}`: [R Packages](https://www.r-pkg.org/)
-* `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
+* `npm {query}`: Node.js [NPM Packages](https://www.npmjs.org)
 * `nuget {query}`: .Net [NuGet Packages](http://nuget.org)
 * `pear {query}`: PHP [Pear Packages](http://pear.php.net)
 * `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
@@ -63,7 +71,7 @@ The `PATH` variable needs to capture not only where PHP is installed, but also w
 
 ## Additional Notes
 
-All workflows require constant internet connection.
+All workflows require an internet connection.
 
 Workflows can break from time to time due to changes by the provider of the repo. If you notice a workflow stops working, please [file an Issue](https://github.com/willfarrell/alfred-pkgman-workflow/issues).
 
@@ -101,46 +109,23 @@ See below for how to run the automation that handles these steps.
 
 `make release` - builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
 
-![Alcatraz logo][alcatraz]
-![Bower logo][bower]
-![Homebrew logo][brew]
-![Chef logo][chef]
-![CocoaPods logo][cocoa]
-![Composer logo][composer]
-![Docker logo][docker]
-![Rubygems logo][gems]
-![Grunt logo][grunt]
-![Gulp logo][gulp]
-![Hex logo][hex]
-![Maven logo][maven]
-![Metacran logo][metacran]
-![NPM logo][npm]
-![PEAR logo][pear]
-![PyPi logo][pypi]
-![Red Hat fedora logo][rpm]
-![Sublime Text logo][st]
-![Yarn logo][yarn]
-![Yo logo][yo]
-
-Featured on [Smashing Magazine](http://www.smashingmagazine.com/2013/10/25/hidden-productivity-secrets-with-alfred/)
-
-[alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
-[bower]: ./screenshots/bower.png "Sample bower result"
-[brew]: ./screenshots/brew.png "Sample brew result"
-[chef]: ./screenshots/chef.png "Sample chef result"
-[cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
-[composer]: ./screenshots/composer.png "Sample composer result"
-[docker]: ./screenshots/docker.png "Sample docker result"
-[gems]: ./screenshots/gems.png "Sample gems result"
-[grunt]: ./screenshots/grunt.png "Sample grunt result"
-[gulp]: ./screenshots/gulp.png "Sample gulp result"
-[hex]: ./screenshots/hex.png "Sample hex resuls"
-[maven]: ./screenshots/maven.png "Sample maven result"
-[metacran.png]: ./screenshots/metacran.png "Sample metacran.png result"
-[npm]: ./screenshots/npm.png "Sample npm result"
-[pear]: ./screenshots/pear.png "Sample pear result"
-[pypi]: ./screenshots/pypi.png "Sample pypi result"
-[rpm]: ./screenshots/rpm.png "Sample rpm result"
-[st]: ./screenshots/stpm.png "Sample stpm result"
-[yarn]: ./screenshots/yarn.png "Sample yarn result"
-[yo]: ./screenshots/yo.png "Sample yo result"
+![Alcatraz sample results](./screenshots/alcatraz.png "Sample alcatraz result")
+![Bower sample results](./screenshots/bower.png "Sample bower result")
+![Chef sample results](./screenshots/brew.png "Sample brew result")
+![CocoaPods sample results](./screenshots/chef.png "Sample chef result")
+![Composer sample results](./screenshots/cocoa.png "Sample cocoa result")
+![Docker sample results](./screenshots/composer.png "Sample composer result")
+![Grunt sample results](./screenshots/docker.png "Sample docker result")
+![Gulp sample results](./screenshots/gems.png "Sample gems result")
+![Hex sample results](./screenshots/grunt.png "Sample grunt result")
+![Homebrew sample results](./screenshots/gulp.png "Sample gulp result")
+![Maven sample results](./screenshots/hex.png "Sample hex resuls")
+![Metacran sample results](./screenshots/maven.png "Sample maven result")
+![NPM sample results](./screenshots/metacran.png "Sample metacran.png result")
+![PEAR sample results](./screenshots/npm.png "Sample npm result")
+![PyPi sample results](./screenshots/pear.png "Sample pear result")
+![RPMfind sample results](./screenshots/pypi.png "Sample pypi result")
+![Rubygems sample results](./screenshots/rpm.png "Sample rpm result")
+![Sublime Text sample results](./screenshots/stpm.png "Sample stpm result")
+![Yarn sample results](./screenshots/yarn.png "Sample yarn result")
+![Yo sample results](./screenshots/yo.png "Sample yo result")

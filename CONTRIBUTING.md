@@ -2,7 +2,42 @@
 
 First off, thanks for you interest in contributing. Everyone who uses this repos really appreciates it.
 
-![alt text][alfred]
+![Screenshot of the workflow as seen in Alfred 2](./screenshots/alfred.png "Alfred Workflow")
+
+## Developing & Building the Workflow
+
+There is a `Makefile` to automate setting up & building the workflow.
+
+This `Makefile` have one prerequisite: you must set `$ALFRED_PKGMAN_WORKFLOW_DIR` shell environment variable targeting to workflow path installed in Alfred.
+
+To determine this path on your Mac, you should:
+
+1. Open Alfred Preferences → Workflows
+2. Find “Package Managers” in the list
+3. Right click on it and select “Open in Finder”
+
+To make a contribution:
+
+1. Clone this repository
+2. Set `$AFLRED_PKGMAN_WORKFLOW_DIR` as described above
+3. Run `make` to build the workflow and link it to your installed copy
+4. Make desired changes to workflow / underlying code base
+5. Test that your changes work as desired & no regressions have been introduced
+6. Commit your changes & open a Pull Request following the below steps
+
+See below for details on the key elements of the `Makefile`.
+
+### Link your built development copy to Alfred
+
+`make linkSourceFoldersToWorkflow` - links src, bin, vendor folders from your local cloned source code folder of the workflow to corresponding folders that installed in Alfred, located at `$ALFRED_PKGMAN_WORKFLOW_DIR`.
+
+### Build the Alfred workflow
+
+`make dist` - runs `composer install`, copies sources to `./dist`, copies icons and `info.plist` from `$ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`, zips `./dist` to `./dist/Package Managers.alfredworkflow`
+
+### Prepare a new release
+
+`make release` - builds a new release by running `make dist`, then copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
 
 ## Issues
 
@@ -19,19 +54,7 @@ Make sure to adhere to the coding conventions used throughout a project
 (indentation, accurate comments, etc.). Please update any documentation that is
 relevant to the change you're making.
 
-## Pull Request Checklist
-
-Before you submit your PR please make sure everything is in order.
-
-- [ ] Installed `.alfredworkflow` file from repo before making changes.
-- [ ] Update the version in the workflow title. Double-click the workflow to edit.
-- [ ] If needed include a large icon in the `src/icon-src/` folder that has square dimensions.
-- [ ] If needed include a cached icon in the `src/icon-cache/` folder that 256x256 pixels. Alfred creates these when you insert an image into a workflow. You can get this from inside the `.alfredworkflow`. Right-click the workflow in Alfred, click `Show in Finder`. The `--hash-value--.png` file will be in that folder. Copy to `/src/icon-cache` and rename.
-- [ ] If needed add a screenshot. Use ⌘ (command) + ⇧ (shift) + 4, press ␣ (space), then click on the Alfred window to create a clean screen shot. Place in the `screenshots` folder.
-- [ ] Update README.md with new version (number and URL) and any additional screenshots.
-- [ ] Export workflow to repo folder. Right-click the workflow in Alfred, click `Export...`. Don't include the `(v1.0)` in the name.
-
-## Pull Request Process
+### Pull Request Process
 
 Please follow this process; it's the best way to get your work included in the
 project:
@@ -82,5 +105,3 @@ project:
 
 7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests)
    with a clear title and description.
-
-[alfred]: ./screenshots/alfred.png "Alfred Workflow"

@@ -81,33 +81,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 
 ## Contribution
 
-There is a `Makefile` to automate the contribution steps. This `Makefile` have one prerequisite: you should set `ALFRED_PKGMAN_WORKFLOW_DIR` shell environment variable targeting to workflow path installed in Alfred. To get the path you should:
-
-1. Go Alfred Preferences → Workflows
-2. Find “Package Managers”
-3. Right click on it and select “Open in Finder”
-
-To make a contribution:
-
-1. Make desired changes to workflow / underlying code base
-2. Build the Alfred workflow
-3. Prepare a new release:
-    1. Update `Package Managers.alfredworkflow` file in the root of repository from your newly-built one
-    2. Update `info.plist` in the root of the repository
-
-See below for how to run the automation that handles these steps.
-
-### Make changes to workflow / underlying code base
-
-`make linkSourceFoldersToWorkflow` - links src, bin, vendor folders from your local cloned source code folder of the workflow to corresponding folders that installed in Alfred, located at `ALFRED_PKGMAN_WORKFLOW_DIR`.
-
-### Build the Alfred workflow
-
-`make dist` - runs `composer install`, copies sources to `./dist`, copies icons and `info.plist` from `ALFRED_PKGMAN_WORKFLOW_DIR` to `./dist`, zips `./dist` to `./dist/Package Managers.alfredworkflow`
-
-### Prepare a new release
-
-`make release` - builds a new release by copying `info.plist` and `Package Managers.alfredworkflow` from `./dist` to the root of the repository.
+Please see [CONTRIBUTING.md](https://github.com/willfarrell/alfred-pkgman-workflow/blob/master/CONTRIBUTING.md) for details
 
 ![Alcatraz sample results](./screenshots/alcatraz.png "Sample alcatraz result")
 ![Bower sample results](./screenshots/bower.png "Sample bower result")

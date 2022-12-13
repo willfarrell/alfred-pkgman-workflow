@@ -2864,7 +2864,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2960</real>
+			<real>2860</real>
 		</dict>
 		<key>135ECB8C-557A-41D9-BF9A-6439A5EA949E</key>
 		<dict>
@@ -2966,7 +2966,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>3160</real>
+			<real>3060</real>
 		</dict>
 		<key>641E4359-7656-456E-93F2-11FE0F755254</key>
 		<dict>
@@ -2994,7 +2994,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>3060</real>
+			<real>2960</real>
 		</dict>
 		<key>78A70680-7C8A-4CC4-AE71-A070E3E8CCD9</key>
 		<dict>
@@ -3086,7 +3086,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2860</real>
+			<real>2760</real>
 		</dict>
 		<key>D22F4CD1-A38D-4D9A-B910-E82A467AB0CC</key>
 		<dict>
@@ -3121,7 +3121,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2660</real>
+			<real>2560</real>
 		</dict>
 		<key>E106723F-9932-431B-8250-64F2983338FC</key>
 		<dict>
@@ -3167,17 +3167,15 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>xpos</key>
 			<real>35</real>
 			<key>ypos</key>
-			<real>2760</real>
+			<real>2660</real>
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
 	<array/>
 	<key>variables</key>
 	<dict>
-		<key>PATH</key>
-		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}</string>
 		<key>XDEBUG_TRIGGER</key>
-		<string>1</string>
+		<string>0</string>
 	</dict>
 	<key>version</key>
 	<string>6.0.0</string>

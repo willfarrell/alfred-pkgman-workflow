@@ -32,18 +32,7 @@
 			</dict>
 		</array>
 		<key>0A704625-29E6-450E-8F2C-8E4EC7179899</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+		<array/>
 		<key>0C5C8FC6-44C4-4EF6-B764-AA6026E0585C</key>
 		<array>
 			<dict>
@@ -127,18 +116,7 @@
 			</dict>
 		</array>
 		<key>1A806429-BBAB-4227-B0C9-46E96CD3E492</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+		<array/>
 		<key>265DF548-7D96-4F94-AB0E-6AD26F31B4A1</key>
 		<array>
 			<dict>
@@ -209,18 +187,7 @@
 			</dict>
 		</array>
 		<key>348251C4-2B72-432F-A923-B082C6740DEA</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+		<array/>
 		<key>436DF03B-19A8-47CA-A8C6-27C31A52BB22</key>
 		<array>
 			<dict>
@@ -564,18 +531,7 @@
 			</dict>
 		</array>
 		<key>A6F75F15-2128-4002-A841-2872651A1640</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+		<array/>
 		<key>A7CD4656-328C-4B54-B34C-F38C9B4B7984</key>
 		<array>
 			<dict>
@@ -909,18 +865,7 @@
 			</dict>
 		</array>
 		<key>E928110A-9651-4404-BCF3-CCF77B35BB0B</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
+		<array/>
 		<key>F1559F42-7F85-4A26-A604-6E31BD686380</key>
 		<array>
 			<dict>
@@ -1450,97 +1395,6 @@
 			<string>A83F18D3-B34F-4AA7-A164-F19D8CE1C790</string>
 			<key>version</key>
 			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string># THESE VARIABLES MUST BE SET. SEE THE ONEUPDATER README FOR AN EXPLANATION OF EACH.
-readonly remote_info_plist='https://raw.githubusercontent.com/willfarrell/alfred-pkgman-workflow/master/info.plist'
-readonly workflow_url='https://github.com/willfarrell/alfred-pkgman-workflow/releases/latest/download/Package.Managers.alfredworkflow'
-readonly download_type='direct'
-readonly frequency_check='4'
-
-# FROM HERE ON, CODE SHOULD BE LEFT UNTOUCHED!
-function abort {
-  echo "${1}" &gt;&amp;2
-  exit 1
-}
-
-function url_exists {
-  curl --silent --location --output /dev/null --fail --range 0-0 "${1}"
-}
-
-function notification {
-  local -r notificator="$(find . -type d -name 'Notificator.app')"
-  if [[ -n "${notificator}" ]]; then
-    "${notificator}/Contents/Resources/Scripts/notificator" --message "${1}" --title "${alfred_workflow_name}" --subtitle 'A new version is available'
-    return
-  fi
-
-  local -r terminal_notifier="$(find . -type f -name 'terminal-notifier')"
-  if [[ -n "${terminal_notifier}" ]]; then
-    "${terminal_notifier}" -title "${alfred_workflow_name}" -subtitle 'A new version is available' -message "${1}"
-    return
-  fi
-
-  osascript -e "display notification \"${1}\" with title \"${alfred_workflow_name}\" subtitle \"A new version is available\""
-}
-
-# Local sanity checks
-readonly local_info_plist='info.plist'
-readonly local_version="$(/usr/libexec/PlistBuddy -c 'print version' "${local_info_plist}")"
-
-[[ -n "${local_version}" ]] || abort 'You need to set a workflow version in the configuration sheet.'
-[[ "${download_type}" =~ ^(direct|page|github_release)$ ]] || abort "'download_type' (${download_type}) needs to be one of 'direct', 'page', or 'github_release'."
-[[ "${frequency_check}" =~ ^[0-9]+$ ]] || abort "'frequency_check' (${frequency_check}) needs to be a number."
-
-# Check for updates
-if [[ $(find "${local_info_plist}" -mtime +"${frequency_check}"d) ]]; then
-  if ! url_exists "${remote_info_plist}"; then abort "'remote_info_plist' (${remote_info_plist}) appears to not be reachable."; fi # Remote sanity check
-
-  readonly tmp_file="$(mktemp)"
-  curl --silent --location --output "${tmp_file}" "${remote_info_plist}"
-  readonly remote_version="$(/usr/libexec/PlistBuddy -c 'print version' "${tmp_file}")"
-
-  if [[ "${local_version}" == "${remote_version}" ]]; then
-    touch "${local_info_plist}" # Reset timer by touching local file
-    exit 0
-  fi
-
-  if [[ "${download_type}" == 'page' ]]; then
-    notification 'Opening download page…'
-    open "${workflow_url}"
-    exit 0
-  fi
-
-  download_url="$([[ "${download_type}" == 'github_release' ]] &amp;&amp; curl --silent "https://api.github.com/repos/${workflow_url}/releases/latest" | grep 'browser_download_url' | head -1 | sed -E 's/.*browser_download_url": "(.*)"/\1/' || echo "${workflow_url}")"
-
-  if url_exists "${download_url}"; then
-    notification 'Downloading and installing…'
-    curl --silent --location --output "${HOME}/Downloads/${alfred_workflow_name}.alfredworkflow" "${download_url}"
-    open "${HOME}/Downloads/${alfred_workflow_name}.alfredworkflow"
-  else
-    abort "'workflow_url' (${download_url}) appears to not be reachable."
-  fi
-fi</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -3143,17 +2997,6 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<real>960</real>
 			<key>ypos</key>
 			<real>1930</real>
-		</dict>
-		<key>EDFF14C6-DDD5-4CA8-BEE4-E651942DF753</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>12</integer>
-			<key>note</key>
-			<string>OneUpdater</string>
-			<key>xpos</key>
-			<real>1150</real>
-			<key>ypos</key>
-			<real>935</real>
 		</dict>
 		<key>F1559F42-7F85-4A26-A604-6E31BD686380</key>
 		<dict>

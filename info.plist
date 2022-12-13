@@ -3014,12 +3014,29 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
-	<array/>
-	<key>variables</key>
-	<dict>
-		<key>XDEBUG_TRIGGER</key>
-		<string>0</string>
-	</dict>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>0</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<false/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>label</key>
+			<string>XDebug Trigger</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>XDEBUG_TRIGGER</string>
+		</dict>
+	</array>
 	<key>version</key>
 	<string>6.0.0</string>
 	<key>webaddress</key>

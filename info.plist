@@ -3014,31 +3014,9 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		</dict>
 	</dict>
 	<key>userconfigurationconfig</key>
-	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>default</key>
-				<string>0</string>
-				<key>placeholder</key>
-				<string></string>
-				<key>required</key>
-				<false/>
-				<key>trim</key>
-				<true/>
-			</dict>
-			<key>description</key>
-			<string></string>
-			<key>label</key>
-			<string>XDebug Trigger</string>
-			<key>type</key>
-			<string>textfield</string>
-			<key>variable</key>
-			<string>XDEBUG_TRIGGER</string>
-		</dict>
-	</array>
+	<array/>
 	<key>version</key>
-	<string>6.0.1</string>
+	<string>6.0.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
 </dict>

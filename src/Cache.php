@@ -8,15 +8,15 @@ class Cache
      * @var Workflows
      */
     public $w;
-
+    private $queries = [];
 
     public $cache_age = 14;
     public $dbs = [
         "alcatraz" => "https://raw.githubusercontent.com/mneorr/alcatraz-packages/master/packages.json",
         "apple" => "http://cocoadocs.org/apple_documents.jsonp", // CocoaDocs
         "brew" => [
-          "formula" => "https://formulae.brew.sh/api/formula.json",
-          "cask" => "https://formulae.brew.sh/api/cask.json",
+            "formula" => "https://formulae.brew.sh/api/formula.json",
+            "cask" => "https://formulae.brew.sh/api/cask.json",
         ],
         "cocoa" => "http://cocoadocs.org/documents.jsonp",
         "grunt" => "http://gruntjs.com/plugin-list.json",
@@ -27,6 +27,10 @@ class Cache
 
     public function __construct()
     {
+        // Some package managers (like brew or gems) have a very large JSON payload that causes
+        // PHP to globally allocate more than would allow in its default configuration (128M)
+        ini_set('memory_limit', '1024M');
+
         $this->w = new Workflows();
 
         $q = $this->w->read($this->query_file . '.json');
@@ -143,6 +147,7 @@ class Cache
         if ($pkgs === false || $timestamp < (time() - $this->cache_age * 86400)) {
             $data = $this->w->request($url);
             $this->w->write($data, $name . '.json');
+
             $pkgs = $data;
 
             $this->queries[$name] = time();
@@ -169,7 +174,7 @@ class Cache
         $data = $this->w->request($url);
 
         // clean jsonp wrapper
-        if (strpos($url, 'jsonp') !== false){
+        if (strpos($url, 'jsonp') !== false) {
             $data = preg_replace('/.+?({.+}).+/', '$1', $data);
         }
 
@@ -182,7 +187,7 @@ class Cache
         // remove db json files
         foreach ($this->dbs as $key => $url) {
             if (is_array($url)) {
-                array_map(function($part) use ($key) {
+                array_map(function ($part) use ($key) {
                     $this->w->delete("$key-$part.json");
                 }, array_keys($url));
             } else {

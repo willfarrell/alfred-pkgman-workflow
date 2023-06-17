@@ -294,6 +294,8 @@ class Workflows
         }
 
         $defaults = [                                  // Create a list of default curl options
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_RETURNTRANSFER => true,                 // Returns the result as a string
             CURLOPT_URL => $url,                            // Sets the url to request
             CURLOPT_FRESH_CONNECT => true,

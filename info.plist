@@ -1655,7 +1655,7 @@ open $url</string>
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Searcing for "{query}"</string>
+				<string>Searching for "{query}"</string>
 				<key>script</key>
 				<string>php ./bin/index.php brew {query}</string>
 				<key>scriptargtype</key>

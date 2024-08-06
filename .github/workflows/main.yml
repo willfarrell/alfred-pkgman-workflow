@@ -14,9 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Rename Alfred Workflow
-        run: mv "Package Managers.alfredworkflow" Package.Managers.alfredworkflow
-
       - name: Create GitHub Release
         uses: elgohr/Github-Release-Action@v5
         env:
@@ -25,8 +22,8 @@ jobs:
           title: ${{ github.ref }}
 
       - name: GitHub Upload Release Artifacts
-        uses: Roang-zero1/github-upload-release-artifacts-action@v2.1.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: Shopify/upload-to-release@v2.0.0
         with:
-          args: Package.Managers.alfredworkflow
+          name: Package.Managers.alfredworkflow
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          path: Package Managers.alfredworkflow

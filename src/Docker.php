@@ -1,4 +1,5 @@
 <?php
+
 namespace WillFarrell\AlfredPkgMan;
 
 
@@ -24,14 +25,14 @@ class Docker extends Repo
         foreach ($this->pkgs->results as $pkg) {
             // make params
             $title = $pkg->name;
-            $repository = ($pkg->is_official ) ? '_' : 'r';
-            $url = $this->url . '/'. $repository . '/'. $pkg->name;
+            $repository = $pkg->is_official ? '_' : 'r';
+            $url = "{$this->url}/{$repository}/{$pkg->name}";
             $description = $pkg->description;
 
             $this->cache->w->result(
                 $title,
                 $this->makeArg($title, $url),
-                $title.' ~ '.$pkg->star_count,
+                "{$title} ~ {$pkg->star_count}",
                 $description,
                 "icon-cache/{$this->id}.png"
             );

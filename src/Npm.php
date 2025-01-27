@@ -1,4 +1,5 @@
 <?php
+
 namespace WillFarrell\AlfredPkgMan;
 
 // README: Turn off all error reporting
@@ -31,15 +32,13 @@ class Npm extends Repo
 
             // README: Description is not required to publish a module, so we check for it
             //          and fall back to an empty string if it is missing
-            $p->description
-                ? $description = $p->description
-                : $description = '';
+            $description = $p->description ?? '';
 
             $this->cache->w->result(
                 $uid,
                 $this->makeArg($name, $p->links->npm, "{$p->name}: {$p->version}"),
                 $name,
-                $p->description,
+                $description,
                 "icon-cache/{$this->id}.png"
             );
 

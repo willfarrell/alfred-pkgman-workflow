@@ -30,9 +30,7 @@ class Cache
         // Some package managers (like brew or gems) have a very large JSON payload that causes
         // PHP to globally allocate more than would allow in its default configuration (128M)
         ini_set('memory_limit', '1024M');
-
         $this->w = new Workflows();
-
         $q = $this->w->read($this->query_file . '.json');
         $this->queries = $q ? (array)$q : [];
     }
@@ -42,12 +40,19 @@ class Cache
         $this->w->write($this->queries, $this->query_file . '.json');
     }
 
+    private function fetch_data($name, $url)
+    {
+        $data = $this->w->request($url);
+        if (substr($url, -5) === 'jsonp') {
+            $data = preg_replace('/.+?([\[{].+[\]}]).+/', '$1', $data);
+        }
+        $this->w->write($data, $name . '.json');
+        return json_decode($data);
+    }
+
     public function get_query_data($id, $query, $url)
     {
-        if (!$query) {
-            return [];
-        }
-        return $this->w->request($url);
+        return $query ? $this->w->request($url) : [];
     }
 
     public function get_db($id)
@@ -57,23 +62,13 @@ class Cache
         }
 
         $name = $id;
-
         $pkgs = $this->w->read($name . '.json');
         $timestamp = $this->w->filetime($name . '.json');
         if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
-            $data = $this->w->request($this->dbs[$id]);
-
-            // clean jsonp wrapper
-            if (substr($this->dbs[$id], -5) === 'jsonp') {
-                $data = preg_replace('/.+?([\[{].+[\]}]).+/', '$1', $data);
-            }
-
-            $this->w->write($data, $name . '.json');
-            $pkgs = json_decode($data);
+            $pkgs = $this->fetch_data($name, $this->dbs[$id]);
         } elseif (!$pkgs) {
             $pkgs = [];
         }
-
 
         return $pkgs;
     }
@@ -85,20 +80,11 @@ class Cache
         }
 
         $name = $id . '.' . $query;
-
         $pkgs = $this->w->read($name . '.json');
         $timestamp = $this->w->filetime($name . '.json');
         if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
-            $data = $this->w->request($url);
-
-            // clean jsonp wrapper
-            if (substr($url, -5) === 'jsonp') {
-                $data = preg_replace('/.+?([\[{].+[\]}]).+/', '$1', $data);
-            }
-
-            $this->w->write($data, $name . '.json');
+            $pkgs = $this->fetch_data($name, $url);
             $this->queries[$name] = time();
-            $pkgs = json_decode($data);
         } elseif (!$pkgs) {
             $pkgs = [];
         }
@@ -113,16 +99,13 @@ class Cache
         }
 
         $name = $id . '.' . $query;
-
         $pkgs = $this->w->read($name . '.json');
         $timestamp = $this->w->filetime($name . '.json');
 
         if (!$pkgs || $timestamp < (time() - $this->cache_age * 86400)) {
             $data = $this->w->request($url);
-
             preg_match_all($regex, $data, $matches);
             $data = $matches[$regex_pos];
-
             $this->w->write($data, $name . '.json');
             $pkgs = is_string($data) ? json_decode($data) : $data;
             $this->queries[$name] = time();
@@ -140,19 +123,14 @@ class Cache
         }
 
         $name = $id . '.' . $query;
-
         $pkgs = $this->w->read($name . '.json');
         $timestamp = $this->w->filetime($name . '.json');
 
         if ($pkgs === false || $timestamp < (time() - $this->cache_age * 86400)) {
             $data = $this->w->request($url);
             $this->w->write($data, $name . '.json');
-
             $pkgs = $data;
-
             $this->queries[$name] = time();
-
-            return $pkgs;
         }
 
         return $pkgs;
@@ -162,12 +140,12 @@ class Cache
     {
         $url = $this->dbs[$id];
         if (is_array($url)) {
+            $data = [];
             foreach ($url as $index => $u) {
                 $part = $this->w->request($u);
                 $this->w->write($part, "$id-$index.json");
                 $data[] = $part;
             }
-
             return $data;
         }
 
@@ -177,7 +155,6 @@ class Cache
         if (strpos($url, 'jsonp') !== false) {
             $data = preg_replace('/.+?({.+}).+/', '$1', $data);
         }
-
         $this->w->write($data, $id . '.json');
         return $data;
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace WillFarrell\AlfredPkgMan;
 
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0af8e412c0f3810e466063ac71145d53",
+    "content-hash": "f9476035b73d6b43631fcc3dcda9f037",
     "packages": [
         {
             "name": "joetannenbaum/alfred-workflow",

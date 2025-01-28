@@ -1,4 +1,5 @@
 <?php
+
 namespace WillFarrell\AlfredPkgMan;
 
 
@@ -30,7 +31,9 @@ class Pear extends Repo
             $title = strip_tags($matches[0]);
 
             // url
-            $details = strip_tags(substr($pkg, strpos($pkg, ":")+2));
+            $details = strip_tags(substr($pkg, strpos($pkg,
+                ":"
+            ) + 2));
 
             $this->cache->w->result(
                 $title,

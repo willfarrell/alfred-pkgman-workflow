@@ -1,6 +1,6 @@
 <?php
-namespace WillFarrell\AlfredPkgMan;
 
+namespace WillFarrell\AlfredPkgMan;
 
 class Yarn extends Repo
 {
@@ -25,12 +25,15 @@ class Yarn extends Repo
         foreach ($this->pkgs->results as $pkg) {
             $p = $pkg->package;
             $name = $p->name;
+            $description = $p->description;
+            $version = $p->version;
+            $url = $this->yarn_url . $name;
 
             $this->cache->w->result(
                 $this->id,
-                $this->makeArg($name, $this->yarn_url.$p->name, "{$p->name}: {$p->version}"),
+                $this->makeArg($name, $url, "{$name}: {$version}"),
                 $name,
-                $p->description,
+                $description,
                 "icon-cache/{$this->id}.png"
             );
 

@@ -25,7 +25,6 @@ class Workflows
      * @var Workflow
      */
     private $workflow;
-
     private $cache;
     private $data;
     private $bundle;
@@ -44,21 +43,20 @@ class Workflows
         $this->bundle = getenv('alfred_workflow_bundleid');
         $this->path = getcwd();
         $this->home = getenv('HOME');
-
         $this->cache = getenv('alfred_workflow_cache');
         $this->data = getenv('alfred_workflow_data');
-
         $this->workflow = new Workflow();
-
-        if (!file_exists($this->cache)) {
-            exec("mkdir '" . $this->cache . "'");
-        }
-
-        if (!file_exists($this->data)) {
-            exec("mkdir '" . $this->data . "'");
-        }
-
         $this->results = [];
+
+        $this->createDirectory($this->cache);
+        $this->createDirectory($this->data);
+    }
+
+    private function createDirectory($dir)
+    {
+        if (!file_exists($dir)) {
+            exec("mkdir '" . $dir . "'");
+        }
     }
 
     /**
@@ -70,9 +68,7 @@ class Workflows
      */
     public function bundle()
     {
-        if (is_null($this->bundle)) {
-            return false;
-        };
+        return $this->bundle ?? false;
     }
 
     /**
@@ -84,11 +80,7 @@ class Workflows
      */
     public function cache()
     {
-        if (is_null($this->bundle)) {
-            return false;
-        }
-
-        return is_null($this->cache) ? false : $this->cache;
+        return $this->cache ?? false;
     }
 
     /**
@@ -100,10 +92,7 @@ class Workflows
      */
     public function data()
     {
-        if (is_null($this->bundle)) {
-            return false;
-        }
-        return is_null($this->data) ? false : $this->data;
+        return $this->data ?? false;
     }
 
     /**
@@ -115,11 +104,7 @@ class Workflows
      */
     public function path()
     {
-        if (is_null($this->path)) {
-            return false;
-        }
-
-        return $this->path;
+        return $this->path ?? false;
     }
 
     /**
@@ -131,11 +116,7 @@ class Workflows
      */
     public function home()
     {
-        if (is_null($this->home)) {
-            return false;
-        }
-
-        return $this->home;
+        return $this->home ?? false;
     }
 
     /**
@@ -158,27 +139,22 @@ class Workflows
      */
     public function toJson($data = null)
     {
-        $data = !empty($data) ? $data : $this->results;
+        $data = $data ?: $this->results;
 
         if (is_string($data)) {
             $data = json_decode($data, true);
-
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new RuntimeException('Invalid JSON');
             }
         }
 
-
         if (empty($data)) {
             return $this->workflow->output();
         }
 
-
         foreach ($data as $item) {
             $c = $this->workflow->result();
-
-            $keys = array_keys($item);
-            (new Hydrator(array_combine($keys, $keys)))->hydrateInto($item, $c);
+            (new Hydrator(array_combine(array_keys($item), array_keys($item))))->hydrateInto($item, $c);
         }
 
         return $this->workflow->output();
@@ -211,38 +187,13 @@ class Workflows
      */
     public function set($a = null, $b = null, $c = null)
     {
-        if (is_array($a)) {
-            if (file_exists($b)) {
-                if (file_exists($this->path . '/' . $b)) {
-                    $b = $this->path . '/' . $b;
-                }
-            } elseif (file_exists($this->data . "/" . $b)) {
-                $b = $this->data . "/" . $b;
-            } elseif (file_exists($this->cache . "/" . $b)) {
-                $b = $this->cache . "/" . $b;
-            } else {
-                $b = $this->data . "/" . $b;
-            }
-        } else {
-            if (file_exists($c)) {
-                if (file_exists($this->path . '/' . $c)) {
-                    $c = $this->path . '/' . $c;
-                }
-            } elseif (file_exists($this->data . "/" . $c)) {
-                $c = $this->data . "/" . $c;
-            } elseif (file_exists($this->cache . "/" . $c)) {
-                $c = $this->cache . "/" . $c;
-            } else {
-                $c = $this->data . "/" . $c;
-            }
-        }
-
+        $file = $this->resolveFilePath($a, $b, $c);
         if (is_array($a)) {
             foreach ($a as $k => $v) {
-                exec('defaults write "' . $b . '" ' . $k . ' "' . $v . '"');
+                exec('defaults write "' . $file . '" ' . $k . ' "' . $v . '"');
             }
         } else {
-            exec('defaults write "' . $c . '" ' . $a . ' "' . $b . '"');
+            exec('defaults write "' . $file . '" ' . $a . ' "' . $b . '"');
         }
     }
 
@@ -256,27 +207,27 @@ class Workflows
      */
     public function get($a, $b)
     {
-        if (file_exists($b)) {
-            if (file_exists($this->path . '/' . $b)) {
-                $b = $this->path . '/' . $b;
-            }
-        } elseif (file_exists($this->data . "/" . $b)) {
-            $b = $this->data . "/" . $b;
-        } elseif (file_exists($this->cache . "/" . $b)) {
-            $b = $this->cache . "/" . $b;
-        } else {
-            return false;
+        $file = $this->resolveFilePath(null, $b);
+        exec('defaults read "' . $file . '" ' . $a, $out);
+        return $out[0] ?? false;
+    }
+
+    private function resolveFilePath($a, $b, $c = null)
+    {
+        $file = $b ?? $c;
+        if (file_exists($file)) {
+            return $file;
         }
-
-        exec('defaults read "' . $b . '" ' . $a, $out);   // Execute system call to read plist value
-
-        if ($out === "") {
-            return false;
+        if (file_exists($this->path . '/' . $file)) {
+            return $this->path . '/' . $file;
         }
-
-        $out = $out[0];
-
-        return $out;                                            // Return item value
+        if (file_exists($this->data . "/" . $file)) {
+            return $this->data . "/" . $file;
+        }
+        if (file_exists($this->cache . "/" . $file)) {
+            return $this->cache . "/" . $file;
+        }
+        return $this->data . "/" . $file;
     }
 
     /**
@@ -293,37 +244,27 @@ class Workflows
             return false;
         }
 
-        $defaults = [                                  // Create a list of default curl options
+        $defaults = [
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_RETURNTRANSFER => true,                 // Returns the result as a string
-            CURLOPT_URL => $url,                            // Sets the url to request
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_URL => $url,
             CURLOPT_FRESH_CONNECT => true,
             CURLOPT_USERAGENT => 'AlfredPkgMan-Workflow',
         ];
 
         if ($options) {
-            foreach ($options as $k => $v) {
-                $defaults[$k] = $v;
-            }
+            $defaults = array_replace($defaults, $options);
         }
 
-        array_filter(
-            $defaults,                            // Filter out empty options from the array
-            [$this, 'empty_filter']
-        );
-
-        $ch = curl_init();                                 // Init new curl object
-        curl_setopt_array($ch, $defaults);                // Set curl options
-        $out = curl_exec($ch);                            // Request remote data
+        $defaults = array_filter($defaults, [$this, 'empty_filter']);
+        $ch = curl_init();
+        curl_setopt_array($ch, $defaults);
+        $out = curl_exec($ch);
         $err = curl_error($ch);
-        curl_close($ch);                                  // End curl request
+        curl_close($ch);
 
-        if ($err) {
-            return $err;
-        }
-
-        return $out;
+        return $err ?: $out;
     }
 
     /**
@@ -336,7 +277,6 @@ class Workflows
     public function mdfind($query)
     {
         exec('mdfind "' . $query . '"', $results);
-
         return $results;
     }
 
@@ -349,14 +289,9 @@ class Workflows
      */
     public function delete($a)
     {
-        if (file_exists($a)) {
-            if (file_exists($this->path . '/' . $a)) {
-                unlink($this->path . '/' . $a);
-            }
-        } elseif (file_exists($this->data . "/" . $a)) {
-            unlink($this->data . "/" . $a);
-        } elseif (file_exists($this->cache . "/" . $a)) {
-            unlink($this->cache . "/" . $a);
+        $file = $this->resolveFilePath(null, $a);
+        if (file_exists($file)) {
+            unlink($file);
         }
     }
 
@@ -370,32 +305,10 @@ class Workflows
      */
     public function write($a, $b)
     {
-        if (file_exists($b)) {
-            if (file_exists($this->path . '/' . $b)) {
-                $b = $this->path . '/' . $b;
-            }
-        } elseif (file_exists($this->data . "/" . $b)) {
-            $b = $this->data . "/" . $b;
-        } elseif (file_exists($this->cache . "/" . $b)) {
-            $b = $this->cache . "/" . $b;
-        } else {
-            $b = $this->data . "/" . $b;
-        }
-
-        if (is_array($a)) {
-            $a = json_encode($a);
-            file_put_contents($b, $a);
-
-            return true;
-        }
-
-        if (is_string($a)) {
-            file_put_contents($b, $a);
-
-            return true;
-        }
-
-        return false;
+        $file = $this->resolveFilePath(null, $b);
+        $data = is_array($a) ? json_encode($a) : $a;
+        file_put_contents($file, $data);
+        return true;
     }
 
     /**
@@ -408,26 +321,14 @@ class Workflows
      */
     public function read($a, $array = false)
     {
-        if (file_exists($a)) {
-            if (file_exists($this->path . '/' . $a)) {
-                $a = $this->path . '/' . $a;
-            }
-        } elseif (file_exists($this->data . "/" . $a)) {
-            $a = $this->data . "/" . $a;
-        } elseif (file_exists($this->cache . "/" . $a)) {
-            $a = $this->cache . "/" . $a;
-        } else {
+        $file = $this->resolveFilePath(null, $a);
+        if (!file_exists($file)) {
             return false;
         }
 
-        $out = file_get_contents($a);
-        if (!is_null(json_decode($out)) && !$array) {
-            $out = json_decode($out);
-        } elseif (!is_null(json_decode($out)) && $array) {
-            $out = json_decode($out, true);
-        }
-
-        return $out;
+        $out = file_get_contents($file);
+        $decoded = json_decode($out, $array);
+        return $decoded ?? $out;
     }
 
     /**
@@ -439,17 +340,8 @@ class Workflows
      */
     public function filetime($a)
     {
-        if (file_exists($a)) {
-            if (file_exists($this->path . '/' . $a)) {
-                return filemtime($this->path . '/' . $a);
-            }
-        } elseif (file_exists($this->data . "/" . $a)) {
-            return filemtime($this->data . '/' . $a);
-        } elseif (file_exists($this->cache . "/" . $a)) {
-            return filemtime($this->cache . '/' . $a);
-        }
-
-        return false;
+        $file = $this->resolveFilePath(null, $a);
+        return file_exists($file) ? filemtime($file) : false;
     }
 
     /**
@@ -487,7 +379,6 @@ class Workflows
         }
 
         $this->results[] = $temp;
-
         return $temp;
     }
 }

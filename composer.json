@@ -1,4 +1,5 @@
 {
+  "$schema": "https://getcomposer.org/schema.json",
   "autoload": {
     "psr-4": {
       "WillFarrell\\AlfredPkgMan\\": "src/"

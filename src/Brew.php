@@ -62,7 +62,7 @@ class Brew extends Repo
     {
         return array_filter($pkgs, static function ($pkg) use ($query) {
             $pkgName = is_array($pkg->name) ? $pkg->name[0] : $pkg->name;
-            $match = levenshtein($query, $pkgName, 4,2,3);
+            $match = levenshtein($query, $pkgName, 4, 2, 3);
 
             return stripos($pkgName, $query) !== false || $match < 4;
         });

@@ -9,7 +9,7 @@ error_reporting(0);
 class Npm extends Repo
 {
     protected $id         = 'npm';
-    protected $url        = 'https://npms.io';
+    protected $url        = 'https://npmjs.com';
     protected $search_url = 'https://api.npms.io/v2/search?q=';
 
     public function search($query)

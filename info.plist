@@ -3008,7 +3008,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
     <key>userconfigurationconfig</key>
     <array/>
     <key>version</key>
-    <string>6.0.9</string>
+    <string>6.0.10</string>
     <key>webaddress</key>
     <string>https://github.com/willfarrell/alfred-pkgman-workflow</string>
   </dict>

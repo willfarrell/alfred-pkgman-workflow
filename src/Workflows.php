@@ -262,7 +262,6 @@ class Workflows
         curl_setopt_array($ch, $defaults);
         $out = curl_exec($ch);
         $err = curl_error($ch);
-        curl_close($ch);
 
         return $err ?: $out;
     }
